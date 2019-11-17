@@ -1,0 +1,32 @@
+.categories .category {
+    min-height: 100px;
+}
+.categories .category img {
+    margin: 20px 0 15px;
+}
+.categories .category h5 {
+    top: 50%;
+}
+.categories .category a, .categories .category .badge {
+    border-radius: 0;
+}
+.featured-posts .row {
+    margin: 0 -8px;
+}
+.badge{
+    background-color: #41bb19;
+}
+
+#footer-link {
+    display: inline-block;
+    margin-top: -5px;
+    margin-left: 8px;
+    text-transform: lowercase!important;
+}
+#footer-link a{
+    text-transform: initial;
+}
+#counter{
+    float: right;
+    opacity: 0.3;
+}
