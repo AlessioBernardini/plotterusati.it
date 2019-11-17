@@ -7,40 +7,6 @@
     <?=View::factory('pages/map/home')?>
 <?endif?>
 
-<section class="categories">
-    <h2>
-        <?=_e("Categories")?>
-        <?if ($user_location) :?>
-            <small><?=$user_location->translate_name() ?></small>
-        <?endif?>
-    </h2>
-        <div class="row">
-            <ul>
-            <?$i=0; foreach($categs as $c):?>
-                <?if($c['id_category_parent'] == 1 AND $c['id_category'] != 1 AND ! in_array($c['id_category'], $hide_categories)):?>
-                    <li class="col-md-3">
-                        <div class="category">
-                            <a title="<?=HTML::chars((strip_tags($c['description'])!=='')?strip_tags($c['description']):$c['translate_name'])?>" href="<?=Route::url('list', array('category'=>$c['seoname'], 'location'=>$user_location ? $user_location->seoname : NULL))?>">
-                            <? $category = new Model_Category($c['id_category']); $icon_src = $category->get_icon(); if(( $icon_src )!==FALSE ):?>
-                                    <img src="<?=Core::imagefly($icon_src,50,50)?>" alt="<?=HTML::chars($c['translate_name'])?>">
-                            	<?elseif($category->get_icon_font()):?>
-                                    <div><span class="h4"><?= $category->get_icon_font() ?></span></div>
-                                <?elseif (file_exists(DOCROOT.'images/categories/'.$c['seoname'].'_icon.png')):?>
-                                    <img src="<?=Core::imagefly(URL::base().'images/categories/'.$c['seoname'].'_icon.png',50,50)?>" alt="<?=HTML::chars($c['translate_name'])?>">
-                            	<?endif?>
-	                            <h5 id="test"><?=($c['translate_name']);?></h5>
-	                            <?if (Theme::get('category_badge')!=1) : ?>
-	                                <span class="badge"><?=number_format($c['count'])?> <?=_e('ads')?></span>
-	                            <?endif?>
-                            </a>
-                        </div>
-                    </li>
-                <? $i++; if ($i%4 == 0) echo '<div class="clear"></div>'; endif?>
-            <?endforeach?>
-            </ul>
-        </div>
-</section>
-
 <?if (Core::Config('appearance.map_active')):?>
     <section class="categories clearfix">
         <h2><?=_e('Map')?></h2>
@@ -113,6 +79,40 @@
         </section>
     <?endif?>
 <?endif?>
+
+<section class="categories">
+    <h2>
+        <?=_e("Categories")?>
+        <?if ($user_location) :?>
+            <small><?=$user_location->translate_name() ?></small>
+        <?endif?>
+    </h2>
+    <div class="row">
+        <ul>
+            <?$i=0; foreach($categs as $c):?>
+                <?if($c['id_category_parent'] == 1 AND $c['id_category'] != 1 AND ! in_array($c['id_category'], $hide_categories)):?>
+                    <li class="col-md-3">
+                        <div class="category">
+                            <a title="<?=HTML::chars((strip_tags($c['description'])!=='')?strip_tags($c['description']):$c['translate_name'])?>" href="<?=Route::url('list', array('category'=>$c['seoname'], 'location'=>$user_location ? $user_location->seoname : NULL))?>">
+                                <? $category = new Model_Category($c['id_category']); $icon_src = $category->get_icon(); if(( $icon_src )!==FALSE ):?>
+                                    <img src="<?=Core::imagefly($icon_src,50,50)?>" alt="<?=HTML::chars($c['translate_name'])?>">
+                                <?elseif($category->get_icon_font()):?>
+                                    <div><span class="h4"><?= $category->get_icon_font() ?></span></div>
+                                <?elseif (file_exists(DOCROOT.'images/categories/'.$c['seoname'].'_icon.png')):?>
+                                    <img src="<?=Core::imagefly(URL::base().'images/categories/'.$c['seoname'].'_icon.png',50,50)?>" alt="<?=HTML::chars($c['translate_name'])?>">
+                                <?endif?>
+                                <h5 id="test"><?=($c['translate_name']);?></h5>
+                                <?if (Theme::get('category_badge')!=1) : ?>
+                                    <span class="badge"><?=number_format($c['count'])?> <?=_e('ads')?></span>
+                                <?endif?>
+                            </a>
+                        </div>
+                    </li>
+                    <? $i++; if ($i%4 == 0) echo '<div class="clear"></div>'; endif?>
+            <?endforeach?>
+        </ul>
+    </div>
+</section>
 
 <?if(core::config('advertisement.homepage_map') == 2):?>
     <?=View::factory('pages/map/home')?>
