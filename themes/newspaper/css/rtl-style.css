@@ -1,0 +1,106 @@
+.chosen-container .chosen-drop {
+    left: 9999px;
+}
+.listing-overview li .text {
+  text-align: right;
+}
+#page-header .breadcrumb {
+  text-align: right;
+}
+footer .location {
+	text-align:right;
+}
+.standard-frm label {
+  text-align:right !important;
+}
+aside .location {
+	text-align:right;
+}
+#slider-thumbs .list-inline>li {
+	float:right;
+}
+.categories-module li .icon {
+ 	float:right;
+}
+#related ul {
+	float: right;
+}
+#container .grid li {
+	float: right;
+}
+.mainmenu {
+	float: right;
+}
+.mainmenu li {
+	float: right;
+}
+.standard-frm {
+	float: right;
+}
+.standard-frm .input {
+	float: right;
+}
+.standard-frm fieldset {
+	float: right;
+}
+.standard-frm .upload-image .image-container {
+	float: right;
+}
+.standard-frm .upload-image label {
+	float: right;
+}
+.findus-frm #googleMap {
+  	float: right;
+}
+.publish-new-frm .second-row {
+  	float: right;
+}
+.nicEdit-panelContain {
+  	float: right;
+}
+.header-btn {
+	float: left;
+}
+.categories .categorie span {
+	unicode-bidi: bidi-override;
+}
+#bs-example-navbar-collapse-1 .dropdown-menu {
+	right: auto!important;
+    left: 0!important;
+}
+.pull-right.price {
+	float: left!important;
+}
+.text-right.header-links {
+	text-align: left!important;
+}
+.single-sidebar .pricelabel::before {
+    background: none;
+}
+.single-sidebar .pricelabel {
+    margin-left: 0;
+    margin-right: -10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    width: 240px;
+}
+
+/* Columns different margin */
+.col-left,
+.col-right {
+  	padding-right: 0 !important;
+    padding-left: 15px !important;
+}
+.sceditor-container {
+	overflow: visible !important;
+}
+#st_gdpr_iframe {
+	right: -5000px !important;
+	left: auto !important;
+}
+@media (max-width: 575px) {
+	div.sceditor-dropdown {
+		left: auto!important;
+		right: 0!important;
+	}
+}

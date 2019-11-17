@@ -1,0 +1,80 @@
+h1, h2, h3, h4, h5, h6 {
+    color: #FF9800;
+}
+a:hover{
+	color: #995b00;
+}
+.nav-cat-cont, .dropdown-menu li > a:hover {
+    background-color: #FF9800;
+}
+li.dropdown a {
+    color: #FF9800;
+}
+.nav-cat a, #slider-fixed-products .thumbnail .caption h5 a {
+    color: #FF9800;
+}
+.categories ul li.cathead {
+    border-bottom-color: #FF9800;
+}
+.footer {
+    border-color: #FF9800;
+}
+.well.featured {
+    background:rgba(255, 152, 0, 0.2);
+}
+.label-warning{
+	background-color: #e58800;
+}
+.price{
+	color: #995b00;
+}
+.btn-success, .btn-success:hover, .btn-success:active, .btn-success:focus,
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:focus  {
+    color: #fff;
+    background-color: #FF9800!important;
+    border-color: #e58800!important;
+}
+#sidebar .widget-header, .label-default, .label-success {
+    background: none repeat scroll 0 0 #995b00;
+}
+.label-default:hover, .label-default:active,.label-default:focus, .label-success:hover, .label-success:active, .label-success:focus {
+    background-color: #995b00!important;
+}
+.label-info{
+    background-color: #FFD28F;
+    border-color: #FFB64A;
+    color: #FFF;
+}
+.btn-info{
+    background-color: #FFD28F;
+    border-color: #FFB64A;
+    color: #000;
+}
+.btn-info:hover, .btn-info:focus, .btn-info:active, .open > .dropdown-toggle.btn-info {
+    background-color: #FFB64A!important;
+    border-color: #FF9800!important;
+    color: #fff;
+}
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+    background-color: #FF9800;
+    border-color: #FF9800;
+}
+.pagination > li > a:focus, .pagination > li > a:hover, .pagination > li > span:focus, .pagination > li > span:hover {
+    color: #FF9800;
+}
+.pagination > li > a, .pagination > li > span {
+    color: #FF9800;
+}
+/* Widgets*/
+.slider-handle{
+    background-color: #FF9800;
+    background-image: linear-gradient(to bottom, #FF9800, #995b00);
+}
+
+/* Forums */
+.table > tbody > tr.success > td{
+    background-color: #fff7ed;
+}
+.table > tbody > tr.success:hover > td {
+    background-color: #fff0db;
+}

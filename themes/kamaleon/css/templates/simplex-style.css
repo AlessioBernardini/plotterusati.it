@@ -1,0 +1,29 @@
+.subnav-fixed{top:44px;}
+.featured-ads,.featured-item{background-color: #f7d3cf;}
+.label-info{background-color:#d9230f;}
+.label-danger, .badge-success, .label-success{background-color: #a91b0c;}
+.label-danger:hover, .badge-success:hover, .label-success:hover, .label-success:active, .label-success:focus{
+    color: #fff;
+    background-color: #a91b0c!important;
+}
+.btn-inverse, .btn-success{
+    color: #ffffff;
+    background-color: #d9230f!important;
+    border-color: #d9230f!important;
+    background-image: none;
+}
+.btn-inverse:hover, .btn-inverse:focus, .btn-inverse:active, .btn-inverse.active, .open .dropdown-toggle.btn-inverse, .btn-success:hover, .btn-success:focus, .btn-success:active {
+    color: #ffffff;
+    background-color: #d9230f!important;
+    border-color: #d9230f!important;
+    background-image: none;
+}
+
+/* Widgets*/
+.slider-handle{
+    background-color: #d9230f;
+    background-image: linear-gradient(to bottom, #d9230f, #c31f0d);
+}
+
+/*yclas topbar style*/
+.yclas-bar.body_fixed .subnav-fixed {top: 84px;}

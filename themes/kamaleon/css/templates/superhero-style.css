@@ -1,0 +1,74 @@
+.btn-header-group{padding-top:0px}
+.subnav{background-color: inherit;border: none;box-shadow: none;}
+.subnav .nav > li:first-child > a, .subnav .nav > li:first-child > a:hover{border:none;}
+.subnav .nav > li > a{ border:none; color: #4e5d6c;  }
+.subnav .nav > li > a:hover, .subnav .nav > li > a:active, .subnav .nav > li > a:focus{ border:none; color: #EEEEEE; }
+.subnav-fixed{top:50px!important;}
+.panel-sidebar {
+    background-color: #4e5d6c;
+    border: 1px solid transparent;
+    -webkit-border-radius: 0px;
+       -moz-border-radius: 0px;
+            border-radius: 0px;
+}
+.select2-results__option[aria-selected]{color:#444;}
+.select2{color:#444;}
+.dropdown-header{color:#fff;font-weight: bold}
+/* Listin page */
+.featured-ads,.featured-item{background-color: #d4d8dc;color:#444;}
+.featured-item li.price{color: #2b3e50;}
+li.price{ color: #ebebeb; }
+
+/* Buttons and labels */
+.btn-inverse{
+    color: #000;
+    background-color: #fff;
+    border-color: #adadad;
+}
+.btn-inverse:hover, .btn-inverse:focus, .btn-inverse:active, .btn-inverse.active, .open .dropdown-toggle.btn-inverse{
+    color: #000;
+    background-color: #e6e6e6!important;
+    border-color: #c2c2c2!important;
+}
+
+.media .label-danger, .label-success{
+    color: #ffffff;
+    background-color: #df691a;
+    border-color: transparent;
+}
+.btn-success {
+    color: #ffffff;
+    background-color: #df691a;
+    border-color: transparent;
+}
+.btn-success:hover, .btn-success:active, .btn-success:focus, .label-success:hover, .label-success:active, .label-success:focus {
+    color: #ffffff;
+    background-color: #b15315!important;
+    border-color: rgba(0,0,0,0);
+}
+.navbar .btn-primary-white .badge { font-weight: 700}
+
+/* Publish new */
+.fileinput .thumbnail {
+	background-color: #2b3e50!important;
+}
+.btn-file{
+	background-color: #2b3e50!important;
+}
+
+/* Widgets*/
+.slider-handle{
+    background-color: #df691a;
+    background-image: linear-gradient(to bottom, #df691a, #c85e17);
+}
+
+/* Forums */
+.table > tbody > tr.success > td{
+    background-color: #717d89;
+}
+.table > tbody > tr.success:hover > td {
+    background-color: #5f6d7a;
+}
+
+/*yclas topbar style*/
+.yclas-bar.body_fixed .subnav-fixed {top: 80px;}

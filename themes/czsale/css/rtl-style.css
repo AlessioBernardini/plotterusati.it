@@ -1,0 +1,20 @@
+.navbar-default{
+	float: left!important;
+}
+.logo{
+	float: right!important;
+	right: 0;
+}
+.sceditor-container {
+	overflow: visible !important;
+}
+#st_gdpr_iframe {
+	right: -5000px !important;
+	left: auto !important;
+}
+@media (max-width: 575px) {
+	div.sceditor-dropdown {
+		left: auto!important;
+		right: 0!important;
+	}
+}

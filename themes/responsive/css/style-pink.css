@@ -1,0 +1,80 @@
+h1, h2, h3, h4, h5, h6 {
+    color: #FF00DC;
+}
+a:hover{
+	color: #990084;
+}
+.nav-cat-cont, .dropdown-menu li > a:hover {
+    background-color: #FF00DC;
+}
+li.dropdown a {
+    color: #FF00DC;
+}
+.nav-cat a, #slider-fixed-products .thumbnail .caption h5 a {
+    color: #FF00DC;
+}
+.categories ul li.cathead {
+    border-bottom-color: #FF00DC;
+}
+.footer {
+    border-color: #FF00DC;
+}
+.well.featured {
+    background:rgba(255, 0, 220, 0.2);
+}
+.label-warning{
+	background-color: #FF00DC;
+}
+.price{
+	color: #cc00b0;
+}
+.btn-success, .btn-success:hover, .btn-success:active, .btn-success:focus,
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:focus  {
+    color: #fff;
+    background-color: #FF00DC!important;
+    border-color: #cc00b0!important;
+}
+#sidebar .widget-header, .label-default, .label-success {
+    background: none repeat scroll 0 0 #990084;
+}
+#sidebar .widget-header, .label-default, .label-success {
+    background: none repeat scroll 0 0 #990084;
+}
+.label-info{
+    background-color: #FD97F0;
+    border-color: #FF46E8;
+    color: #FFF;
+}
+.btn-info{
+    background-color: #FD97F0;
+    border-color: #FF46E8;
+    color: #000;
+}
+.btn-info:hover, .btn-info:focus, .btn-info:active, .open > .dropdown-toggle.btn-info {
+    background-color: #FF46E8!important;
+    border-color: #FF00DC!important;
+    color: #fff;
+}
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+    background-color: #FF00DC;
+    border-color: #FF00DC;
+}
+.pagination > li > a:focus, .pagination > li > a:hover, .pagination > li > span:focus, .pagination > li > span:hover {
+    color: #FF00DC;
+}
+.pagination > li > a, .pagination > li > span {
+    color: #FF00DC;
+}
+/* Widgets*/
+.slider-handle{
+    background-color: #FF00DC;
+    background-image: linear-gradient(to bottom, #FF00DC, #990084);
+}
+
+/* Forums */
+.table > tbody > tr.success > td{
+    background-color: #ffe0fa;
+}
+.table > tbody > tr.success:hover > td {
+    background-color: #ffd1f8;
+}

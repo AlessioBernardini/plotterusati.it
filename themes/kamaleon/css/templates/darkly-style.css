@@ -1,0 +1,54 @@
+.subnav.navbar{background-color: #303030;border-color:#303030;}
+.subnav .nav > .active > a, .subnav .nav > .active > a:hover{background-color: inherit; color: inherit;}
+.subnav .nav > li > a{border: none;}
+.subnav .nav > li:first-child > a, .subnav .nav > li:first-child > a:hover{border-left: none;}
+.nav-pills .open .dropdown-toggle{background-color: #2c3e50;}
+.subnav .nav > li > a:hover{background-color: #2c3e50;}
+.subnav{margin-top: 10px; background-image: none;}
+.active-result, .group-result{color:#0ce3ac;}
+.subnav-fixed {top: 50px;}
+.panel-sidebar {
+    background-color: #303030;
+    border: 1px solid transparent;
+}
+.select2, .select2-results__option[aria-selected]{color:#444;}
+
+/* Buttons and labels*/
+.badge-success{background-color: #375a7f;}
+.btn-inverse {
+    color: #000;
+    background-color: #fff;
+    border-color: #adadad;
+}
+.btn-inverse:hover, .btn-inverse:active, .btn-inverse:focus{
+    color: #000;
+	background-color: #e6e6e6;
+    border-color: #d2d2d2;
+}
+.btn-success{
+	color: #ffffff;
+	background-color: #375a7f;
+	border-color: #375a7f;
+}
+.btn-success:hover, .btn-success:active, .btn-success:focus{
+	color: #ffffff;
+	background-color: #28415b!important;
+	border-color: #253c54!important;
+}
+
+/* Listing page */
+.featured-ads,.featured-item{background-color: #375a7f;}
+.featured-item li.price{color: #fff;}
+li.price{color: #5e7a98;}
+
+/* Ad details */
+.media .label-danger{background-color: #375a7f;}
+
+/* Widgets*/
+.slider-handle{
+    background-color: #375a7f;
+    background-image: linear-gradient(to bottom, #375a7f, #315172);
+}
+
+/*yclas topbar style*/
+.yclas-bar.body_fixed .subnav-fixed {top: 90px;}

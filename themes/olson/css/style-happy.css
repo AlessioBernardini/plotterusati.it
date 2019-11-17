@@ -1,0 +1,284 @@
+
+/*Bacic colors
+light pink: #FCBD8A;
+dark pink: #A2122F;
+*/
+
+/* Basic CSS starts */
+
+body{
+   font-family: 'Open Sans', sans-serif;
+   color:#444;
+   font-size:13px;
+   line-height:25px;
+	-webkit-font-smoothing: antialiased;
+   background:#fafafa url('../img/main-back.png') repeat;
+}
+
+h1,h2,h3,h4{
+   font-family: 'Open Sans Condensed', sans-serif;
+}
+
+h5,h6{
+   font-family: 'Open Sans', sans-serif;
+}
+
+p{
+	margin:0;
+	padding:0;
+}
+
+ul, ol{
+   padding-left:15px;
+}
+
+a{
+   color:#FCBD8A;
+}
+
+a:hover{
+   color:#F83D4A;
+   border-bottom:1px dotted #F83D4A;
+}
+
+#myTab li.active a{
+   background:#FCBD8A !important;
+   border-color:#FCBD8A !important;
+}
+
+/* Alerts */
+.alert-info{
+  background: #feebdb;
+  color: #F83D4A;
+  border-color: #FCBD8A;
+}
+
+/* Basic CSS ends */
+
+.color{
+   color:#FCBD8A;
+}
+
+.btn-blue{
+   background:#FCBD8A;
+   border:1px solid #F83D4A;
+   border-bottom:2px solid #F83D4A;
+}
+
+.btn-blue:hover{
+   border:1px solid #F83D4A;
+   border-bottom:2px solid #F83D4A;
+}
+
+.carousel .carousel-caption a.btn{
+   border-bottom:2px solid #F83D4A;
+}
+
+.carousel-indicators .active{
+   background:#FCBD8A;
+   border:1px solid #F83D4A;
+}
+
+.carousel-indicators li:hover{
+   background:#FCBD8A;
+   border:1px solid #F83D4A;
+}
+
+/* Logo & Navigation */
+
+.header{
+   background:#FCBD8A;
+   border-top:4px solid #F83D4A;
+   border-bottom:1px solid #F83D4A;
+}
+
+.ddsubmenustyle li a:hover {
+	background: #F83D4A !important;
+}
+
+/* SELECT MENU */
+
+.navis select{
+	display:none;
+}
+
+/* Kart links */
+
+.kart-links{
+   text-align:center;
+   margin-top:20px;
+}
+
+.kart-links > a,
+.kart-links > div > a{
+   background:#F83D4A;
+   color:#FFF;
+}
+
+.hero .btn-info{
+   border-bottom:3px solid #F83D4A;
+}
+
+.cta h5 i{
+   background:#FCBD8A;
+}
+
+.recent-posts .recent-post-block .rp-right{
+   background:#FCBD8A;
+   border:1px solid #F83D4A;
+}
+
+.recent-posts .my_carousel .carousel_nav a{
+	background:#FCBD8A;
+}
+
+.sidey .nav {
+   border-top:1px solid #F83D4A;
+}
+
+.sidey .nav > li > a {
+   background:#FCBD8A;
+   border:1px solid #F83D4A;
+}
+
+.sidey .nav a:hover, .sidey .nav li > .active, .sidey .nav > li > a.sub:hover {
+	background: #F83D4A!important;
+  border-bottom:1px solid #F83D4A!important;
+  border-color: #F83D4A!important;
+}
+
+.sidey .nav > li.active > a  {
+	background: #444;
+}
+
+.shop-items .item-icon span{
+   background:#FCBD8A;
+}
+
+.shop-items .item-price{
+   background:#FCBD8A;
+}
+
+.about-us .about-team .asocial i{
+   background:#FCBD8A;
+}
+
+/* Back to top */
+
+.totop {
+	background: #FCBD8A; 
+}
+
+/* Buttons */
+
+.btn-header-group { 
+   margin-top: 15px;
+   margin-right: 19px;
+}
+
+.btn-primary{
+   background-color: #20F7A8;  
+   border-color: #20F7A8;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary{
+   background-color: #20F7A8;  
+   border-color: #20F7A8;
+}
+
+.btn-success,.btn-warning{
+    color: #FDF0AB;
+    background-color: #F83D4A;
+    border-color: #FDF0AB;
+}
+.btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open .dropdown-toggle.btn-success{
+   background-color: #FCBD8A!important;
+   border-color: #FDF0AB!important;
+   color: #FDF0AB!important;
+}
+.btn-info{
+    color: #FDF0AB;
+    background-color: #F83D4A;  
+    border-color: #F83D4A;
+}
+.btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info.active, .open .dropdown-toggle.btn-info{
+    color: #fff!important;
+    background-color: #F83D4A!important;
+    border-color: #F83D4A!important;
+}
+.label-info, .label-info:hover, .label-info:active, .label-info:focus{
+    color: #FDF0AB!important;
+    background-color: #F83D4A!important;
+    border-color: #F83D4A!important;
+}
+.btn-primary{
+    color: #fff!important;  
+    background-color: #FCBD8A!important;
+    border-color: #F83D4A!important;
+}
+.shop-items .item.featured-ads,
+.shop-items .item.featured-item {
+  background: #fef1e7!important;
+  border: 1px solid #F83D4A;
+}
+.shop-items .item-favorite span{
+  background: #FCBD8A!important;
+}
+.recent-posts .carousel .c-control{
+  background: #FCBD8A!important;
+}
+.badge
+{
+  background-color: #fff;
+  color: #F83D4A;
+}
+
+/* Ad details */
+
+.recent-posts .s-icon span{
+  background:#F83D4A!important;
+}
+
+footer  i.contact-icon{
+   background:#F83D4A;
+}
+
+/* Listing page */
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+  background: #F83D4A;
+  border-color: #F83D4A;
+}
+.pagination > li > a{
+  color: #F83D4A;
+}
+.pagination > li > a:hover, .pagination > li > span:hover, .pagination > li > a:focus, .pagination > li > span:focus {
+    background: #F83D4A;
+    color: #fff;
+    border-color: #F83D4A;
+}
+
+/* Widgets*/
+.slider-handle{
+    background-color: #F83D4A;
+    background-image: linear-gradient(to bottom, #F83D4A, #df3642);
+}
+
+/* FAQ */
+.faq-number{
+	color: #FFF!important;
+	background-color: #F83D4A!important;
+}
+
+/* Forums */
+.table > tbody > tr.success > td{
+    background-color: #fef8f3!important;
+}
+.table > tbody > tr.success:hover > td {
+    background-color: #fef1e7!important;
+}
+.table > tbody > tr.success > td > a{
+    color: #f83d4a!important;
+}
+
+/* Other */
+.select2-selection__choice{ color: #333; }

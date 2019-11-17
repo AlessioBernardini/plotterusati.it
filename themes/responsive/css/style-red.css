@@ -1,0 +1,81 @@
+h1, h2, h3, h4, h5, h6 {
+    color: #BF2323;
+}
+a:hover{
+	color: #721515;
+}
+.nav-cat-cont, .dropdown-menu li > a:hover {
+    background-color: #BF2323;
+}
+li.dropdown a {
+    color: #BF2323;
+}
+.nav-cat a, #slider-fixed-products .thumbnail .caption h5 a {
+    color: #BF2323;
+}
+.categories ul li.cathead {
+    border-bottom-color: #BF2323;
+}
+.footer {
+    border-color: #BF2323;
+}
+.well.featured {
+    background:rgba(191, 35, 35, 0.2);
+}
+.label-warning{
+	background-color: #BF2323;
+}
+.price{
+	color: #981c1c;
+}
+.btn-success, .btn-success:hover, .btn-success:active, .btn-success:focus,
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:focus  {
+    color: #fff;
+    background-color: #BF2323!important;
+    border-color: #981c1c!important;
+}
+#sidebar .widget-header, .label-default, .label-success {
+    background: none repeat scroll 0 0 #721515;
+}
+.label-default:hover, .label-default:active,.label-default:focus, .label-success:hover, .label-success:active, .label-success:focus {
+    background-color: #721515!important;
+}
+ .label-info{
+    background-color: #FFA0A0;
+    border-color: #E95858;
+    color: #FFF;
+ }
+.btn-info{
+    background-color: #FFA0A0;
+    border-color: #E95858;
+    color: #000;
+}
+.btn-info:hover, .btn-info:focus, .btn-info:active, .open > .dropdown-toggle.btn-info {
+    background-color: #E95858!important;
+    border-color: #BF2323!important;
+    color: #fff;
+}
+
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+    background-color: #BF2323;
+    border-color: #BF2323;
+}
+.pagination > li > a:focus, .pagination > li > a:hover, .pagination > li > span:focus, .pagination > li > span:hover {
+    color: #BF2323;
+}
+.pagination > li > a, .pagination > li > span {
+    color: #BF2323;
+}
+/* Widgets*/
+.slider-handle{
+    background-color: #BF2323;
+    background-image: linear-gradient(to bottom, #BF2323, #721515);
+}
+
+/* Forums */
+.table > tbody > tr.success > td{
+    background-color: #faefef;
+}
+.table > tbody > tr.success:hover > td {
+    background-color: #f6e0e0;
+}

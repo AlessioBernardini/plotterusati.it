@@ -1,0 +1,122 @@
+/**
+ * Custom theme styles that overwrites theme 
+ */
+
+/* Link and hover styling */
+a, .categories-box .row ul li a, .pagination li a {color:#f44336;}
+a:hover, a:focus {color:#e53935;}
+
+/* Header colours */ 
+.header {
+	background: #f44336;
+	background: -moz-linear-gradient(top,  #e9e9e9 0%, #f44336 120%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e9e9e9), color-stop(120%,#f44336));
+	background: -webkit-linear-gradient(top,  #e9e9e9 0%,#f44336 120%);
+	background: -o-linear-gradient(top,  #e9e9e9 0%,#f44336 120%);
+	background: -ms-linear-gradient(top,  #e9e9e9 0%,#f44336 120%);
+	background: linear-gradient(to bottom,  #e9e9e9 0%,#f44336 120%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e9e9e9', endColorstr='#f44336',GradientType=0 );
+}
+.navbar-inverse {border-color:#f44336;}
+.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus{color: #f44336;}
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:hover, .navbar-inverse .navbar-nav>.active>a:focus {color: #909F3B;}
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>.open>a:focus {color: #909F3B;}
+.navbar-header .navbar-toggle{ background-color: #f6685e; }
+
+header .btn-success{
+	background-color: #f6685e;
+	background-image: none;
+}
+header .btn-success:hover, header .btn-success:active, header .btn-success:focus,
+.nav .open > a, .nav .open > a:focus, .nav .open > a:hover{
+	background-color: #f44336!important;
+	border-color: #f44336!important;
+	background-image: none;
+}
+header .btn-success .badge{ color: #f44336; }
+
+/* Other */
+.label-info, .label-success, .badge-success {background-color: #f44336 !important;}
+.label-success:hover, .label-success:active, .label-success:focus, .badge-success:hover, .badge-success:active, .badge-success:focus {
+    background-color: #f6685e !important;
+}
+.badge-success {background-color: #f6685e !important;}
+
+/* Buttons */
+.btn-primary{background: #f44336; border-color: #e53935; color:#fff;}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open > dropdown-toggle.btn-primary {background: #e53935!important; border-color: #f44336!important; background-image: none; color:white}
+.btn-info.active, .btn-info:hover, .btn-info:active, .open > .dropdown-toggle.btn-info {
+    color: #fff;
+    background-color: #f44336!important;
+    border-color: #aa2e25!important;
+}
+.btn-success {
+  	color: #ffffff;
+  	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  	background-color: #f44336;
+  	background-image: -moz-linear-gradient(top, #f44336, #aa2e25);
+  	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f44336), to(#aa2e25));
+  	background-image: -webkit-linear-gradient(top, #f44336, #aa2e25);
+  	background-image: -o-linear-gradient(top, #f44336, #aa2e25);
+  	background-image: linear-gradient(to bottom, #f44336, #aa2e25);
+ 	background-repeat: repeat-x;
+  	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff62c462', endColorstr='#ff51a351', GradientType=0);
+  	border-color: #aa2e25 #aa2e25 #f44336;
+  	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  	filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+
+.btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success:active, .btn-success.active, .btn-success.disabled, .btn-success[disabled] {
+  	color: #ffffff;
+	background-color: #f44336!important;
+	background-image: none!important;
+	border-color: #f44336!important;
+}
+
+/* Ad page */
+.text-info{ color: #aa2e25; }
+.media .label-danger {
+    background-color: #f44336;
+    font-size: 87%;
+}
+
+/* Listing page */
+.featured{background: #BCCDC7;}
+.featured-ads,.featured-item {background: #f9d7d6!important;}
+.featured-item .label-danger{background-color: #f44336;}
+li.price { color: #aa2e25; }
+
+/* Categories */
+.panel-home-categories > .panel-heading {background-color: #f44336;}
+.panel-sidebar > .panel-heading {border-top-color: #f44336;}
+.sidebar-nav h3, footer, .panel-heading {border-color:#f44336;}
+.categories .category-container .panel-heading {border-color:#e53935; background:#f44336; color:white;}
+.categories .category-container .panel-heading a {color:white; text-shadow:none;}
+
+/* Pagination hovers */
+.pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover {
+  color: #e53935;
+}
+
+/* Widgets*/
+.slider-handle{
+    background-color: #f44336;
+    background-image: linear-gradient(to bottom, #f44336, #aa2e25);
+}
+
+/* Forums */
+.table > tbody > tr.success > td{
+    background-color: #fdecea;
+}
+.table > tbody > tr.success:hover > td {
+    background-color: #fcd9d6;
+}
+
+/* Footer edits */
+footer {
+	background: #f44336;
+}

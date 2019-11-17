@@ -1,0 +1,19 @@
+::-moz-selection{background-color:#009688;}::selection{background-color:#009688;}.btn-primary,h1:after,h2:after,h3:before,h4:before,h5:before,h6:before, .bannergroup,.category a.active,.category a:focus,.category a:hover,.pagination .active a,.single .extra_info .price, .filter .active,.filter .active:focus,.filter .active:hover,.bannergroup, .category a.active, .category a:focus, .category a:hover, .pagination .active a, .extra_info .price,.dropdown-menu>.active>a, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover{background:#009688}a{color:#009688}a.active,a:focus,a:hover{color:#26A69A}.footer-copyright a.active,.footer-copyright a:focus,.footer-copyright a:hover,.hvr-icon-forward:before,.latest_ads .extra_info .more-link i,.list-group .caption h3 a:focus,.list-group .caption h3 a:hover,.listing_ads .extra_info .more-link i,.navbar-nav>li>a:focus,.navbar-nav>li>a:hover,.pagination li a,.pagination li span,.panel-sidebar .panel-body ul a.active,.panel-sidebar .panel-body ul a:focus,.panel-sidebar .panel-body ul a:hover,.tabbed ul li button.active,.tabbed ul li button:focus,.tabbed ul li button:hover,footer a.active,footer a:focus,footer a:hover{color:#009688}.btn-primary{border-color:#009688}.btn-primary:active,.btn-primary:focus,.btn-primary:active:focus,.btn-primary:hover,.open>.dropdown-toggle.btn-primary,.open>.dropdown-toggle.btn-primary:focus,.open>.dropdown-toggle.btn-primary:hover{background:#26A69A;border-color:#26A69A}.featured-ads .extra_info,.featured-item .extra_info,.featured-ads,.featured-item,.featured-ads .image_holder,.featured-item .image_holder,.filter #sort,.pagination .active a,.single #gallery .thumbnail.active,.single #gallery .thumbnail:focus,.single #gallery .thumbnail:hover,.tabbed-content{border-color:#009688}.featured-ads,.featured-item{border:2px solid #009688!important;background-color:#ebebeb;}.featured-ads .triangle-top-left,.featured-item .triangle-top-left{border-top:100px solid #009688;}.bannergroup,.category a.active,.category a:focus,.category a:hover,.pagination .active a,.extra_info .price{background:#009688}.filter .active,.filter .active:focus,.filter .active:hover{background:#009688;border-color:#009688}.wizard li.active span.round-tab{border-color:#009688;}.wizard li.active span.round-tab i{color:#009688;}.grid figure.effect-sadie figcaption::before {background: -webkit-linear-gradient(top, rgba(0,150,136,0) 50%, rgba(0,150,136,0.8) 100%);background: linear-gradient(to bottom, rgba(0,150,136,0) 50%, rgba(0,150,136,0.8)100%);}.categories .category h5 {border-bottom:2px solid #009688;}.btn-primary .badge{color:#009688;}
+footer .f-box-header{color: #009688;}
+.btn-success{
+	border-color: #009688;
+	background-color: #009688;
+}
+.btn-success:hover, .btn-success:active, .btn-success:focus{
+	border-color: #26A69A!important;
+	background-color: #26A69A!important;
+}
+.label-info, .label-info:hover, .label-info:active, .label-info:focus{
+	background-color: #4cb5ab;
+}
+
+/* Widgets*/
+.slider-handle{
+    background-color: #009688;
+    background-image: linear-gradient(to bottom, #009688, #26A69A);
+}

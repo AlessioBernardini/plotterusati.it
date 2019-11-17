@@ -1,0 +1,14 @@
+.subnav.navbar{background-color: #4b792e;border-color:#4b792e;}
+.subnav .nav > .active > a, .subnav .nav > .active > a:hover{background-color: inherit; color: inherit;}
+.subnav .nav > li > a{border: none;}
+.subnav .nav > li:first-child > a, .subnav .nav > li:first-child > a:hover{border-left: none;}
+.nav-pills .open .dropdown-toggle{background-color: #2c3e50;}
+.subnav .nav > li > a:hover{background-color: #2c3e50;}
+/*.subnav{margin-top: 10px;}*/
+.featured-ads,.featured-item{background-color: #4b792e;}
+.active-result, .group-result{color:#0ce3ac;}
+.modal-backdrop {z-index: -1;}
+.panel-sidebar {
+    background-color: #4b792e;
+    border: 1px solid #3b5f24;
+}

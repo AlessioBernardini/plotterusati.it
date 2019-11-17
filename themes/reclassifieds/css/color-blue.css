@@ -1,0 +1,94 @@
+/**
+ * Custom theme styles that overwrites theme 
+ */
+
+body, .sidebar-nav.well, footer {background:#0090B3;}
+footer {color:#fff;}
+.breadcrumb {background:#f5f5f5; border: 1px solid #e3e3e3;}
+
+/* Link and hover styling */
+a, .logo h1, .categories-box .row ul li a, .pagination li a {color:#0090B3;}
+a:hover {color:#005580;}
+
+/* Header colours */ 
+
+.navbar-inverse,
+.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus,
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>.open>a:focus {
+  color: #909F3B!important;
+  background-color: #0090B3!important;
+  border-color: #0090B3!important;
+}
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:hover, .navbar-inverse .navbar-nav>.active>a:focus{
+  color: #0090B3!important;
+}
+
+/* Subnav */
+.subcategories-box, .categories-navegation > ul > li.active, .dropped-cat  {background-color: #005580; color:white;}
+.categories-navegation > ul > li {background: #0090B3; color:white;}
+.categories-navegation > ul > li a {color:white;}
+
+/* Other */
+.label-success, .badge-success {background-color: #005580 !important;}
+.btn-success .badge {color: #0090B3;}
+.featured{background: #BCCDC7;}
+
+/* Buttons */
+.btn-primary{background-image: linear-gradient(to bottom,#0090B3,#005580); background-color: #0090B3; border-color: #005580;}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open > dropdown-toggle.btn-primary,
+.btn-success, .btn-success:hover, .btn-success:focus, .btn-success:active {
+  background-color: #0090B3;
+  background-image: -moz-linear-gradient(top, #0090B3, #005580);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0090B3), to(#005580));
+  background-image: -o-linear-gradient(top, #0090B3, #005580);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0090B3', endColorstr='#005580', GradientType=0);
+  border-color: #0090B3 #005580;
+}
+.btn-success i {
+	color:white;
+}
+
+.label-warning{
+	background-color: #0090B3;
+}
+
+/* Categories */
+.panel-home-categories > .panel-heading {color:#005580;}
+.panel-sidebar > .panel-heading {border-top-color: #0090B3;}
+.sidebar-nav h3, footer, .panel-heading {}
+.categories .category-container .panel-heading {border-color:#535F12; background:#0090B3; color:white;}
+.categories .category-container .panel-heading a {color:white; text-shadow:none;}
+.panel-home-categories .panel-heading a {color:#005580;}
+
+/* Pagination hovers */
+.pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover {
+  	color: #535F12;
+}
+#products .item.grid-group-item.featured-ads .thumbnail,
+#products .item.grid-group-item.featured-item .thumbnail,
+#products .item.list-group-item.featured-ads .thumbnail,
+#products .item.list-group-item.featured-item .thumbnail,
+#products .item.list-group-item.featured-ads, #products .item.list-group-item.featured-item {
+  background: #cce8ef!important;
+}
+
+/* Featured Ads */
+.category_box_title{background-color: #0090B3;}
+
+/* Widgets*/
+.slider-handle{
+    background-color: #0090B3;
+    background-image: linear-gradient(to bottom, #0090B3, #005580);
+}
+
+/* Forums */
+.table > tbody > tr.success > td{
+    background-color: #f1f8fe;
+}
+.table > tbody > tr.success:hover > td {
+    background-color: #e4f2fd;
+}

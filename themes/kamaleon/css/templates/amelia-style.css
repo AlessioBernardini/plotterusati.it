@@ -1,0 +1,16 @@
+.subnav{background: rgba(42,99,105,0.9) none;}
+.subnav .nav > li > a{border: none;}
+.subnav{border: none;}
+.subnav .nav > li:first-child > a, .subnav .nav > li:first-child > a:hover{border-left: none;}
+.btn-inverse{color: #fff;
+background-color: #27666d;
+border-color: #27666d;}
+.btn-inverse:hover{background-color: #1E484D;}
+.highlight{background-color: #0d747c;}
+/**/
+.chosen-results li {color: #000;}
+.modal-backdrop {z-index: -1;}
+.panel-sidebar {
+    background-color: #0d747c;
+    border: 1px solid #0a565c;
+}

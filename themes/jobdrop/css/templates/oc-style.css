@@ -1,0 +1,28 @@
+/* Color */
+a, caption, .item .text h2 .company, .listing-date h2, .filter .btn-filter:hover, .filter .btn-filter:focus, .filter .btn-filter.active, .filter .btn-filter:hover, .filter .btn-filter:focus, .filter .btn-filter.active  .filter .filter-buttons a:hover, .filter .filter-buttons a:focus, .filter .filter-buttons a.active , aside .panel-body a:hover, panel-body a:focus, .panel-body a i, .tabbed ul li button:hover, .tabbed ul li button:focus, .tabbed ul li button.active, .nav-tabs>li>a, .breadcrumb a, .pager li>a, .panel-default .panel-heading,.panel-default .panel-title,.panel-default .panel-footer, .badge, .panel-success>.panel-heading, .panel-success>.panel-heading .badge, .list-group-item-success, a.list-group-item-success,a.list-group-item-success:hover,a.list-group-item-success:focus, .navbar-default .navbar-nav .open .dropdown-menu>li>a:hover,.navbar-default .navbar-nav .open .dropdown-menu>li>a:focus, .navbar-default .navbar-link:hover, .navbar-default .btn-link:hover,.navbar-default .btn-link:focus, .breadcrumb>.active, .pagination>li>a,.pagination>li>span, .navbar-default .navbar-nav>li>a:hover,.navbar-default .navbar-nav>li>a:focus, .nav-pills>li.active>a,.nav-pills>li.active>a:hover,.nav-pills>li.active>a:focus, .nav-tabs>li.active>a,.nav-tabs>li.active>a:hover,.nav-tabs>li.active>a:focus, .dropdown-menu>li>a, .dropdown-menu>li>a:hover,.dropdown-menu>li>a:focus, .dropdown-menu>.active>a,.dropdown-menu>.active>a:hover,.dropdown-menu>.active>a:focus, .navbar .nav>li>a:hover,.navbar .nav>li>a:focus, .btn-link, .text-success, .btn-default .badge, .has-success .help-block, .has-success .form-control-feedback, .has-success .control-label,.has-success .radio,.has-success .checkbox,.has-success .radio-inline,.has-success .checkbox-inline,.has-success.radio label {color:#41bb19;}
+.badge{color: #FFF;}
+/* Background */
+.btn-success, .btn-group .dropdown-toggle:active, .btn-default:hover, .btn-default:focus, .pagination>.active>a, header .btn, .overlay .btn, .btn-default, .subfilter ul li a.active, .featured .listing-categorie .btn-inverse, .page-header, .tooltip-inner, .panel-success>.panel-heading, .panel-success>.panel-heading .badge, .alert-success, a.list-group-item-success.active,a.list-group-item-success.active:hover,a.list-group-item-success.active:focus, .progress-bar-success, .btn-default.active, .btn-primary, .navbar-toggle, .label-default, .label-success, .badge,.nav-pills>.active>a>.badge {background:#41bb19;}
+/* Border */
+.pagination>.active>a, button,  .btn-primary, .has-success .form-control, .subfilter ul li a, .filter .filter-buttons a:hover, .filter .filter-buttons a:focus, .filter .filter-buttons a.active, .tabbed ul li button:hover, .tabbed ul li button:focus, .tabbed ul li button.active, .tooltip.top .tooltip-arrow, .tooltip.top-left .tooltip-arrow, .tooltip.top-right .tooltip-arrow, .tooltip.left .tooltip-arrow, .tooltip.bottom .tooltip-arrow, .tooltip.bottom-left .tooltip-arrow, a.list-group-item-success.active,a.list-group-item-success.active:hover,a.list-group-item-success.active:focus, a.thumbnail:hover,a.thumbnail:focus,a.thumbnail.active, .nav .open>a,.nav .open>a:hover,.nav .open>a:focus, .navbar-default .navbar-collapse,.navbar-default .navbar-form {border-color:#41bb19;}
+/* Misc */
+.btn-inverse {
+ 	-webkit-box-shadow:inset 0px 0px 0px 3px #41bb19;
+    -moz-box-shadow:inset 0px 0px 0px 3px #41bb19;
+    box-shadow:inset 0px 0px 0px 3px #41bb19;
+}
+/* Hovers */
+.btn-success:hover, .btn-success:active, .btn-success:focus,
+.btn-primary.active, .btn-primary:active, .open > .dropdown-toggle.btn-primary,
+.btn-primary:hover, .btn-primary:focus {background:#4acf1f!important; border-color:#4acf1f!important;}
+.btn-inverse a:hover{ color: #4acf1f; }
+.featured .favorite p, .featured .favorite i {color:#41bb19;}
+
+/* Pagination*/
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+    background-color: #41bb19;
+    border-color: #41bb19;
+}
+.pagination > li > a:focus, .pagination > li > a:hover, .pagination > li > span:focus, .pagination > li > span:hover {
+    color: #4acf1f;
+}

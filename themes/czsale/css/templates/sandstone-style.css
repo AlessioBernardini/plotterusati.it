@@ -1,0 +1,50 @@
+.btn-primary{
+	color: #ffffff!important;
+	background-color: #325d88!important;
+	border-color: #325d88!important;
+}
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus{
+	color: #ffffff!important;
+	background-color: #244363!important;
+	border-color: #244363!important;
+}
+.btn-search{
+    background-color: #93c54b;
+    border-color: #93c54b;
+    color: #fff;
+}
+.btn-search:hover, .btn-search:active, .btn-search:focus{
+    background-color: #79a736!important;
+    border-color: #79a736!important;
+    color: #fff;
+}
+
+/* Listin page */
+.media-heading a {
+    color: #93c54b;
+}
+.thumbnail .label-default{
+	background-color: #244363;
+}
+.featured-ads,.featured-item{
+    border: 2px solid #93c54b !important;
+}
+/* list view */
+.triangle-top-left { 
+    border-top: 90px solid #93c54b;
+}
+/* grid view */
+.grid-view .triangle-top-left { 
+    border-top: 90px solid #93c54b;
+}
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+    background-color: #93c54b;
+    border-color: #93c54b;
+    color: #eee;
+}
+
+.slider-handle{
+    background-color: #325d88;
+    background-image: linear-gradient(to bottom, #325d88, #466d93);
+}

@@ -1,0 +1,46 @@
+.subnav-fixed {top: 53px;}
+.navbar{min-height: 0px!important; }
+.navbar-btn {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.panel-sidebar {
+    background-color: #f9f9f9;
+    border: 1px solid transparent;
+    box-shadow: none;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+         border-radius: 0px;
+}
+.btn-inverse{
+    color: #000;
+    background-color: #fff;
+    border-color: #adadad;
+}
+.btn-inverse:hover, .btn-inverse:focus, .btn-inverse:active, .btn-inverse.active, .open .dropdown-toggle.btn-inverse{
+    color: #000;
+    background-color: #e6e6e6!important;
+    border-color: #c2c2c2!important;
+}
+.btn-success, .label-success{
+    background-color: #2196f3;
+    border-color: transparent;
+    color: #ffffff;
+}
+.btn-success:hover, .btn-success:active, .btn-success:focus, .label-success:hover, .label-success:active, .label-success:hover {
+    background-color: #0d87e9!important;
+    background-image: none!important;
+}
+.featured-ads, .featured-item{ background-color: #d2eafc; }
+li.price{color:#135a91;}
+.text-info{ color:#135a91;}
+.media .label-danger{background-color:#2196f3;}
+/* Forums */
+.table > tbody > tr.success > td{
+    background-color: #fbfbfb;
+}
+.table > tbody > tr.success:hover > td {
+    background-color: #f6f6f6;
+}
+/*yclas topbar style*/
+.yclas-bar.body_fixed .subnav-fixed {top: 102px;}

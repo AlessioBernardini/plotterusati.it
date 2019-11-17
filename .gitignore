@@ -8,7 +8,6 @@ install/install.lock
 oc/cache/*
 oc/logs/*
 images/*
-themes/*
 !themes/default/
 !themes/basecamp_free/
 oc/vendor/hybridauth/logs.txt

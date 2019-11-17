@@ -1,0 +1,122 @@
+/**
+ * Custom theme styles that overwrites theme 
+ */
+
+/* Link and hover styling */
+a, .logo h1, .categories-box .row ul li a, .pagination li a {color:#BF763B;}
+a:hover, a:focus {color:#9F571D;}
+
+/* Header colours */ 
+.header {
+	background: #727F27;
+	background: -moz-linear-gradient(top,  #e9e9e9 0%, #BF763B 120%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e9e9e9), color-stop(120%,#BF763B));
+	background: -webkit-linear-gradient(top,  #e9e9e9 0%,#BF763B 120%);
+	background: -o-linear-gradient(top,  #e9e9e9 0%,#BF763B 120%);
+	background: -ms-linear-gradient(top,  #e9e9e9 0%,#BF763B 120%);
+	background: linear-gradient(to bottom,  #e9e9e9 0%,#BF763B 120%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e9e9e9', endColorstr='#BF763B',GradientType=0 );
+}
+.navbar-inverse {border-color:#BF763B;}
+.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus{color: #9F571D;}
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:hover, .navbar-inverse .navbar-nav>.active>a:focus {color: #909F3B;}
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>.open>a:focus {color: #909F3B;}
+.navbar-header .navbar-toggle{ background-color: #bf763b; }
+
+header .btn-success{
+	background-color: #bf763b;
+	background-image: none;
+}
+header .btn-success:hover, header .btn-success:active, header .btn-success:focus,
+.nav .open > a, .nav .open > a:focus, .nav .open > a:hover{
+	background-color: #9f571d!important;
+	border-color: #9f571d!important;
+	background-image: none;
+}
+header .btn-success .badge{ color: #9f571d; }
+
+/* Other */
+.label-info, .label-success, .badge-success {background-color: #bf763b !important;}
+.label-success:hover, .label-success:active, .label-success:focus, .badge-success:hover, .badge-success:active, .badge-success:focus {
+    background-color: #9f571d !important;
+}
+.badge-success {background-color: #9F571D !important;}
+
+/* Buttons */
+.btn-primary{background-color: #bf763b; border-color: #9f571d;}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open > dropdown-toggle.btn-primary {background-color: #9f571d!important; border-color: #bf763b!important; color:white;}
+.btn-info.active, .btn-info:hover, .btn-info:active, .open > .dropdown-toggle.btn-info {
+    color: #fff;
+    background-color: #AFBD5E!important;
+    border-color: #9f571d!important;
+}
+.btn-success {
+  	color: #ffffff;
+  	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  	background-color: #9f571d;
+  	background-image: -moz-linear-gradient(top, #bf763b, #9f571d);
+  	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#bf763b), to(#9f571d));
+  	background-image: -webkit-linear-gradient(top, #bf763b, #9f571d);
+  	background-image: -o-linear-gradient(top, #bf763b, #9f571d);
+  	background-image: linear-gradient(to bottom, #bf763b, #9f571d);
+ 	 background-repeat: repeat-x;
+  	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff62c462', endColorstr='#ff51a351', GradientType=0);
+  	border-color: #9f571d #9f571d #bf763b;
+  	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  	filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+
+.btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success:active, .btn-success.active, .btn-success.disabled, .btn-success[disabled] {
+  	color: #ffffff;
+	background-color: #bf763b!important;
+	background-image: none!important;
+	border-color: #bf763b!important;
+}
+
+/* Ad page */
+.text-info{ color: #9f571d; }
+.media .label-danger {
+    background-color: #9f571d;
+    font-size: 87%;
+}
+
+/* Categories */
+.panel-home-categories > .panel-heading {background-color: #9F571D;}
+.panel-sidebar > .panel-heading {border-top-color: #9F571D;}
+.sidebar-nav h3, footer, .panel-heading {border-color:#BF763B;}
+.categories .category-container .panel-heading {border-color:#9F571D; background:#BF763B; color:white;}
+.categories .category-container .panel-heading a {color:white; text-shadow:none;}
+
+/* Listing page */
+.featured{background: #BCCDC7;}
+.featured-ads,.featured-item {background: #ebd5c4!important;}
+.featured-item .label-danger{background-color: #9F571D;}
+li.price { color: #9f571d; }
+
+/* Pagination hovers */
+.pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover {
+  color: #9F571D;
+}
+
+/* Widgets*/
+.slider-handle{
+    background-color: #9f571d;
+    background-image: linear-gradient(to bottom, #9f571d, #7f4517);
+}
+
+/* Forums */
+.table > tbody > tr.success > td{
+    background-color: #f5eee8;
+}
+.table > tbody > tr.success:hover > td {
+    background-color: #ebddd1;
+}
+
+/* Footer edits */
+footer {
+	background: #9F571D;
+}

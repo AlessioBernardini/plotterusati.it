@@ -1,0 +1,67 @@
+a {
+	color:#19AACF;
+}
+a:hover {
+	color:#6ABE59;
+	text-decoration:none;
+}
+.btn-warning, .btn-primary, .btn-success{
+	background:#19AACF;
+	border-color: #1488a5;
+}
+.btn-warning:hover, .btn-warning:active, .btn-warning:focus,
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus,
+.btn-success:hover, .btn-success:active, .btn-success:focus{
+	background:#6ABE59!important;
+	color:#fff;
+	border-color:#5fab50!important;
+}
+.panel-sidebar > .panel-heading {
+    color: #031202;
+}
+#sidebar {
+	background:#F2F2F2;
+	padding:15px 10px 0;
+}
+#logo h1 {
+	color:#19AACF;
+}
+/* Homepage main categories and locations */
+.directory h4 a {
+    color: #19AACF;
+}
+.directory h4 a:hover, .directory h4 a:active, .directory h4 a:focus {
+    color: #6ABE59;
+}
+.panel-sidebar .categories .active, .panel-sidebar .categories .active:hover {
+	color:#19AACF;
+}
+.pagination li > a:hover {
+	color:#6ABE59;
+}
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+	color:#19AACF;
+}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+	color:#6ABE59;
+}
+.label-info{
+	background-color: #19AACF;
+}
+.listings .premium.listing-row {
+	background-color: #d1eef5!important;
+}
+.listings .listing-row:nth-child(even) {
+	background-color: #f8fcfd;
+}
+
+/* Widgets*/
+.slider-handle{
+    background-color: #19AACF;
+    background-image: linear-gradient(to bottom, #19AACF, #1488a5);
+}

@@ -1,0 +1,34 @@
+.glyphicon,label, small,cite,td,p,a{color:#fff!important;}
+a:hover{color:#888;}
+.sweet-alert p {
+    color: #797979!important;
+}
+.error {
+    color: #ee5f5b!important;
+}
+.chosen-container .chosen-results li {
+    color: #888888;
+}
+.chosen-container-single .chosen-single span {
+    color: #888888;
+}
+.slide_title {
+    background: rgba(0,0,0,0.5);
+}
+.featured-ads,.featured-item{
+    background-color: transparent;
+    border: 2px solid #2a9fd6 !important;
+}
+/* grid view */
+.grid-view .triangle-top-left { 
+    border-top: 90px solid #2a9fd6;
+}
+/* list view */
+.triangle-top-left { 
+    border-top: 90px solid #2a9fd6;
+}
+
+.slider-handle{
+	background-color: #2a9fd6;
+	background-image: linear-gradient(to bottom, #2a9fd6, #3fa8da);
+}

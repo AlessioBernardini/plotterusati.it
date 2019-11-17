@@ -1,0 +1,12 @@
+h1:before, h2:before{content:none;}
+.subnav-fixed{top: 61px;}
+.modal-backdrop {z-index: -1;}
+.panel-sidebar {
+    background-color: #ffd1e7;
+    border: 1px solid transparent;
+    -webkit-border-radius: 0px;
+       -moz-border-radius: 0px;
+            border-radius: 0px;
+}
+/*yclas topbar style*/
+.yclas-bar.body_fixed .subnav-fixed {top: 101px;}

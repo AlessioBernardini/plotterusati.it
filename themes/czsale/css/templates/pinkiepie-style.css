@@ -1,0 +1,46 @@
+.featured-ads,.featured-item{
+    border: 2px solid #ffa6b6 !important;
+}
+/* grid view */
+.grid-view .triangle-top-left { 
+    border-top: 90px solid #ffa6b6;
+}
+/* list view */
+.triangle-top-left { 
+    border-top: 90px solid #ffa6b6;
+}
+.btn-info, .label-info{
+	background-color: #ffd4dc;
+	border: 1px solid #ffc0cb;
+	color: #000;
+}
+.btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info.active, .open .dropdown-toggle.btn-info{
+	background-color: #ffd4dc;
+	border: 1px solid #ffc0cb;
+	color: #000;
+}
+#czsale-navbar .btn-success{
+    color: #fff;
+    background-color: #a63e51;
+    border-color: #933748;
+}
+#czsale-navbar .btn-success:hover, #czsale-navbar .btn-success:active, #czsale-navbar .btn-success:focus{
+    color: #fff;
+    background-color: #883343;
+    border-color: #672632;
+}
+
+.slider-handle{
+    background-color: #ff9fb0;
+    background-image: linear-gradient(to bottom, #ff9fb0, #ffa8b7);
+}
+.table > thead > tr > td.success, .table > tbody > tr > td.success, .table > tfoot > tr > td.success, .table > thead > tr > th.success, .table > tbody > tr > th.success, .table > tfoot > tr > th.success, .table > thead > tr.success > td, .table > tbody > tr.success > td, .table > tfoot > tr.success > td, .table > thead > tr.success > th, .table > tbody > tr.success > th, .table > tfoot > tr.success > th {
+    background-color: #ffd4dc;
+    color: #333!important;
+}
+.table-hover > tbody > tr > td.success:hover, .table-hover > tbody > tr > th.success:hover, .table-hover > tbody > tr.success:hover > td, .table-hover > tbody > tr.success:hover > th {
+    background-color: #ffc0cb;
+}
+.table > tbody > tr.success > td a{
+    color: #333!important;
+}

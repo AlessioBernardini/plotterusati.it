@@ -1,0 +1,22 @@
+.subnav .nav > li > a{border: none;}
+.subnav .nav > li:first-child > a, .subnav .nav > li:first-child > a:hover{border-left: none;}
+.nav-pills .open .dropdown-toggle{background-color: #000;}
+.subnav .nav > li > a:hover{background-color: #000; color:#fff;}
+.badge{border-radius: 0px;}
+.featured-ads,.featured-item{
+    background-color: transparent;
+    border: 2px solid #2780e3 !important;
+}
+/* grid view */
+.grid-view .triangle-top-left { 
+    border-top: 90px solid #2780e3;
+}
+/* list view */
+.triangle-top-left { 
+    border-top: 90px solid #2780e3;
+}
+
+.slider-handle{
+	background-color: #2780e3;
+	background-image: linear-gradient(to bottom, #2780e3, #3c8ce5);
+}

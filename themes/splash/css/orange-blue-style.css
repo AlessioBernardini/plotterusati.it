@@ -1,0 +1,186 @@
+.slider-overlay {
+  background: #256FB2;
+}
+.categories .categorie {
+  border: 1px solid #256FB2;
+}
+.categories .categorie:hover,
+.categories .categorie:focus,
+.categories .categorie.active {
+  border-color: #FF781D;
+}
+.categories .categorie:hover .icon,
+.categories .categorie:focus .icon,
+.categories .categorie.active .icon {
+  background: #FF781D;
+}
+.categories .categorie:hover .h3,
+.categories .categorie:focus .h3,
+.categories .categorie.active .h3 {
+  color: #FF781D;
+}
+.categories .categorie .h3 {
+  color: #256FB2;
+}
+.categories .categorie .icon {
+  background: #256FB2;
+}
+.categories .categorie ul a:hover,
+.categories .categorie ul a:focus {
+  color: #FF781D;
+}
+#related li .overlay-related {
+  background-color: #FF781D;
+}
+#related li:last-of-type {
+  background: #FF781D;
+}
+#page-header .breadcrumb li:hover,
+#page-header .breadcrumb li:focus,
+#page-header .breadcrumb li.active {
+  color: #FF781D;
+}
+#page-header .overlay {
+  background-color: #256FB2;
+}
+.filter a:hover,
+.filter button:hover,
+.filter a:focus,
+.filter button:focus,
+.filter a.active,
+.filter button.active {
+  background: #FF781D;
+}
+.listing-overview li .list-image-overlay {
+  background: #256FB2;
+}
+.listing-overview li .text .h2 {
+  color: #FF781D;
+}
+.listing-overview li .text span a {
+  color: #256FB2;
+}
+/* Featured ad */
+.featured {
+  border: 2px solid #FF781D !important;
+}
+.featured .triangle-top-left {
+  border-top: 100px solid #FF781D;
+}
+.featured span a {
+  color: #FF781D !important;
+}
+.featured .list-image-overlay {
+  background: #FF781D !important;
+}
+.pagination a:hover,
+.pagination a:focus,
+.pagination a.active {
+  background: #FF781D;
+}
+.detaillist li span {
+  color: #FF781D;
+}
+.detaillist .price .pricebtn {
+  background: #FF781D;
+}
+.btn-success,
+.color-primary {
+  background: #FF781D;
+  color: #ffffff;
+  border:none;
+}
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active,
+.color-primary:hover,
+.color-primary:focus,
+.color-primary.active {
+  background-color: #FF8736!important;
+  color: #ffffff;
+  text-decoration: none;
+  border: none!important;
+}
+.color-secondary {
+  background: #256FB2;
+  color: #ffffff;
+}
+.color-secondary:hover,
+.color-secondary:focus,
+.color-secondary.active {
+  background-color: #0085FF;
+}
+footer {
+  background: url("../img/footer-top.png") top repeat-x #256FB2;
+}
+.copyright {
+  background: #0085FF;
+}
+.mainmenu li:hover,
+.mainmenu li:focus,
+.mainmenu li:active {
+  color: #FF781D;
+}
+.navbar-nav .active a {
+  color: #FF781D !important;
+}
+.navbar-default .navbar-nav > li > a {color: #777;}
+.navbar-default .navbar-nav > li > a.primary-btn {color: #FFF;}
+.navbar-default .navbar-nav > li > a.primary-btn:hover,
+.navbar-default .navbar-nav > li > a.primary-btn:active,
+.navbar-default .navbar-nav > li > a.primary-btn:focus {color: #777;}
+.standard-frm .upload-image .image-container .overlay-image {
+  background: #FF781D;
+}
+.standard-frm .upload-image button {
+  color: #FF781D;
+}
+.findus-frm span {
+  color: #FF781D;
+}
+.latest-module li:hover,
+.latest-module li:focus {
+  border: 2px solid #FF781D;
+}
+.latest-module li:hover .latest-module-overlay,
+.latest-module li:focus .latest-module-overlay {
+  background: #FF781D;
+}
+.latest-module li .latest-module-overlay {
+  background: #256FB2;
+}
+.tags-module li:hover,
+.tags-module li:focus,
+.tags-module li.active {
+  background: #FF781D;
+}
+.categories-module li a:hover,
+.categories-module li a:focus,
+.categories-module li a.active {
+  color: #FF781D;
+}
+.categories-module li a:hover .icon:before,
+.categories-module li a:focus .icon:before,
+.categories-module li a.active .icon:before {
+  background: #FF781D;
+}
+.categories-module li .icon:before {
+  background: #256FB2;
+}
+.categories-module li .icon {
+  background: #256FB2;
+}
+aside .location:hover a,
+aside .location:hover .location-icon, 
+aside .location:focus a,
+aside .location:focus .location-icon  {
+  color: #FF781D;
+}
+
+/* Forums */
+.table > tbody > tr.success > td{
+    background-color: #fff7ed;
+}
+.table > tbody > tr.success:hover > td {
+    background-color: #fff0db;
+}

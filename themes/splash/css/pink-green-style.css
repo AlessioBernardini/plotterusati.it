@@ -1,0 +1,185 @@
+.slider-overlay {
+  background: #FF0047;
+}
+.categories .categorie {
+  border: 1px solid #FF0047;
+}
+.categories .categorie:hover,
+.categories .categorie:focus,
+.categories .categorie.active {
+  border-color: #00B266;
+}
+.categories .categorie:hover .icon,
+.categories .categorie:focus .icon,
+.categories .categorie.active .icon {
+  background: #00B266;
+}
+.categories .categorie:hover .h3,
+.categories .categorie:focus .h3,
+.categories .categorie.active .h3 {
+  color: #00B266;
+}
+.categories .categorie .h3 {
+  color: #FF0047;
+}
+.categories .categorie .icon {
+  background: #FF0047;
+}
+.categories .categorie ul a:hover,
+.categories .categorie ul a:focus {
+  color: #00B266;
+}
+#related li .overlay-related {
+  background-color: #00B266;
+}
+#related li:last-of-type {
+  background: #00B266;
+}
+#page-header .breadcrumb li:hover,
+#page-header .breadcrumb li:focus,
+#page-header .breadcrumb li.active {
+  color: #00B266;
+}
+#page-header .overlay {
+  background-color: #FF0047;
+}
+.filter a:hover,
+.filter button:hover,
+.filter a:focus,
+.filter button:focus,
+.filter a.active,
+.filter button.active {
+  background: #00B266;
+}
+.listing-overview li .list-image-overlay {
+  background: #FF0047;
+}
+.listing-overview li .text .h2 {
+  color: #00B266;
+}
+.listing-overview li .text span a {
+  color: #FF0047;
+}
+/* Featured ad */
+.featured {
+  border: 2px solid #00B266 !important;
+}
+.featured .triangle-top-left {
+  border-top: 100px solid #00B266;
+}
+.featured span a {
+  color: #00B266 !important;
+}
+.featured .list-image-overlay {
+  background: #00B266 !important;
+}
+.detaillist li span {
+  color: #00B266;
+}
+.detaillist .price .pricebtn {
+  background: #00B266;
+}
+.btn-success,
+.color-primary {
+  background: #00B266!important;
+  color: #ffffff!important;
+  border: none;
+}
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active,
+.color-primary:hover,
+.color-primary:focus,
+.color-primary.active {
+  background-color: #00B286!important;
+  color: #ffffff!important;
+  text-decoration: none;
+  border: none;
+}
+.color-secondary {
+  background: #FF0047;
+  color: #ffffff!important;
+}
+.color-secondary:hover,
+.color-secondary:focus,
+.color-secondary.active {
+  background-color: #B23B5C!important;
+  color: #ffffff!important;
+  text-decoration: none;
+}
+footer {
+  background: url("../img/footer-top.png") top repeat-x #FF0047;
+}
+.copyright {
+  background: #B23B5C;
+}
+.mainmenu li:hover,
+.mainmenu li:focus,
+.mainmenu li:active {
+  color: #00B266;
+}
+.navbar-nav .active a {
+  color: #00B266 !important;
+}
+.standard-frm .upload-image .image-container .overlay-image {
+  background: #00B266;
+}
+.standard-frm .upload-image button {
+  color: #00B266;
+}
+.findus-frm span {
+  color: #00B266;
+}
+.latest-module li:hover,
+.latest-module li:focus {
+  border: 2px solid #00B266;
+}
+.latest-module li:hover .latest-module-overlay,
+.latest-module li:focus .latest-module-overlay {
+  background: #00B266;
+}
+.latest-module li .latest-module-overlay {
+  background: #FF0047;
+}
+.tags-module li:hover,
+.tags-module li:focus,
+.tags-module li.active {
+  background: #00B266;
+}
+.categories-module li a:hover,
+.categories-module li a:focus,
+.categories-module li a.active {
+  color: #00B266;
+}
+.categories-module li a:hover .icon:before,
+.categories-module li a:focus .icon:before,
+.categories-module li a.active .icon:before {
+  background: #00B266;
+}
+.categories-module li .icon:before {
+  background: #FF0047;
+}
+.categories-module li .icon {
+  background: #FF8502;
+}
+aside .location:hover a,
+aside .location:hover .location-icon, 
+aside .location:focus a,
+aside .location:focus .location-icon  {
+  color: #00B266;
+}
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+    background-color: #FF0047;
+    border-color: #FF0047;
+}
+.pagination > li > a:focus, .pagination > li > a:hover, .pagination > li > span:focus, .pagination > li > span:hover {
+    color: #FF0047;
+}
+.pagination > li > a, .pagination > li > span {
+    color: #FF0047;
+}
+/* Widgets*/
+.slider-handle{
+    background-color: #00B266;
+    background-image: linear-gradient(to bottom, #00B266, #00a05b);
+}
