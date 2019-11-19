@@ -43,6 +43,11 @@
                                     <img data-src="holder.js/360x200?<?=str_replace('+', ' ', http_build_query(array('text' => $ad->category->translate_name(), 'size' => 14, 'auto' => 'yes')))?>" class="center-block img-responsive" alt="<?=HTML::chars($ad->title)?>">
                                 <?endif?>
                             </a>
+                            <?if (Core::config('advertisement.reviews')==1):?>
+                                <?for ($j=0; $j < round($ad->rate,1); $j++):?>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                <?endfor?>
+                            <?endif?>
                             <div class="extra_info">
                                 <?if ($ad->price!=0){?>
                                     <div class="price pull-left">
@@ -68,6 +73,19 @@
                             <div class="caption">
                                 <h5><a href="<?=Route::url('ad', array('category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>"><?=Text::limit_chars(Text::removebbcode($ad->title), 30, NULL, TRUE)?></a></h5>
                                 <p><?=Text::limit_chars(Text::removebbcode($ad->description), 120, NULL, TRUE)?></p>
+                                <?foreach ($ad->custom_columns(TRUE) as $name => $value):?>
+                                    <?if($value=='checkbox_1'):?>
+                                        <p class="aggiunto"><b><?=$name?></b>: <i class="fa fa-check"></i></p>
+                                    <?elseif($value=='checkbox_0'):?>
+                                        <p class="aggiunto"><b><?=$name?></b>: <i class="fa fa-times"></i></p>
+                                    <?else:?>
+                                        <?if(is_string($name)):?>
+                                            <p class="aggiunto"><b><?=$name?></b>: <?=$value?></p>
+                                        <?else:?>
+                                            <p class="aggiunto"><?=$value?></p>
+                                        <?endif?>
+                                    <?endif?>
+                                <?endforeach?>
                             </div>
                         </div>
                     </div>

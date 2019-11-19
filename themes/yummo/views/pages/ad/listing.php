@@ -7,13 +7,13 @@
 <?else:?>
     <h1><?=_e('Listings')?></h1>
 <?endif?>
-<? if (Core::config('advertisement.only_admin_post') != 1
+<? /* if (Core::config('advertisement.only_admin_post') != 1
         AND (core::config('advertisement.parent_category') == 1
             OR (core::config('advertisement.parent_category') != 1
                 AND $category !== NULL
                 AND ! $category->is_parent()))):?>
    <a title="<?=__('New Advertisement')?>" class="btn btn-primary btn-publish pull-right" href="<?=Route::url('post_new')?>?category=<?=($category!==NULL)?$category->seoname:''?>&amp;location=<?=($location!==NULL)?$location->seoname:''?>"><i class="fa fa-pencil"></i> <?=_e('Publish new advertisement')?></a>
-<?endif?>
+<?endif */?>
 
 <p id="listing_description" class="pull-left col-xs-12">
     <?if ($category!==NULL):?>
@@ -204,6 +204,28 @@
                                 <?endfor?>
                             <?endif?>
                         </div>
+                        <div class="extra_info">
+                            <?if ($ad->price!=0){?>
+                                <div class="price pull-left">
+                                    <i class="fa fa-money"></i><span class="price-curry"><?=i18n::money_format( $ad->price, $ad->currency())?></span>
+                                </div>
+                            <?}?>
+                            <?if ($ad->price==0 AND core::config('advertisement.free')==1){?>
+                                <div class="price pull-left">
+                                    <i class="fa fa-money"></i><?=_e('Free');?>
+                                </div>
+                            <?}?>
+                            <div class="location pull-left">
+                                <?if(Theme::get('listing_extra_info')=='views'):?>
+                                    <i class="fa fa-eye"></i><?=$ad->count_ad_hit()?>
+                                <?elseif(Theme::get('listing_extra_info')=='location'):?>
+                                    <i class="fa fa-map-marker"></i><?=$ad->location->translate_name() ?>
+                                <?elseif(Theme::get('listing_extra_info')=='user'):?>
+                                    <a href="<?=Route::url('profile',  array('seoname'=>$ad->user->seoname))?>"><i class="fa fa-user"></i><?=$ad->user->name?></a>
+                                <?endif?>
+                            </div>
+                            <a class="more-link pull-right hvr-icon-forward" href="<?=Route::url('ad', array('category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>"><?=_e('more')?></a>
+                        </div>
                         <div class="brake-grid"></div>
                         <div class="caption pull-left">
                             <h3>
@@ -218,7 +240,7 @@
                                 </div>
                             </h3>
                             <?if(core::config('advertisement.description')!=FALSE AND $ad->description):?>
-                                <p class="description"><?=Text::limit_chars(Text::removebbcode($ad->description), 110, NULL, TRUE)?></p>
+                                <p class="description"><?=Text::limit_chars(Text::removebbcode($ad->description), 120, NULL, TRUE)?></p>
                             <?else:?>
                                 <p class="description">&nbsp;</p>
                             <?endif?>
@@ -235,28 +257,6 @@
                                     <?endif?>
                                 <?endif?>
                             <?endforeach?>
-                            <div class="extra_info">
-                                <?if ($ad->price!=0){?>
-                                <div class="price pull-left">
-                                    <i class="fa fa-money"></i><span class="price-curry"><?=i18n::money_format( $ad->price, $ad->currency())?></span>
-                                </div>
-                                <?}?>
-                                  <?if ($ad->price==0 AND core::config('advertisement.free')==1){?>
-                                <div class="price pull-left">
-                                    <i class="fa fa-money"></i><?=_e('Free');?>
-                                </div>
-                                <?}?>
-                                <div class="location pull-left">
-                                    <?if(Theme::get('listing_extra_info')=='views'):?>
-                                        <i class="fa fa-eye"></i><?=$ad->count_ad_hit()?>
-                                    <?elseif(Theme::get('listing_extra_info')=='location'):?>
-                                        <i class="fa fa-map-marker"></i><?=$ad->location->translate_name() ?>
-                                    <?elseif(Theme::get('listing_extra_info')=='user'):?>
-                                        <a href="<?=Route::url('profile',  array('seoname'=>$ad->user->seoname))?>"><i class="fa fa-user"></i><?=$ad->user->name?></a>
-                                    <?endif?>
-                                </div>
-                            <a class="more-link pull-right hvr-icon-forward" href="<?=Route::url('ad', array('category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>"><?=_e('more')?></a>
-                            </div>
                         </div>
                         <?if ($user !== NULL AND ($user->is_admin() OR $user->is_moderator())):?>
                             <br />
