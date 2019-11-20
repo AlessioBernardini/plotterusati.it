@@ -5,10 +5,12 @@
 </div>
 
 <div class="panel panel-default">
+    <div id="mobile-desc"><small>Scorri verso destra per visualizzare tutti i dati</small></div>
     <div class="table-responsive">
         <table class="table table-bordered">
             <tr>
-            <th><?=_e('Name')?></th>
+                <th><?=_e('Immagine')?></th>
+                <th><?=_e('Name')?></th>
                 <th><?=_e('Category')?></th>
                 <th><?=_e('Location')?></th>
                 <th><?=_e('Status')?></th>
@@ -16,14 +18,20 @@
                 <?if( core::config('payment.to_featured')):?>
                 <th><?=_e('Featured')?></th>
                 <?endif?>
-                <th></th>
+                <th><?=_e('Actions')?></th>
             </tr>
             <? $i = 0; foreach($ads as $ad):?>
             <tbody>
                 <tr>
 
+                    <td><?=HTML::picture($ad->get_first_image('image'), ['w' => 70, 'h' => 70], ['1200px' => ['w' => '70', 'h' => '70'], '992px' => ['w' => '70', 'h' => '70'], '768px' => ['w' => '70', 'h' => '70'], '480px' => ['w' => '50', 'h' => '50'], '320px' => ['w' => '50', 'h' => '50']], ['class' => 'img-responsive', 'alt' => HTML::chars($ad->title)])?></td>
+
                     <? foreach($category as $cat){ if ($cat->id_category == $ad->id_category) $cat_name = $cat->seoname; }?>
-                    <td><a href="<?=Route::url('ad', array('controller'=>'ad','category'=>$cat_name,'seotitle'=>$ad->seotitle))?>"><?= $ad->title; ?></a>
+                    <?/*<td><a href="<?=Route::url('ad', array('controller'=>'ad','category'=>$cat_name,'seotitle'=>$ad->seotitle))?>"><?= $ad->title; ?></a></td>*/?>
+                    <td>
+                        <a href="<?=Route::url('ad', array('controller'=>'ad','category'=>$cat_name,'seotitle'=>$ad->seotitle))?>">
+                            <?=Text::limit_chars(Text::removebbcode($ad->title), 20, NULL, TRUE)?>
+                        </a>
                     </td>
 
                     <? foreach($category as $cat):?>
@@ -102,9 +110,10 @@
                             <i class="glyphicon glyphicon-edit"></i>
                         </a>
                         <?if($ad->status != Model_Ad::STATUS_SOLD AND $ad->status != Model_Ad::STATUS_UNCONFIRMED):?>
+                            <?/*
                             <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#soldModal<?=$ad->id_ad?>">
                                 <i class="glyphicon glyphicon-usd"></i>
-                            </button>
+                            </button>*/?>
                             <div class="modal fade" id="soldModal<?=$ad->id_ad?>" tabindex="-1" role="dialog">
                                 <div class="modal-dialog modal-sm" role="document">
                                     <div class="modal-content">
