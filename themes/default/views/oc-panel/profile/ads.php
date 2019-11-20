@@ -15,6 +15,7 @@
                 <th><?=_e('Location')?></th>
                 <th><?=_e('Status')?></th>
                 <th><?=_e('Date')?></th>
+                <th><?=_e('Price')?></th>
                 <?if( core::config('payment.to_featured')):?>
                 <th><?=_e('Featured')?></th>
                 <?endif?>
@@ -80,6 +81,19 @@
                     </td>
 
                     <td><?= Date::format($ad->published, core::config('general.date_format'))?></td>
+
+                    <td>
+                        <?if ($ad->price!=0){?>
+                            <div class="price pull-left">
+                                <?=i18n::money_format( $ad->price, $ad->currency())?>
+                            </div>
+                        <?}?>
+                        <?if ($ad->price==0 AND core::config('advertisement.free')==1){?>
+                            <div class="price pull-left">
+                               <?=_e('Free');?>
+                            </div>
+                        <?}?>
+                    </td>
 
                     <?if( core::config('payment.to_featured')):?>
                     <td>
