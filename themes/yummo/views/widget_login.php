@@ -10,11 +10,13 @@
             href="#"> <i class="fa fa-caret-down"></i>
         </a>
         <ul class="dropdown-menu">
-            <li>
-                <a href="<?=Route::url('oc-panel',array('controller'=>'home','action'=>'index'))?>">
-                    <i class="glyphicon glyphicon-cog"></i> <?=_e('Panel')?>
-                </a>
-            </li>
+            <?if (Auth::instance()->get_user()->is_admin() OR Auth::instance()->get_user()->is_moderator()):?>
+                <li>
+                    <a href="<?=Route::url('oc-panel',array('controller'=>'home','action'=>'index'))?>">
+                        <i class="glyphicon glyphicon-cog"></i> <?=_e('Panel')?>
+                    </a>
+                </li>
+            <?endif?>
 
             <li>
                 <a href="<?=Route::url('oc-panel',array('controller'=>'myads','action'=>'index'))?>">
