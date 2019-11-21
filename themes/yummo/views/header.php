@@ -2,6 +2,7 @@
 <?if (Theme::landing_single_ad() == FALSE):?>
 <div class="navbar navbar-default">
     <div class="container">
+        <? include_once "user_online.php"?>
         <div class="row">
             <div class="col-xs-3 col-sm-2 col-md-3">
                 <a class="nav-btn" id="nav-open-btn" href="#nav"></a>
