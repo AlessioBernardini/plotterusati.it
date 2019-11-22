@@ -170,11 +170,13 @@
                         <div class="tab-pane" role="tabpanel" id="step3">
                             <h3><?=_e('Ad Details')?></h3>
                             <?if($form_show['price'] != FALSE):?>
-                            <div class="form-group">
-                                <?= FORM::label('price', _e('Price'), array('class'=>'control-label col-xs-12 col-sm-2', 'for'=>'price'))?>
+                            <div class="form-group required">
+                                <div class="col-xs-12 col-sm-2 control-label">
+                                <?= FORM::label('price', _e('Price'), array('for'=>'price'))?>
+                                </div>
                                 <div class="col-xs-12 col-sm-10">
                                     <div class="input-prepend">
-                                        <?= FORM::input('price', Request::current()->post('price'), array('placeholder' => html_entity_decode(html_entity_decode(i18n::money_format(1))), 'class' => 'form-control', 'id' => 'price', 'type'=>'text', 'data-error' => __('Please enter only numbers.'), 'data-decimal_point' => i18n::get_decimal_point()))?>
+                                        <?= FORM::input('price', Request::current()->post('price'), array('placeholder' => html_entity_decode(html_entity_decode(i18n::money_format(1))), 'class' => 'form-control', 'id' => 'price', 'required'=>'required', 'type'=>'text', 'data-error' => __('Please enter only numbers.'), 'data-decimal_point' => i18n::get_decimal_point()))?>
                                     </div>
                                 </div>
                             </div>
