@@ -1,13 +1,18 @@
-<div class="page-header">
-    <?if (!Auth::instance()->logged_in()):?>
-        <a class="btn btn-success pull-right" data-toggle="modal" data-dismiss="modal" 
-            href="<?=Route::url('oc-panel',array('directory'=>'user','controller'=>'auth','action'=>'login'))?>#login-modal">
-    <?else:?>
-        <a class="btn btn-success pull-right" href="<?=Route::url('forum-new')?>">
-    <?endif?>
-        <?=__('New Topic')?></a>
-    <?=View::factory('pages/forum/search-form')?>
+<div class="page-header forum">
     <h1 class="forum-title pull-left"><?=__('Search')?> <?=HTML::chars(core::get('search'))?></h1>
+
+    <div class="col-md-9 col-sm-12 col-xs-12">
+        <?=View::factory('pages/forum/search-form')?>
+    </div>
+
+    <div class="col-md-3 col-sm-12 col-xs-12">
+        <?if (!Auth::instance()->logged_in()):?>
+            <a class="btn btn-success pull-right" data-toggle="modal" data-dismiss="modal" href="<?=Route::url('oc-panel',array('directory'=>'user','controller'=>'auth','action'=>'login'))?>#login-modal"><?=_e('New Topic')?></a>
+        <?else:?>
+            <a class="btn btn-success pull-right" href="<?=Route::url('forum-new')?>"><?=_e('New Topic')?></a>
+        <?endif?>
+    </div>
+
     <div class="clearfix"></div>
 </div>
 
