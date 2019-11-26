@@ -39,16 +39,15 @@
         <div class="row">
             <?if(Controller::$full_width):?>
                 <section class="col-lg-12">
-                    <?=(Theme::get('breadcrumb')==1 AND Theme::landing_single_ad() == FALSE)?Breadcrumbs::render('breadcrumbs'):''?>
                     <?=Alert::show()?>
                     <?=(Theme::get('header_ad')!='')?Theme::get('header_ad'):''?>
+                    <?=(Theme::get('breadcrumb')==1 AND Theme::landing_single_ad() == FALSE)?Breadcrumbs::render('breadcrumbs'):''?>
                     <div id="main-content">
                         <?=$content?>
                     </div>
                 </section>
             <?else:?>
                 <section class="<?=(Theme::get('sidebar_position')!='none')?'col-lg-9 col-md-9 col-sm-12 col-xs-12':'col-lg-12'?> <?=(Theme::get('sidebar_position')=='left')?'pull-right':'pull-left'?>" id="page">
-                    <?=(Theme::get('breadcrumb')==1 AND Theme::landing_single_ad() == FALSE)?Breadcrumbs::render('breadcrumbs'):''?>
                     <?=Alert::show()?>
 
                     <div class="row">
@@ -61,6 +60,7 @@
                         <?endif?>
                     </div>
                     <?=(Theme::get('header_ad')!='')?Theme::get('header_ad'):''?>
+                    <?=(Theme::get('breadcrumb')==1 AND Theme::landing_single_ad() == FALSE)?Breadcrumbs::render('breadcrumbs'):''?>
                     <div id="main-content">
                         <?=$content?>
                     </div>
