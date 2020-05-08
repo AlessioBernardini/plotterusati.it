@@ -5,35 +5,26 @@
 </div>
 
 <div class="panel panel-default">
-    <? $ceck = 0; ?>
-    <? foreach ($ads as $ad) {$ceck++;} ?>
-    <? if($ceck >0){?>
-    <div id="mobile-desc"><small>Scorri verso destra per visualizzare tutti i dati</small></div>
     <div class="table-responsive">
         <table class="table table-bordered">
             <tr>
-                <th><?=_e('Immagine')?></th>
-                <th><?=_e('Name')?></th>
+            <th><?=_e('Name')?></th>
                 <th><?=_e('Category')?></th>
                 <th><?=_e('Location')?></th>
                 <th><?=_e('Status')?></th>
                 <th><?=_e('Date')?></th>
-                <th><?=_e('Price')?></th>
                 <?if( core::config('payment.to_featured')):?>
-                    <th><?=_e('Featured')?></th>
+                <th><?=_e('Featured')?></th>
                 <?endif?>
-                <th><?=_e('Actions')?></th>
+                <th></th>
             </tr>
             <? $i = 0; foreach($ads as $ad):?>
-            <? $ceck++ ?>
             <tbody>
                 <tr>
 
-                    <td><?=HTML::picture($ad->get_first_image('image'), ['w' => 70, 'h' => 70], ['1200px' => ['w' => '70', 'h' => '70'], '992px' => ['w' => '70', 'h' => '70'], '768px' => ['w' => '70', 'h' => '70'], '480px' => ['w' => '50', 'h' => '50'], '320px' => ['w' => '50', 'h' => '50']], ['class' => 'img-responsive', 'alt' => HTML::chars($ad->title)])?></td>
-
                     <td>
                         <a href="<?= Route::url('ad', ['controller' => 'ad', 'category' => $ad->category->seoname, 'seotitle' => $ad->seotitle])?>">
-                            <?=Text::limit_chars(Text::removebbcode($ad->title), 20, NULL, TRUE)?>
+                            <?= $ad->title ?>
                         </a>
                     </td>
 
@@ -74,19 +65,6 @@
 
                     <td><?= Date::format($ad->published, core::config('general.date_format'))?></td>
 
-                    <td>
-                        <?if ($ad->price!=0){?>
-                            <div class="price pull-left">
-                                <?=i18n::money_format( $ad->price, $ad->currency())?>
-                            </div>
-                        <?}?>
-                        <?if ($ad->price==0 AND core::config('advertisement.free')==1){?>
-                            <div class="price pull-left">
-                                <?=_e('Free');?>
-                            </div>
-                        <?}?>
-                    </td>
-
                     <?if( core::config('payment.to_featured')):?>
                     <td>
                         <?if($ad->featured == NULL):?>
@@ -116,9 +94,9 @@
                             <i class="glyphicon glyphicon-edit"></i>
                         </a>
                         <?if($ad->status != Model_Ad::STATUS_SOLD AND $ad->status != Model_Ad::STATUS_UNCONFIRMED):?>
-                            <!--<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#soldModal<?php //echo $ad->id_ad ?>">
+                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#soldModal<?=$ad->id_ad?>">
                                 <i class="glyphicon glyphicon-usd"></i>
-                            </button>-->
+                            </button>
                             <div class="modal fade" id="soldModal<?=$ad->id_ad?>" tabindex="-1" role="dialog">
                                 <div class="modal-dialog modal-sm" role="document">
                                     <div class="modal-content">
@@ -198,12 +176,5 @@
             </tbody>
         </table>
     </div>
-    <? } ?>
-    <?
-    if($ceck == 0){
-        $domain = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'];
-        echo '<h3 class="no-border light text-center">Non hai ancora inserito nessun annuncio. Fai un giro sul <a href="'.$domain.'">sito</a> oppure <a href="'.$domain.'/pubblicare-nuovi.html">inserisci un nuovo annuncio!</a></h3>';
-    }
-    ?>
 </div>
 <div class="text-center"><?=$pagination?></div>

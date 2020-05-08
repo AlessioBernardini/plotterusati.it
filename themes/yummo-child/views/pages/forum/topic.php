@@ -1,17 +1,19 @@
-<div class="page-header">
+<div class="page-header topic">
     <h1><?=$topic->title?></h1>
-    <span class="label label-info"><?=$topic->user->name?> <?=Date::fuzzy_span(Date::mysql2unix($topic->created))?></span>
-    <?if($previous->loaded()):?>
-        <a class="label label-info" href="<?=Route::url('forum-topic',  array('seotitle'=>$previous->seotitle,'forum'=>$forum->seoname))?>" title="<?=HTML::chars($previous->title)?>">
-        <i class="icon-white icon-backward glyphicon-backward glyphicon"></i> <?=$previous->title?></i></a>
-    <?endif?>
-    <?if($next->loaded()):?>
-        <a class="label label-info" href="<?=Route::url('forum-topic',  array('seotitle'=>$next->seotitle,'forum'=>$forum->seoname))?>" title="<?=HTML::chars($next->title)?>">
-        <?=$next->title?> <i class="icon-white icon-forward glyphicon-forward glyphicon"></i></a>
-    <?endif?>
+    <span class="label label-info">Pubblicato da: <?=$topic->user->name?> <?=Date::fuzzy_span(Date::mysql2unix($topic->created))?></span>
+    <div class="naviga">
+        <?if($previous->loaded()):?>
+            <a class="label label-info" href="<?=Route::url('forum-topic',  array('seotitle'=>$previous->seotitle,'forum'=>$forum->seoname))?>" title="<?=HTML::chars($previous->title)?>">
+            <i class="icon-white icon-backward glyphicon-backward glyphicon"></i> <?=$previous->title?></i></a>
+        <?endif?>
+        <?if($next->loaded()):?>
+            <a class="label label-info" href="<?=Route::url('forum-topic',  array('seotitle'=>$next->seotitle,'forum'=>$forum->seoname))?>" title="<?=HTML::chars($next->title)?>">
+            <?=$next->title?> <i class="icon-white icon-forward glyphicon-forward glyphicon"></i></a>
+        <?endif?>
+    </div>
 </div>
 
-    <div class="col-md-3 span2">
+    <div class="col-md-3 span2 topic">
         <div class="thumbnail highlight">
             <img src="<?=$topic->user->get_profile_image()?>" width="120" height="120" alt="<?=HTML::chars($topic->user->name)?>">
             <div class="caption">
@@ -30,7 +32,7 @@
             </div>
         </div> 
     </div>
-    <div class="col-md-9 span6">
+    <div class="col-md-9 span6 topic">
         <?if(Auth::instance()->logged_in()):?>
             <?if(Auth::instance()->get_user()->is_admin()):?>
                 <a class="label label-warning pull-right" href="<?=Route::url('oc-panel', array('controller'=> 'topic', 'action'=>'update','id'=>$topic->id_post)) ?>">
@@ -52,7 +54,7 @@
 
 <?foreach ($replies as $reply):?>
 
-    <div class="col-md-3 span2">
+    <div class="col-md-3 span2 topic">
         <div class="thumbnail highlight">
             <img src="<?=$reply->user->get_profile_image()?>" width="120" height="120" alt="<?=HTML::chars($reply->user->name)?>">
             <div class="caption">
@@ -71,7 +73,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-9 span6">
+    <div class="col-md-9 span6 topic">
     <?if(Auth::instance()->logged_in()):?>
         <?if(Auth::instance()->get_user()->is_admin()):?>
             <a class="label label-warning pull-right" href="<?=Route::url('oc-panel', array('controller'=> 'topic', 'action'=>'update','id'=>$reply->id_post)) ?>">

@@ -5,6 +5,9 @@
 </div>
 
 <div class="panel panel-default">
+    <? $ceck = 0; ?>
+    <? foreach ($ads as $ad) {$ceck++;} ?>
+    <? if($ceck >0){?>
     <div id="mobile-desc"><small>Scorri verso destra per visualizzare tutti i dati</small></div>
     <div class="table-responsive">
         <table class="table table-bordered">
@@ -17,67 +20,56 @@
                 <th><?=_e('Date')?></th>
                 <th><?=_e('Price')?></th>
                 <?if( core::config('payment.to_featured')):?>
-                <th><?=_e('Featured')?></th>
+                    <th><?=_e('Featured')?></th>
                 <?endif?>
                 <th><?=_e('Actions')?></th>
             </tr>
             <? $i = 0; foreach($ads as $ad):?>
+            <? $ceck++ ?>
             <tbody>
                 <tr>
 
                     <td><?=HTML::picture($ad->get_first_image('image'), ['w' => 70, 'h' => 70], ['1200px' => ['w' => '70', 'h' => '70'], '992px' => ['w' => '70', 'h' => '70'], '768px' => ['w' => '70', 'h' => '70'], '480px' => ['w' => '50', 'h' => '50'], '320px' => ['w' => '50', 'h' => '50']], ['class' => 'img-responsive', 'alt' => HTML::chars($ad->title)])?></td>
 
-                    <? foreach($category as $cat){ if ($cat->id_category == $ad->id_category) $cat_name = $cat->seoname; }?>
-                    <?/*<td><a href="<?=Route::url('ad', array('controller'=>'ad','category'=>$cat_name,'seotitle'=>$ad->seotitle))?>"><?= $ad->title; ?></a></td>*/?>
                     <td>
-                        <a href="<?=Route::url('ad', array('controller'=>'ad','category'=>$cat_name,'seotitle'=>$ad->seotitle))?>">
+                        <a href="<?= Route::url('ad', ['controller' => 'ad', 'category' => $ad->category->seoname, 'seotitle' => $ad->seotitle])?>">
                             <?=Text::limit_chars(Text::removebbcode($ad->title), 20, NULL, TRUE)?>
                         </a>
                     </td>
 
-                    <? foreach($category as $cat):?>
-                        <? if ($cat->id_category == $ad->id_category): ?>
-                            <td><?= $cat->name ?>
-                        <?endif?>
-                    <?endforeach?>
+                    <td>
+                        <?= $ad->category->name ?>
+                    </td>
 
-                    <?$locat_name = NULL;?>
-                    <?foreach($location as $loc):?>
-                        <? if ($loc->id_location == $ad->id_location):
-                            $locat_name=$loc->name;?>
-                            <td><?=$locat_name?></td>
-                        <?endif?>
-                    <?endforeach?>
-                    <?if($locat_name == NULL):?>
+                    <? if($ad->id_location): ?>
+                        <td><?= $ad->location->name ?></td>
+                    <? else: ?>
                         <td>n/a</td>
-                    <?endif?>
-
+                    <? endif ?>
 
                     <td>
-                    <?if($ad->status == Model_Ad::STATUS_NOPUBLISHED):?>
-                        <?=_e('Not published')?>
-                    <? elseif($ad->status == Model_Ad::STATUS_PUBLISHED):?>
-                        <?=_e('Published')?>
-                    <? elseif($ad->status == Model_Ad::STATUS_SPAM):?>
-                        <?=_e('Spam')?>
-                    <? elseif($ad->status == Model_Ad::STATUS_UNAVAILABLE):?>
-                        <?=_e('Unavailable')?>
-                    <? elseif($ad->status == Model_Ad::STATUS_UNCONFIRMED):?>
-                        <?=_e('Unconfirmed')?>
-                    <? elseif($ad->status == Model_Ad::STATUS_SOLD):?>
-                        <?=_e('Sold')?>
-                    <?endif?>
+                        <?
+                            $status = [
+                                Model_Ad::STATUS_NOPUBLISHED => _e('Not published'),
+                                Model_Ad::STATUS_PUBLISHED => _e('Published'),
+                                Model_Ad::STATUS_SPAM => _e('Spam'),
+                                Model_Ad::STATUS_UNAVAILABLE => _e('Unavailable'),
+                                Model_Ad::STATUS_UNCONFIRMED => _e('Unconfirmed'),
+                                Model_Ad::STATUS_SOLD => _e('Sold'),
+                            ]
+                        ?>
 
-                    <?if( ($order = $ad->get_order())!==FALSE ):?>
-                        <?if ($order->status==Model_Order::STATUS_CREATED AND $ad->status != Model_Ad::STATUS_PUBLISHED):?>
-                            <a class="btn btn-warning" href="<?=Route::url('default', array('controller'=> 'ad','action'=>'checkout' , 'id' => $order->id_order))?>">
-                                <i class="glyphicon glyphicon-shopping-cart"></i> <?=_e('Pay')?>  <?=i18n::format_currency($order->amount,$order->currency)?> 
-                            </a>
-                        <?elseif ($order->status==Model_Order::STATUS_PAID):?>
-                            (<?=_e('Paid')?>)
+                        <?= $status[$ad->status] ?>
+
+                        <?if( ($order = $ad->get_order())!==FALSE ):?>
+                            <?if ($order->status==Model_Order::STATUS_CREATED AND $ad->status != Model_Ad::STATUS_PUBLISHED):?>
+                                <a class="btn btn-warning" href="<?=Route::url('default', array('controller'=> 'ad','action'=>'checkout' , 'id' => $order->id_order))?>">
+                                    <i class="fa fa-shopping-cart"></i> <?=_e('Pay')?>  <?=i18n::format_currency($order->amount,$order->currency)?> 
+                                </a>
+                            <?elseif ($order->status==Model_Order::STATUS_PAID):?>
+                                (<?=_e('Paid')?>)
+                            <?endif?>
                         <?endif?>
-                    <?endif?>
-
                     </td>
 
                     <td><?= Date::format($ad->published, core::config('general.date_format'))?></td>
@@ -90,7 +82,7 @@
                         <?}?>
                         <?if ($ad->price==0 AND core::config('advertisement.free')==1){?>
                             <div class="price pull-left">
-                               <?=_e('Free');?>
+                                <?=_e('Free');?>
                             </div>
                         <?}?>
                     </td>
@@ -124,10 +116,9 @@
                             <i class="glyphicon glyphicon-edit"></i>
                         </a>
                         <?if($ad->status != Model_Ad::STATUS_SOLD AND $ad->status != Model_Ad::STATUS_UNCONFIRMED):?>
-                            <?/*
-                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#soldModal<?=$ad->id_ad?>">
+                            <!--<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#soldModal<?php //echo $ad->id_ad ?>">
                                 <i class="glyphicon glyphicon-usd"></i>
-                            </button>*/?>
+                            </button>-->
                             <div class="modal fade" id="soldModal<?=$ad->id_ad?>" tabindex="-1" role="dialog">
                                 <div class="modal-dialog modal-sm" role="document">
                                     <div class="modal-content">
@@ -207,5 +198,12 @@
             </tbody>
         </table>
     </div>
+    <? } ?>
+    <?
+    if($ceck == 0){
+        $domain = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'];
+        echo '<h3 class="no-border light text-center">Non hai ancora inserito nessun annuncio. Fai un giro sul <a href="'.$domain.'">sito</a> oppure <a href="'.$domain.'/pubblicare-nuovi.html">inserisci un nuovo annuncio!</a></h3>';
+    }
+    ?>
 </div>
 <div class="text-center"><?=$pagination?></div>
