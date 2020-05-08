@@ -8,6 +8,9 @@
 </div>
 
 <div class="panel panel-default">
+    <? $ceck = 0; ?>
+    <? foreach ($favorites as $favorite) {$ceck++;} ?>
+    <? if($ceck >0){?>
     <div id="mobile-desc"><small>Scorri verso destra per visualizzare tutti i dati</small></div>
     <div class="table-responsive">
         <table class="table table-striped table-bordered">
@@ -22,6 +25,7 @@
             </thead>
             <tbody>
                 <?foreach($favorites as $favorite):?>
+                    <? $ceck++ ?>
                     <tr id="tr<?=$favorite->id_favorite?>">
                         <td><?=HTML::picture($favorite->ad->get_first_image('image'), ['w' => 70, 'h' => 70], ['1200px' => ['w' => '70', 'h' => '70'], '992px' => ['w' => '70', 'h' => '70'], '768px' => ['w' => '70', 'h' => '70'], '480px' => ['w' => '50', 'h' => '50'], '320px' => ['w' => '50', 'h' => '50']], ['class' => 'img-responsive', 'alt' => HTML::chars($favorite->ad->title)])?></td>
                         <td><a target="_blank" href="<?=Route::url('ad', array('controller'=>'ad','category'=>$favorite->ad->category->seoname,'seotitle'=>$favorite->ad->seotitle))?>"><?= wordwrap($favorite->ad->title, 150, "<br />\n"); ?></a></td>
@@ -54,4 +58,11 @@
             </tbody>
         </table>
     </div>
+    <? } ?>
+    <?
+    if($ceck == 0){
+        $domain = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'];
+        echo '<h3 class="no-border light text-center">Non hai ancora nessun annuncio preferito. Fai un giro sul <a href="'.$domain.'">sito</a> e scopri quali sono!</a></h3>';
+    }
+    ?>
 </div>
