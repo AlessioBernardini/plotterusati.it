@@ -29,7 +29,7 @@
                     <small><?=$user_location->translate_name() ?></small>
                 <?endif?>
             </h2>
-            <div class="row">
+            <div class="row"> <a class="home vedi-tutti" href="/all">Vedi tutti</a>
                 <?$i=0;foreach ($ads as $ad):?>
                 	<?if($i%3 == 0 OR $i==0):?><div class="row"><?endif?>
                     <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
