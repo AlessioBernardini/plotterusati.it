@@ -1,11 +1,17 @@
 <?php defined('SYSPATH') or die('No direct script access.');?>
 
+<?php
+$annunci = new Model_Ad();
+$annunci->where('status', '=', Model_Ad::STATUS_PUBLISHED);
+$annunci = $annunci->find_all();
+?>
+
 <?if ($category!==NULL):?>
-    <h1><?=$category->translate_name() ?></h1>
+    <h1><?=$category->translate_name()?> <span class="count_ads">(<?=core::count($annunci)?>)</span></h1>
 <?elseif ($location!==NULL):?>
-    <h1><?=$location->translate_name() ?></h1>
+    <h1><?=$location->translate_name()?> <span class="count_ads">(<?=core::count($annunci)?>)</span></h1>
 <?else:?>
-    <h1><?=_e('Listings')?></h1>
+    <h1><?=_e('Listings')?> <span class="count_ads">(<?=core::count($annunci)?>)</span></h1>
 <?endif?>
 <? /* if (Core::config('advertisement.only_admin_post') != 1
         AND (core::config('advertisement.parent_category') == 1
