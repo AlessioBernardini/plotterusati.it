@@ -100,7 +100,7 @@
                                     </a>
                                 </td>
 
-                                <td><?=HTML::picture($ad->get_first_image('image'), ['w' => 70, 'h' => 70], ['1200px' => ['w' => '70', 'h' => '70'], '992px' => ['w' => '70', 'h' => '70'], '768px' => ['w' => '70', 'h' => '70'], '480px' => ['w' => '50', 'h' => '50'], '320px' => ['w' => '50', 'h' => '50']], ['class' => 'img-responsive', 'alt' => HTML::chars($ad->title)])?></td>
+                                <td><?=HTML::picture($ad->get_first_image('image'), ['w' => 70, 'h' => 70], ['1200px' => ['w' => '70', 'h' => '70'], '992px' => ['w' => '70', 'h' => '70'], '768px' => ['w' => '70', 'h' => '70'], '480px' => ['w' => '50', 'h' => '50'], '320px' => ['w' => '50', 'h' => '50']], ['class' => 'img-responsive', 'alt' => HTML::chars(__('N.D.'))])?></td>
 
                                 <td><a href="<?=Route::url('oc-panel', array('controller'=>'myads','action'=>'update','id'=>$ad->id_ad))?>"><?= wordwrap($ad->title, 45, "<br />\n"); ?></a>
                                 </td>
