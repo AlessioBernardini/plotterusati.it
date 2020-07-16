@@ -72,7 +72,7 @@
 						<!-- category select -->
 						<div class="form-group">
 							<?= FORM::label('category', _e('Category'), array('class'=>'col-xs-12 col-sm-2 control-label', 'for'=>'category'))?>
-							<div class="col-sm-10">
+							<div class="col-sm-10" id="descrizione-categoria">
 								<div id="category-chained" class="row <?=($id_category === NULL) ? NULL : 'hidden'?>"
 									data-apiurl="<?=Route::url('api', array('version'=>'v1', 'format'=>'json', 'controller'=>'categories'))?>"
 									data-price0="<?=i18n::money_format(0)?>"
