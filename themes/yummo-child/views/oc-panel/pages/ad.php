@@ -101,6 +101,7 @@
                         </th>
                         <th class="sorting_disabled">#</th>
                         <th class="sorting_disabled"><?=__('Immagine')?></th>
+                        <th class="sorting_disabled"><?=__('Price')?></th>
                         <th class="sorting_disabled"><?=__('Name')?></th>
                         <th class="sorting_disabled hidden-sm hidden-xs"><?=__('Category')?></th>
                         <th class="sorting_disabled hidden-sm hidden-xs"><?=__('Location')?></th>
@@ -187,8 +188,21 @@
 
                                 <td><?=$ad->id_ad?></td>
                                 
-                                <td><?=HTML::picture($ad->get_first_image('image'), ['w' => 70, 'h' => 70], ['1200px' => ['w' => '70', 'h' => '70'], '992px' => ['w' => '70', 'h' => '70'], '768px' => ['w' => '70', 'h' => '70'], '480px' => ['w' => '50', 'h' => '50'], '320px' => ['w' => '50', 'h' => '50']], ['class' => 'img-responsive', 'alt' => HTML::chars($ad->title)])?></td>
+                                <td><?=HTML::picture($ad->get_first_image('image'), ['w' => 70, 'h' => 70], ['1200px' => ['w' => '70', 'h' => '70'], '992px' => ['w' => '70', 'h' => '70'], '768px' => ['w' => '70', 'h' => '70'], '480px' => ['w' => '50', 'h' => '50'], '320px' => ['w' => '50', 'h' => '50']], ['class' => 'img-responsive'])?></td>
 
+								<td>
+                           			<?if ($ad->price!=0){?>
+                                	<div class="price pull-left">
+                                    <?=i18n::money_format( $ad->price, $ad->currency())?>
+                                	</div>
+                            		<?}?>
+                            		<?if ($ad->price==0 AND core::config('advertisement.free')==1){?>
+                                	<div class="price pull-left">
+                                    <?=_e('Free');?>
+                               		 </div>
+                            		<?}?>
+                    			</td>
+								
                                 <td><a href="<?=Route::url('ad', array('controller'=>'ad','category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>"><?= wordwrap($ad->title, 15, "<br />\n"); ?></a>
                                 </td>
 

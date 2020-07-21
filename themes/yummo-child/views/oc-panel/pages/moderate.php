@@ -24,6 +24,7 @@
                         </th>
                         <th class="sorting_disabled"><?=__('Activate')?></th>
                         <th class="sorting_disabled"><?=__('Immagine')?></th>
+                        <th class="sorting_disabled"><?=__('Price')?></th>
                         <th class="sorting_disabled"><?=__('Name')?></th>
                         <th class="sorting_disabled"><?=__('Category')?></th>
                         <th class="sorting_disabled"><?=__('Location')?></th>
@@ -101,7 +102,20 @@
                                 </td>
 
                                 <td><?=HTML::picture($ad->get_first_image('image'), ['w' => 70, 'h' => 70], ['1200px' => ['w' => '70', 'h' => '70'], '992px' => ['w' => '70', 'h' => '70'], '768px' => ['w' => '70', 'h' => '70'], '480px' => ['w' => '50', 'h' => '50'], '320px' => ['w' => '50', 'h' => '50']], ['class' => 'img-responsive', 'alt' => HTML::chars(__('N.D.'))])?></td>
-
+								
+								<td>
+                           			<?if ($ad->price!=0){?>
+                                	<div class="price pull-left">
+                                    <?=i18n::money_format( $ad->price, $ad->currency())?>
+                                	</div>
+                            		<?}?>
+                            		<?if ($ad->price==0 AND core::config('advertisement.free')==1){?>
+                                	<div class="price pull-left">
+                                    <?=_e('Free');?>
+                               		 </div>
+                            		<?}?>
+                    			</td>
+								
                                 <td><a href="<?=Route::url('oc-panel', array('controller'=>'myads','action'=>'update','id'=>$ad->id_ad))?>"><?= wordwrap($ad->title, 45, "<br />\n"); ?></a>
                                 </td>
 
