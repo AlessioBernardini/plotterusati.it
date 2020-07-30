@@ -70,7 +70,13 @@
 				                    <?elseif($value=='checkbox_0'):?>
 				                        <i class="fa fa-times"></i>
 				                    <?else:?>
-				                        <a href="<?=$value?>" target="_blank"><?=$value?></a>
+				                    	<?php
+				                    	if(strpos($value, 'http') === false){
+				                    	    ?><a href="https://<?=$value?>" target="_blank"><?=$value?></a><?php
+				                    	}else{			                    	   
+				                    	    ?><a href="<?=$value?>" target="_blank"><?=$value?></a><?php
+				                    	}
+				                    	?>
 				                    <?endif?>
 				            	</li>
 				            <?endif?>
