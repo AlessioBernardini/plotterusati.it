@@ -1,3 +1,92 @@
+.count_ads {
+    font-weight: bold;
+}
+
+.brand {
+    max-height: 60px!important;
+    overflow: visible!important;
+    margin-top: -20px;
+}
+.brand:after {
+    content: "il sito di annunci n.1 per la stampa digitale in Italia";
+    display: block;
+    font-size: 16px;
+    margin-top: 5px;
+}
+a.brand:hover {
+    text-decoration: none !important;
+    color: #41bb19;
+}
+
+#social-login {
+    text-align: center;
+    margin-top: -35px;
+}
+
+#descrizione-categoria:after {
+    content: "NB: inserisci anche la sottocategoria che comparirà una volta selezionata la categoria principale. In questo modo avrai un'icona speciale sul tuo annuncio che ti permetterà di essere più visibile all'interno del sito e di essere trovato più facilmente sulla mappa degli annunci.";
+    margin-top: -15px;
+    display: inline-block;
+    font-size: 12px;
+}
+#step2 .form-group:before{
+    content: "NB: è possibile proseguire anche senza inserire immagini per darti la possibilità di inserirle in seguito ma l'annuncio non verrà pubblicato finché resterà senza immagini. Gli annunci che resteranno senza immagini per oltre 7 giorni verranno eliminati.";
+    font-size: 12px;
+    color: #000;
+    line-height: 20px;
+    margin-bottom: 10px;
+    margin-top: -10px;
+    padding: 0 15px;
+}
+
+.home.vedi-tutti {
+    text-align: right;
+    display: block;
+    margin-top: -35px;
+    padding: 8px;
+}
+
+.latest_ads img {
+    border: 1px solid #dadada;
+    border-bottom: 0;
+}
+
+.light{
+    font-weight:lighter;
+}
+
+#user_profile_info .thumbnail.gallery-item {
+    pointer-events: none;
+}
+#user_profile_info > div {
+    padding-left:0;
+}
+
+footer{display:none}
+
+.js-ready #nav, .search-container, .footer-copyright {
+    background-image: none;
+    background-color: #222;
+    border: none;
+}
+
+.sweet-alert h2::after {
+    display: none;
+}
+
+.navbar-btn.benvenuti {
+    height: 42px;
+    overflow: hidden;
+    text-align:center;
+}
+.navbar-btn.benvenuti a {
+    margin-right:10px;
+}
+
+.navbar-btn.benvenuti a.last {
+    margin-right:0;
+}
+
 .categories .category {
     min-height: 100px;
 }
@@ -28,5 +117,282 @@
 }
 #counter{
     float: right;
-    opacity: 0.3;
+    opacity: 0.05;
+}
+
+h1, h2 {
+    /*text-align: left;*/
+    margin: 30px 0 50px 0;
+}
+/*h1::after, h2::after {
+    left: 0;
+    margin-left:0;
+}*/
+
+h5 {
+    font-size: 16px;
+    font-weight: normal;
+}
+
+h3{
+    height:auto;
+    line-height: 30px;
+}
+
+h3.chi-siamo{
+    line-height: 30px;
+    font-weight: normal;
+}
+
+h3.no-border:before{
+    display:none;
+}
+h3.no-border{
+    margin:0;
+    padding:0;
+}
+
+h3 .details {
+    display:none;
+}
+
+.page-header {
+    padding-bottom: 0;
+    margin: 0;
+    border-bottom: none;
+}
+
+.list-group .grid-group-item h3 {
+    font-size: 18px;
+    height: 60px;
+    line-height: 60px;
+    overflow: hidden;
+}
+
+.latest_ads h5 {
+    font-weight: bold;
+    text-transform: capitalize;
+    font-size: 18px;
+    margin:0;
+}
+.latest_ads {
+    margin-bottom: 30px;
+}
+.extra_info .fa.fa-money {
+    display: none;
+}
+.extra_info .price {
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 20px;
+    color: #000;
+}
+.listing_ads .extra_info .price {
+    margin-right: 20px;
+}
+.extra_info .location i, .latest_ads .extra_info .price i, .listing_ads .extra_info .location i, .listing_ads .extra_info .price i {
+    margin-right: 5px;
+}
+
+section.categories{
+    margin-bottom: 50px;
+    margin-top: -30px;
+}
+section.related{
+    margin-bottom: 50px;
+}
+
+.vertical-rule {
+    margin: 0 5px;
+    visibility: hidden;
+}
+
+.navbar-nav li a {
+    padding: 20px 20px 5px;
+}
+
+.btn, .filter .btn-default, .toolbar{
+    border-radius: 0!important;
+}
+
+.listing_ads .extra_info {
+    margin-top: -1px;
+    margin-left: 1px;
+    width: calc(100% - 2px);
+}
+
+a#list, a#grid {
+    display: none;
+}
+.list-group .grid-group-item p.description, .latest_ads .caption p {
+    margin-bottom: 0;
+    height: auto !important;
+    max-height: 75px !important;
+}
+.list-group .grid-group-item p.description, .latest_ads .caption p.aggiunto {
+    margin-top: 0;
+    height: auto!important;
+}
+
+#listing_description {
+    display: none;
+}
+
+.panel-body {
+    padding-left: 0;
+}
+
+.single .extra_info .price {
+    font-weight: bold;
+}
+.label {
+    font-size: 100%;
+    font-weight: normal;
+    border-radius: 0;
+}
+.label-info {
+    background-color: #41bb19;
+}
+
+/*.single .extra_info div {
+    background-color: #eee;
+}*/
+
+.st_googleplus_large {
+    display: none;
+}
+
+.well-sm {
+    border-radius: 0;
+    margin-top: 20px;
+}
+.well{
+    box-shadow: none;
+}
+
+.cerca .btn {
+    padding: 5px 11px;
+    margin-top: 5px;
+}
+
+.form-control, .form-inline.well .select2-selection--multiple {
+    border-radius:0;
+    box-shadow: none;
+}
+
+.page-header small {
+    display: none;
+}
+
+.panel, .panel-default {
+    border: none;
+    box-shadow: none;
+}
+
+td {
+    vertical-align: middle !important;
+}
+
+#mobile-desc {
+    margin-bottom: 5px;
+    display: none;
+}
+.table-bordered {
+    border: 1px solid #ddd!important;
+}
+
+#page-edit-profile {
+    margin-top: 20px;
+}
+
+#online_user {
+    color: #000;
+    text-align: right;
+    margin-top: -13px;
+    margin-bottom: 2px;
+}
+
+#task-table-filter {
+    height: 44px;
+}
+
+.breadcrumb {
+    text-align: left;
+    border-radius: 0;
+    margin-top: 20px;
+    background-color: #f5f5f5;
+}
+
+#task-table {
+    margin-top: 20px;
+}
+.forum .col-md-9.col-sm-12.col-xs-12 {
+    padding: 0;
+}
+.forum .col-md-9.col-sm-12.col-xs-12 form input {
+    width:80%;
+    float:left;
+    border-right: 0;
+}
+.forum .col-md-9.col-sm-12.col-xs-12 form button{
+    width:20%;
+    float:right;
+}
+.forum .col-md-3.col-sm-12.col-xs-12 {
+    padding-right: 0;
+}
+.forum .col-md-3.col-sm-12.col-xs-12 .btn {
+    width:100%;
+}
+.col-md-3.span2.topic {
+    padding: 0;
+}
+.page-header.topic {
+    margin-bottom: 22px;
+}
+.topic .naviga {
+    float: right;
+}
+.topic .naviga a {
+    background-color: #999;
+}
+.col-md-9.span6.topic {
+    margin-bottom: 40px;
+}
+
+label[for="captcha"] {
+    display: none;
+}
+.modal-dialog{
+    overflow: hidden;
+}
+
+.sidebar-banner{
+    margin-top:-15px;
+    margin-right:-15px;
+    width: calc(70% + 8px);
+}
+
+@media screen and (max-width: 480px) {
+    .brand{margin-top: 20px; }
+    .brand:after {content: "il sito di annunci n.1 per la stampa digitale";}
+    .btn-group > .btn + .dropdown-toggle {padding-left: 0;}
+    .btn.btn-primary .fa.fa-user { margin-right: -10px; margin-left: -10px;}
+    .navbar-nav li {font-size: 18px;}
+    .btn-group > .btn-group {width: auto;}
+    .single .extra_info div {padding: 8px 0;border: 1px solid #dadada;}
+    .single .extra_info{border:none;}
+    .single .extra_info .col-xs-12.col-sm-4 {border-top: none;}
+    .single .extra_info .price {border-bottom: none;}
+    #search-custom-fields{width:100%}
+    /*.well{margin-bottom:50px;}*/
+    #page{margin-bottom:40px;}
+    #mobile-desc{display:block}
+    #step2 h3 {line-height: 25px; height: 80px;}
+    .breadcrumb{display:none;}
+    .forum .col-md-3.col-sm-12.col-xs-12 {padding-left: 0;}
+    .forum .col-md-9.col-sm-12.col-xs-12 form button {height: 44px;}
+    .topic .naviga {float: none; margin-top:10px;}
+    .topic {padding: 0;}
+    .navbar-btn.benvenuti a {width: 31%;}
 }
