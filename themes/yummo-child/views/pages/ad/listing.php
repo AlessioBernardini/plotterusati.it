@@ -148,7 +148,8 @@ $annunci = $annunci->find_all();
                     <span class="glyphicon glyphicon-th-list"></span>
                 </a>
                 <?if (core::config('advertisement.map')==1):?>
-                    <a href="#" data-toggle="modal" data-target="#listingMap" class="btn btn-default pull-right">
+                    <!--<a href="#" data-toggle="modal" data-target="#listingMap" class="btn btn-default pull-right">-->
+                    <a href="https://plotterusati.online/mappa.html" target="_blank" class="btn btn-default pull-right">
                         <span class="glyphicon glyphicon-globe"></span>
                     </a>
                 <?endif?>
