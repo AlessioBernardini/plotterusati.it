@@ -7,9 +7,9 @@ $annunci = $annunci->find_all();
 ?>
 
 <?if ($category!==NULL):?>
-    <h1><?=$category->translate_name()?> <span class="count_ads">(<?=core::count($annunci)?>)</span></h1>
+    <h1><?=$category->translate_name()?></h1>
 <?elseif ($location!==NULL):?>
-    <h1><?=$location->translate_name()?> <span class="count_ads">(<?=core::count($annunci)?>)</span></h1>
+    <h1><?=$location->translate_name()?></h1>
 <?else:?>
 	<?php 
 	if(strpos($_SERVER['REQUEST_URI'], 'ricerca') == false){
