@@ -11,7 +11,11 @@ $annunci = $annunci->find_all();
 <?elseif ($location!==NULL):?>
     <h1><?=$location->translate_name()?> <span class="count_ads">(<?=core::count($annunci)?>)</span></h1>
 <?else:?>
-    <h1><?=_e('Listings')?> <span class="count_ads">(<?=core::count($annunci)?>)</span></h1>
+	<?php 
+	if(strpos($_SERVER['REQUEST_URI'], 'ricerca') == false){
+	    ?><h1><?=_e('Listings')?> <span class="count_ads">(<?=core::count($annunci)?>)</span></h1><?php  
+	}
+	?>
 <?endif?>
 <? /* if (Core::config('advertisement.only_admin_post') != 1
         AND (core::config('advertisement.parent_category') == 1
