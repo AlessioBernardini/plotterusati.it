@@ -58,8 +58,14 @@
                                 Model_Ad::STATUS_SOLD => _e('Sold'),
                             ]
                         ?>
-
-                        <?= $status[$ad->status] ?>
+						
+                        <?php 
+                        if($status[$ad->status] != _e('Published')){
+                            echo "<span style='color:red'>".$status[$ad->status]."</span>";
+                        }else {
+                            echo $status[$ad->status];
+                        }
+                        ?>
 
                         <?if( ($order = $ad->get_order())!==FALSE ):?>
                             <?if ($order->status==Model_Order::STATUS_CREATED AND $ad->status != Model_Ad::STATUS_PUBLISHED):?>
