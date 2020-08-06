@@ -35,7 +35,13 @@
                                             ])?>
                                         </th>
                                         <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                                            #
+                                            ID
+                                        </th>
+                                        <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                            <?= __('Images') ?>
+                                        </th>
+                                        <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                            <?= __('Price') ?>
                                         </th>
                                         <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                             <?= __('Name') ?>
@@ -104,6 +110,21 @@
                                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
                                                 <?= $ad->id_ad ?>
                                             </td>
+                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
+                                            <?=HTML::picture($ad->get_first_image('image'), ['w' => 70, 'h' => 70], ['1200px' => ['w' => '70', 'h' => '70'], '992px' => ['w' => '70', 'h' => '70'], '768px' => ['w' => '70', 'h' => '70'], '480px' => ['w' => '50', 'h' => '50'], '320px' => ['w' => '50', 'h' => '50']], ['class' => 'img-responsive', 'alt' => HTML::chars(__('N.D.'))])?>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
+                                       			<?if ($ad->price!=0){?>
+                                            	<div class="price pull-left">
+                                                <?=i18n::money_format( $ad->price, $ad->currency())?>
+                                            	</div>
+                                        		<?}?>
+                                        		<?if ($ad->price==0 AND core::config('advertisement.free')==1){?>
+                                            	<div class="price pull-left">
+                                                <?=_e('Free');?>
+                                           		 </div>
+                                        		<?}?>
+                                			</td>
                                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                 <div class="text-sm leading-5 text-gray-900">
                                                     <a href="<?=Route::url('ad', array('controller'=>'ad','category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>"><?= wordwrap($ad->title, 15, "<br />\n"); ?></a>
