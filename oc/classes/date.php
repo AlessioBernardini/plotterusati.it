@@ -9,10 +9,10 @@
 * @license    GPL v3
 */
 class Date extends Kohana_Date {
-    
+
     /**
      * Formats the given date into another format
-     * 
+     *
      * @param string $date
      * @param string $format
      * @return string
@@ -21,9 +21,9 @@ class Date extends Kohana_Date {
     {
        return date($format, strtotime($date));
     }
-    
+
     /**
-     * 
+     *
      * Converts a Unix time stamp to a MySQL date
      * @param integer $date
      * @return string
@@ -36,9 +36,9 @@ class Date extends Kohana_Date {
         }
         return date(Date::$timestamp_format,$date);
     }
-    
+
     /**
-     * 
+     *
      * Converts a MySQL date to a Unix date
      * @param unknown_type $date
      * @return number
@@ -50,10 +50,10 @@ class Date extends Kohana_Date {
 
     /**
      * shortcut fot DateTime::createFromFormat
-     * @param  string $date          
-     * @param  string $input_format  
-     * @param  string $output_format 
-     * @return mixed                
+     * @param  string $date
+     * @param  string $input_format
+     * @param  string $output_format
+     * @return mixed
      */
     public static function from_format($date, $input_format = 'd/m/yy', $output_format = 'm-d-Y')
     {
@@ -62,12 +62,12 @@ class Date extends Kohana_Date {
 
         $datetime = DateTime::createFromFormat($input_format, $date);
 
-        switch ($output_format) 
+        switch ($output_format)
         {
             case 'unix':
                 return date::unix2mysql($datetime->getTimestamp());
                 break;
-            
+
             default:
                 return $datetime->format($output_format);
                 break;
@@ -83,19 +83,19 @@ class Date extends Kohana_Date {
      * @param  string $format     date format
      * @param  array $array_fill default fill for the array to return
      * @param  string $d_field      the field we use to put the date into
-     * @return array             
+     * @return array
      */
-    public static function range($start, $end, $step = '+1 day', $format = 'Y-m-d', $array_fill = NULL, $d_field = 'date') 
+    public static function range($start, $end, $step = '+1 day', $format = 'Y-m-d', $array_fill = NULL, $d_field = 'date')
     {
         //return array
         $range = array();
 
-        if (is_string($start) === TRUE) 
+        if (is_string($start) === TRUE)
             $start = strtotime($start);
-        if (is_string($end) === TRUE) 
+        if (is_string($end) === TRUE)
             $end   = strtotime($end);
 
-        do 
+        do
         {
             $date = date($format, $start);
 
@@ -103,42 +103,42 @@ class Date extends Kohana_Date {
             {
                 $array_fill[$d_field]  = $date;
                 $range[] = $array_fill;
-            }   
+            }
             else
                 $range[] = $date;
-            
+
             $start  = strtotime($step, $start);//increase
 
         } while($start <= $end);
 
         return $range;
     }
-    
+
 
     /**
      * seconds to readable time format h:i:s
-     * @param  integer $secs 
-     * @return string      
+     * @param  integer $secs
+     * @return string
      */
-    public static function secs_to_time($secs) 
+    public static function secs_to_time($secs)
     {
         $times = array(3600, 60, 1);
         $time = '';
         $tmp  = '';
 
-        for($i = 0; $i < 3; $i++) 
+        for($i = 0; $i < 3; $i++)
         {
             $tmp = floor($secs / $times[$i]);
-            if($tmp < 1) 
+            if($tmp < 1)
             {
                 $tmp = '00';
             }
-            elseif($tmp < 10) 
+            elseif($tmp < 10)
             {
                 $tmp = '0' . $tmp;
             }
             $time .= $tmp;
-            if($i < 2) 
+            if($i < 2)
             {
                 $time .= ':';
             }
@@ -149,7 +149,7 @@ class Date extends Kohana_Date {
 
     /**
      * returns timezones ins a more friendly array way, ex Madrid [+1:00]
-     * @return array 
+     * @return array
      */
     public static function get_timezones()
     {
@@ -183,10 +183,10 @@ class Date extends Kohana_Date {
 
     /**
      * gets the offset of a date
-     * @param  string $offset 
-     * @return string       
+     * @param  string $offset
+     * @return string
      */
-    public static function format_offset($offset) 
+    public static function format_offset($offset)
     {
             $hours = $offset / 3600;
             $remainder = $offset % 3600;
@@ -199,7 +199,7 @@ class Date extends Kohana_Date {
             }
             return $sign . str_pad($hour, 2, '0', STR_PAD_LEFT) .':'. str_pad($minutes,2, '0');
     }
-    
+
 
     /**
      * Overwrite to force translation
@@ -316,6 +316,26 @@ class Date extends Kohana_Date {
             return sprintf(__('in %s'), $span);
         }
     }
-   
-    
+
+    public static function get_month_name($date)
+    {
+        $months = [
+            1 => __('January'),
+            2 => __('February'),
+            3 => __('March'),
+            4 => __('April'),
+            5 => __('May'),
+            6 => __('June'),
+            7 => __('July'),
+            8 => __('August'),
+            9 => __('September'),
+            10 => __('October'),
+            11 => __('November'),
+            12 => __('December'),
+        ];
+
+        return $months[$date->format("n")];
+    }
+
+
 } // End Date

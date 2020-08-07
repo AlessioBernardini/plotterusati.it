@@ -82,6 +82,33 @@ class Controller_Api_Categories extends Api_Controller {
         }
     }
 
+    /**
+     * Handle GET requests.
+     */
+    public function action_count()
+    {
+        try
+        {
+            if (isset($this->_params['id_location']) && is_numeric($this->_params['id_location']))
+            {
+                $location = new Model_Location($this->_params['id_location']);
+                if ($location->loaded())
+                {
+                    $output = Model_Category::get_category_count(TRUE, $location);
+                }
+            }
+            else
+            {
+                $output = Model_Category::get_category_count(FALSE);
+            }
+            $this->rest_output(array('categories' => $output),200,count($output));
+        }
+        catch (Kohana_HTTP_Exception $khe)
+        {
+            $this->_error($khe);
+        }
+    }
+
     public function action_get()
     {
         try

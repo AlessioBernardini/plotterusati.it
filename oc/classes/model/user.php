@@ -58,6 +58,19 @@ class Model_User extends ORM {
             ),
     );
 
+    public static function status()
+    {
+        return [
+            self::STATUS_INACTIVE => __('Inactive'),
+            self::STATUS_ACTIVE => __('Active'),
+            self::STATUS_SPAM => __('Spam'),
+        ];
+    }
+
+    public static function get_status_label($status_key)
+    {
+        return self::status()[$status_key] ?? NULL;
+    }
 
     /**
      * Rule definitions for validation
@@ -461,7 +474,8 @@ class Model_User extends ORM {
         }
         $form->fields['email']['caption'] = 'email';
         $form->fields['status']['display_as'] = 'select';
-        $form->fields['status']['options'] = array('0','1','5');
+        $form->fields['status']['dont_reindex_options'] = TRUE;
+        $form->fields['status']['options'] = self::status();
         $form->fields['id_role']['caption'] = 'name';
     }
 
@@ -975,7 +989,7 @@ class Model_User extends ORM {
      */
     public function is_verified_user()
     {
-        if ($this->loaded() AND isset($this->cf_verifiedbadge) AND $this->cf_verifiedbadge==1 AND Theme::get('premium')==1)
+        if ($this->loaded() AND isset($this->cf_verifiedbadge) AND $this->cf_verifiedbadge==1 AND Core::extra_features() == TRUE)
             return '<i title="'.__('Verified!').'" class="fa fa-check-circle" aria-hidden="true"></i>';
 
         return '';
@@ -1180,6 +1194,42 @@ class Model_User extends ORM {
             ->find();
 
         return $s;
+    }
+
+    /**
+     * The user has an expired subscription? is he expired? does need to renew? or no ads available
+     * @return bool
+     */
+    public function expired_subscription($allows_new_user = FALSE)
+    {
+        //it's the feature enabled?
+        if (Core::config('general.subscriptions') == TRUE)
+        {
+            //if admin or moderator never need to pay
+            if (Auth::instance()->logged_in() AND Auth::instance()->get_user()->is_admin() OR Auth::instance()->get_user()->is_moderator())
+                return FALSE;
+
+            //getting user last subscription no matter the status
+            $subscription = new Model_Subscription();
+            $subscription->where('id_user','=',$this->id_user)->order_by('created','desc')->limit(1)->find();
+
+            //we allow the user to navigate the site with this extra param even if does not have a subscription
+            if ($allows_new_user ==TRUE AND !$subscription->loaded())
+                return FALSE;
+            //verify expired since no ads or cron was not executed...
+            elseif ( Core::config('general.subscriptions_expire') == TRUE AND
+                ($subscription->status = 0 OR
+                Date::mysql2unix($subscription->expire_date) < time() OR
+                ($allows_new_user == FALSE AND $subscription->amount_ads_left == 0))
+                )
+                return TRUE;
+            //he needs a subscription
+            elseif(!$subscription->loaded())
+                return TRUE;
+        }
+
+        //by default nothing it's expired
+        return FALSE;
     }
 
     /**

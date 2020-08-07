@@ -65,13 +65,36 @@ class Controller_Api_Profile extends Api_User {
     }
 
 
-    //deletes a picture
+    /**
+     * Delete picture action.
+     * 
+     * Optionally deletes a specific image by number using param 'num_image'.
+     * If 'num_image' is not submitted, the primary image will be deleted instead.
+     */
     public function action_picture_delete()
     {
-        if ($this->user->delete_image()==TRUE )
-            $this->rest_output(TRUE);
-        else
-            $this->_error(FALSE);
+        try
+        {
+            $num_image = null;
+
+            if (isset($this->_post_params['num_image'])) {
+                $num_image = $this->_post_params['num_image'];
+            }
+
+            if (!is_numeric($num_image)) {
+                $num_image = 1;
+            }
+
+            if ($this->user->delete_image($num_image)==TRUE ) {
+                $this->rest_output(TRUE);
+            } else {
+                $this->_error(FALSE);
+            }
+        }
+        catch (Kohana_HTTP_Exception $khe)
+        {
+            $this->_error($khe);
+        }
     }
 
 

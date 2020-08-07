@@ -52,15 +52,18 @@
                     <?endif?>
 
                     <hr>
-                    <a href="<?=Route::url('default', array('controller'=>'plan','action'=>'buy','id'=>$plan->seoname))?>"
-                        class="btn btn-<?=($current_plan)?'primary':'success'?> btn-block">
-                        <?if($current_plan==TRUE):?>
-                            <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> <?=_e('Renew')?>
-                        <?else:?>
+                    <?if($current_plan==TRUE):?>
+                        <button type="button" disabled=""
+                            class="btn btn-primary btn-block">
+                            <?=_e('Current Plan')?>
+                        </button>
+                    <?else:?>
+                        <a href="<?=Route::url('default', array('controller'=>'plan','action'=>'buy','id'=>$plan->seoname))?>"
+                            class="btn btn-success btn-block">
                             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> <?=_e('Sign Up')?>
-                        <?endif?>
-                        <b><?=i18n::format_currency($plan->price,core::config('payment.paypal_currency'))?></b>
-                    </a>
+                            <b><?=i18n::format_currency($plan->price,core::config('payment.paypal_currency'))?></b>
+                        </a>
+                    <?endif?>
 
                 </div>
             </div>

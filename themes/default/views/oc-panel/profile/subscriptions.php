@@ -1,5 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');?>
+
 <?=Alert::show()?>
+
 <?=Form::errors()?>
 
 <div class="panel panel-default">
@@ -12,57 +14,56 @@
             <th><?=_e('Created')?></th>
             <th>
                 <a
-                    href="<?=Route::url('default', array('controller'=>'subscribe','action'=>'unsubscribe', 'id'=>Auth::instance()->get_user()->id_user))?>" 
-                    class="btn btn-danger" 
-                    title="<?=__('Unsubscribe to all?')?>" 
-                    data-toggle="confirmation" 
-                    data-placement="left" 
-                    data-href="<?=Route::url('default', array('controller'=>'subscribe','action'=>'unsubscribe', 'id'=>Auth::instance()->get_user()->id_user))?>" 
-                    data-btnOkLabel="<?=__('Yes, definitely!')?>" 
-                    data-btnCancelLabel="<?=__('No way!')?>">
+                    href="<?= Route::url('default', ['controller' => 'subscribe', 'action' => 'unsubscribe', 'id' => Auth::instance()->get_user()->id_user]) ?>"
+                    class="btn btn-danger"
+                    title="<?= __('Unsubscribe to all?') ?>"
+                    data-toggle="confirmation"
+                    data-placement="left"
+                    data-href="<?= Route::url('default', ['controller' => 'subscribe', 'action' => 'unsubscribe', 'id' => Auth::instance()->get_user()->id_user]) ?>"
+                    data-btnOkLabel="<?= __('Yes, definitely!')?>"
+                    data-btnCancelLabel="<?= __('No way!') ?>">
                     <i class="glyphicon glyphicon-remove"></i>
                 </a>
             </th>
         </tr>
-        <?foreach($list as $l):?>
-            <tbody>
+        <tbody>
+            <?foreach($subscriptions as $subscription):?>
                 <tr>
                     <td>
-                    <!-- category -->
-                        <p><?=$l['category']?></p>
+                        <p><?= $subscription->category ? $subscription->category->name : '' ?></p>
                     </td>
-                    
+
                     <td>
-                        <!-- locations -->
-                        <p><?=$l['location']?></p>
+                        <p><?= $subscription->location ? $subscription->location->name : '' ?></p>
                     </td>
-                    
+
                     <td>
-                        <!-- Min price -->
-                        <p><?=$l['min_price']?></p>
+                        <p><?= $subscription->min_price ?></p>
                     </td>
+
                     <td>
-                        <!-- Max Price -->
-                        <p><?=$l['max_price']?></p>
+                        <p><?= $subscription->max_price ?></p>
                     </td>
+
                     <td>
-                        <!-- Created -->
-                        <p><?=substr($l['created'], 0, 11)?></p>
+                        <p><?= Date::format($subscription->created, core::config('general.date_format'))?></p>
                     </td>
+
                     <td>
-                        <!-- unsubscribe one entry button -->
                         <a
-                            href="<?=Route::url('oc-panel', array('controller'=>'profile','action'=>'unsubscribe','id'=>$l['id']))?>" 
-                            class="btn btn-warning" 
-                            title="<?=__('Unsubscribe?')?>" 
-                            data-toggle="confirmation" 
-                            data-btnOkLabel="<?=__('Yes, definitely!')?>" 
-                            data-btnCancelLabel="<?=__('No way!')?>">
+                            href="<?= Route::url('oc-panel', ['controller' => 'profile', 'action' => 'unsubscribe', 'id'=> $subscription->id_subscribe]) ?>"
+                            class="btn btn-warning"
+                            title="<?= __('Unsubscribe?') ?>"
+                            data-toggle="confirmation"
+                            data-btnOkLabel="<?= __('Yes, definitely!') ?>"
+                            data-btnCancelLabel="<?= __('No way!') ?>">
                             <i class="glyphicon glyphicon-remove"></i>
                         </a>
                     </td>
                 </tr>
-            </tbody>
-        <?endforeach?>
+            <?endforeach?>
+        </tbody>
     </table>
 </div>
+
+<div class="text-center"><?=$pagination?></div>

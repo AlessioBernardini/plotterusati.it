@@ -13,7 +13,10 @@ class Controller_Api_Favorites extends Api_User {
         {
             $favs = new Model_Favorite();
 
-            $favs = $favs->where('id_user','=',$this->user->id_user)
+            $favs = $favs->join('ads')
+                        ->using('id_ad')
+                        ->where('favorite.id_user','=',$this->user->id_user)
+                        ->where('ads.status','=',Model_Ad::STATUS_PUBLISHED)
                         ->order_by('created','desc')
                         ->find_all();
 
@@ -21,9 +24,14 @@ class Controller_Api_Favorites extends Api_User {
             $output = array();
             foreach ($favs as $fav)
             {
-                $title = $fav->ad->title;
+                $ad = $fav->ad;
                 $fav = $fav->as_array();
-                $fav['ad'] = $title;
+                if ($ad->loaded())
+                {
+                    $fav['ad'] = $ad->title;
+                    $fav['price'] = $ad->price;
+                    $fav['image'] = $ad->get_first_image();
+                }
                 $output[] = $fav;
             }
 
@@ -35,6 +43,7 @@ class Controller_Api_Favorites extends Api_User {
             $this->_error($khe);
         }
     }
+
 
     public function action_create()
     {

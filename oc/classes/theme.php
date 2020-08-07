@@ -14,8 +14,7 @@ class Theme {
 
     public static $theme        = 'default';
     public static $parent_theme = NULL; //used for child themes
-    public static $skin         = ''; //skin that the theme is using, used in premium themes
-    public static $is_mobile    = FALSE; //used to determinate if $theme is mobile
+    public static $skin         = ''; //skin that the theme is using
     private static $views_path  = 'views';
     public  static $scripts     = array();
     public  static $styles      = array();
@@ -358,62 +357,16 @@ class Theme {
     }
 
     /**
-     * detect if visitor browser is mobile
-     * @return boolean/theme name
-     */
-    public static function is_mobile()
-    {
-        $is_mobile = FALSE;
-
-        //we check if we are forcing not to show mobile
-        if( Core::get('theme')!=Core::config('appearance.theme_mobile') AND Core::get('theme')!==NULL)
-        {
-            $is_mobile = FALSE;
-        }
-        //check if we selected a mobile theme
-        elseif ( Core::config('appearance.theme_mobile')!='' )
-        {
-
-            //they are forcing to show the mobile
-            if ( Core::get('theme')==Core::config('appearance.theme_mobile')
-                OR Cookie::get('theme')==Core::config('appearance.theme_mobile'))
-            {
-                $is_mobile = TRUE;
-            }
-            //none of this scenarios try to detect if ismobile
-            else
-            {
-                require Kohana::find_file('vendor', 'Mobile-Detect/Mobile_Detect','php');
-                $detect = new Mobile_Detect();
-                if ($detect->isMobile() AND ! $detect->isTablet())
-                    $is_mobile = TRUE;
-            }
-        }
-
-        self::$is_mobile = $is_mobile;
-
-        return ($is_mobile)?Core::config('appearance.theme_mobile'):FALSE;
-    }
-
-
-    /**
      * initialize theme
      * @param  string $theme forcing theme to load used in the admin
      * @return void
      */
     public static function initialize($theme = NULL)
     {
-
         //we are not forcing the view of other theme
         if ($theme === NULL)
         {
-            //first we check if it's a mobile device
-            if(($mobile_theme = self::is_mobile())!==FALSE)
-            {
-               $theme = $mobile_theme;
-            }
-            else
-                $theme = Core::config('appearance.theme');
+            $theme = Core::config('appearance.theme');
 
             //if we allow the user to select the theme, perfect for the demo
             if (Core::config('appearance.allow_query_theme')=='1')
@@ -483,49 +436,11 @@ class Theme {
 
     }
 
-
-     /**
-     * sets the theme we need to use in front
-     * @param string $theme
-     */
-    public static function set_mobile_theme($theme)
-    {
-        if ($theme == 'disable' OR !file_exists(self::theme_init_path($theme)))
-            $theme = '';
-
-        // save theme to DB
-        $conf = new Model_Config();
-        $conf->where('group_name','=','appearance')
-                    ->where('config_key','=','theme_mobile')
-                    ->limit(1)->find();
-
-        if (!$conf->loaded())
-        {
-            $conf->group_name = 'appearance';
-            $conf->config_key = 'theme_mobile';
-        }
-
-        $conf->config_value = $theme;
-
-        try
-        {
-            $conf->save();
-            return TRUE;
-        }
-        catch (Exception $e)
-        {
-            throw HTTP_Exception::factory(500,$e->getMessage());
-        }
-
-    }
-
-
     /**
      * Read the folder /themes/ for themes
-     * @param  boolean $only_mobile set to true an returns the mobile themes
      * @return array
      */
-    public static function get_installed_themes($only_mobile = FALSE)
+    public static function get_installed_themes()
     {
         //read folders in theme folder
         $folder = DOCROOT.'themes';
@@ -539,17 +454,37 @@ class Theme {
             {
                 if ( ($info = self::get_theme_info($file->getFilename())) !==FALSE )
                 {
-
-                    if ($only_mobile AND $info['Mobile']=='TRUE')
-                        $themes[$file->getFilename()] = $info;
-                    elseif(!$only_mobile AND $info['Mobile']!='TRUE')
-                        $themes[$file->getFilename()] = $info;
+                    $themes[$file->getFilename()] = $info;
                 }
 
             }
         }
 
         return $themes;
+    }
+
+    /**
+     * get templates from json hosted currently at our site
+     * @param  boolean $reload
+     * @return void
+     */
+    public static function get_pro_templates($reload = FALSE)
+    {
+        $url = Core::yclas_url_().'/api/v1/templates';
+
+        //try to get the json from the cache
+        $templates = Core::cache($url);
+
+        //not cached :(
+        if ($templates === NULL OR  $reload === TRUE)
+        {
+            $templates = Core::curl_get_contents($url.'?r='.time());
+            //save the json
+            Core::cache($url,$templates,strtotime('+7 day'));
+        }
+
+        return json_decode($templates,TRUE);
+
     }
 
 
@@ -576,7 +511,6 @@ class Theme {
             'Version'     => 'Version',
             'License'     => 'License',
             'Tags'        => 'Tags',
-            'Mobile'      => 'Mobile',
             'Parent'      => 'Parent Theme',
         ));
     }
@@ -636,6 +570,30 @@ class Theme {
         }
     }
 
+    public static function admin_sidebar_link($label, $controller, $action = 'index', $svg = NULL)
+    {
+        if (Auth::instance()->get_user()->has_access($controller, $action))
+        {
+            $is_active = strtolower(Request::current()->controller()) == $controller ? TRUE : FALSE;
+
+            if ($is_active AND $controller == 'ad' AND $action == 'moderate' AND Request::current()->action() != 'moderate')
+            {
+                $is_active = false;
+            }
+
+            if ($is_active AND $controller == 'ad' AND $action == 'index' AND Request::current()->action() != 'index')
+            {
+                $is_active = false;
+            }
+
+            return View::factory('oc-panel/layouts/_nav-link', [
+                'label' => $label,
+                'svg' => $svg,
+                'url'=> Route::url('oc-panel', ['controller' => $controller, 'action' => $action]),
+                'is_active' => $is_active
+            ]);
+        }
+    }
 
     /**
      * nav_link generates a link for main nav-bar
@@ -736,103 +694,6 @@ class Theme {
         self::save($theme);
     }
 
-    public static function checker()
-    {
-        if (Kohana::$environment=== Kohana::DEVELOPMENT)
-            return TRUE;
-
-        if (self::get('premium')!=1
-                OR (strtolower(Request::current()->controller())=='theme' AND strtolower(Request::current()->action())=='license')
-                OR !Auth::instance()->logged_in() OR $_POST)
-            return TRUE;
-
-        if (self::get('premium')==1 AND (Core::config('license.date') < time() OR Core::config('license.date')==NULL))
-        {
-            if (self::license(Core::config('license.number'))==TRUE)
-            {
-                Model_Config::set_value('license','date',time()+7*24*60*60);
-                HTTP::redirect(URL::current());
-            }
-            elseif (Auth::instance()->get_user()->is_admin())
-            {
-                Alert::set(Alert::INFO, __('License validation error, please insert again.'));
-                HTTP::redirect(Route::url('oc-panel',array('controller'=>'theme', 'action'=>'license')));
-            }
-        }
-    }
-
-    public static function license($l, $current_theme = NULL)
-    {
-        if (Kohana::$environment === Kohana::DEVELOPMENT)
-            return TRUE;
-        
-/*        if ($current_theme === NULL)
-            $current_theme = Theme::$theme;
-
-        //getting the licenses unique. to avoid downloading twice
-        $themes = core::config('theme');
-
-        //child  theme can use parent license, so we remove the parent from the list
-        $parent_theme = self::get_theme_parent($current_theme);
-        if ( $parent_theme !==NULL AND isset($themes[$parent_theme]))
-            unset($themes[$parent_theme]);
-
-        //remove current theme from themes checking list
-        if (isset($themes[$current_theme]))
-            unset($themes[$current_theme]);
-
-        //for the remaining themes checking the values
-        foreach ($themes as $theme=>$settings)
-        {
-            $settings = json_decode($settings,TRUE);
-            //theme has a license
-            if (isset($settings['license']))
-            {
-                //license is already in use in that theme
-                if ($settings['license'] == $l)
-                {
-                    Alert::set(Alert::INFO, sprintf(__('This license is in use in the theme %s'),$theme));
-                    return FALSE;
-                }
-            }
-        }*/
-
-        $api_url = Core::market_url().'/api/license/'.$l.'/?domain='.parse_url(URL::base(), PHP_URL_HOST);
-
-        return json_decode(Core::curl_get_contents($api_url));
-    }
-
-    public static function download($l)
-    {
-        $download_url = Core::market_url().'/api/download/'.$l.'/?domain='.parse_url(URL::base(), PHP_URL_HOST);
-        $fname = DOCROOT.'themes/'.$l.'.zip'; //root folder
-        $file_content = core::curl_get_contents($download_url);
-
-        if ($file_content!='false')
-        {
-            // saving zip file to dir.
-            file_put_contents($fname, $file_content);
-            $zip = new ZipArchive;
-            if ($zip_open = $zip->open($fname))
-            {
-                //if theres nothing in that ZIP file...zip corrupted :(
-                if ($zip->getNameIndex(0)===FALSE)
-                    return FALSE;
-
-                $theme_name = (substr($zip->getNameIndex(0), 0,-1));
-                File::delete(DOCROOT.'themes/'.$theme_name);
-                $zip->extractTo(DOCROOT.'themes/');
-                $zip->close();
-                File::delete($fname);
-                Alert::set(Alert::SUCCESS, $theme_name.' Updated');
-                return $theme_name;
-            }
-        }
-
-        return FALSE;
-    }
-
-
     /**
      * saves thme options as json 'theme.NAMETHEME' = array json
      * @param  string $theme theme to save at
@@ -925,18 +786,18 @@ class Theme {
 
     /**
      * uploads the given image to S3
-     * @param  $_FILE $image 
+     * @param  $_FILE $image
      * @param  boolean $favicon set to true if image is a favicon
-     * @return FALSE/string url        
+     * @return FALSE/string url
      */
     public static function upload_image($image, $favicon = FALSE)
-    {                 
+    {
         if ($favicon)
             $allowed_formats = array('ico');
         else
             $allowed_formats = explode(',',core::config('image.allowed_formats'));
 
-        if ( 
+        if (
         ! Upload::valid($image) OR
         ! Upload::not_empty($image) OR
         ! Upload::type($image, $allowed_formats) OR
@@ -953,7 +814,7 @@ class Theme {
             if( ! Upload::not_empty($image))
                 return FALSE;
         }
-          
+
         if (! $favicon AND core::config('image.disallow_nudes') AND ! Upload::not_nude_image($image))
         {
             Alert::set(Alert::ALERT, $image['name'].' '.__('Seems a nude picture so you cannot upload it'));
@@ -963,17 +824,24 @@ class Theme {
         if ($image !== NULL)
         {
             $directory  = DOCROOT.'images/';
-            if ($file = Upload::save($image, $image['name'], $directory))
+
+            if (Upload::$remove_spaces === TRUE)
+            {
+                // Remove spaces from the filename
+                $image_name = preg_replace('/\s+/u', '_', $image['name']);
+            }
+
+            if ($file = Upload::save($image, $image_name, $directory))
             {
                 // put image to Amazon S3
-                Core::S3_upload($directory.$image['name'], 'images/'.$image['name']);
+                Core::S3_upload($directory.$image_name, 'images/'.$image_name);
             }
-            else 
+            else
             {
                 Alert::set(Alert::ALERT, __('Something went wrong uploading your logo'));
                 return FALSE;
             }
-        }   
+        }
 
         //try s3, if not normal
         if ( ($base = Core::S3_domain()) === FALSE )
@@ -981,40 +849,40 @@ class Theme {
 
         //if s3 absolute url
         if ( core::config('image.aws_s3_active') )
-            return $base.'images/'.$image['name'];
+            return $base.'images/'.$image_name;
 
         //relative url
         $base = parse_url($base);
 
-        return $base['path'].'images/'.$image['name'];
+        return $base['path'].'images/'.$image_name;
     }
-    
+
     /**
      * deletes the given image
      * @param  $image string
-     * @return FALSE/NULL       
+     * @return FALSE/NULL
      */
     public static function delete_image($image)
-    {                 
+    {
         $root = DOCROOT.'images/'; //root folder
-        
-        if (!is_dir($root)) 
+
+        if (!is_dir($root))
             return FALSE;
-        
+
         else
         {
             if (($pos = strpos($image, "images/")) !== FALSE)
-            { 
+            {
                 $image_uri = substr($image, $pos+7);
-                
+
                 //delete image
                 if (file_exists($root.$image_uri))
                     @unlink($root.$image_uri);
-                
+
                 // delete image from Amazon S3
                 if(core::config('image.aws_s3_active'))
                     $s3->deleteObject(core::config('image.aws_s3_bucket'), 'images/'.$image_uri);
-                
+
                 return NULL;
             }
             else
@@ -1028,7 +896,7 @@ class Theme {
      * @return mixed        bool=fasle if not found , url if matched
      */
     public static function get_custom_css($theme = NULL)
-    {   
+    {
         if ($theme === NULL)
             $theme = 'default';
 
@@ -1038,7 +906,7 @@ class Theme {
             if ( core::config('image.aws_s3_active') )
                 $base = Core::S3_domain().$theme.'/css/web-custom.css';
             else
-                $base =  self::public_path('css/web-custom.css', $theme); 
+                $base =  self::public_path('css/web-custom.css', $theme);
 
             return $base.'?v='.Core::config('appearance.custom_css_version');
         }
@@ -1048,11 +916,11 @@ class Theme {
 
     /**
      * shortcut do we display the header and footer?
-     * @return bool 
+     * @return bool
      */
     public static function landing_single_ad()
     {
-        if (Theme::get('landing_single_ad',0) == TRUE AND 
+        if (Theme::get('landing_single_ad',0) == TRUE AND
             ((strtolower(Request::current()->controller())=='ad' AND strtolower(Request::current()->action()) == 'view') OR
             (strtolower(Request::current()->controller())=='user' AND strtolower(Request::current()->action()) == 'profile') OR
             (strtolower(Request::current()->controller())=='ad' AND strtolower(Request::current()->action()) == 'guestcheckout'))

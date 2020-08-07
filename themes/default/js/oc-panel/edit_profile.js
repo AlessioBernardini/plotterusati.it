@@ -189,8 +189,10 @@ $('.fileinput').on('clear.bs.fileinput', function() {
 });
 
 $(".upload_image").submit( function(event) {
-    clearFileInput($('input[name="image0"]'));
-    return true;
+    if (FileApiSupported()) {
+        clearFileInput($('input[name="image0"]'));
+        return true;
+    }
 });
 
 function clearFileInput($input) {

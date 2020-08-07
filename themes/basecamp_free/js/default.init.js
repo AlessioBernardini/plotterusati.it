@@ -536,7 +536,7 @@ $('.show-all-categories').click(function() {
             $('#modalAllCategories .modal-body .list-group').empty();
             $('#modalAllCategories').modal('show');
             $.each(result.categories, function (idx, category) {
-                $("#modalAllCategories .modal-body .list-group").append('<li class="list-group-item"><a href="/' + category.seoname + '">' + category.name + '</a></li>');
+                $("#modalAllCategories .modal-body .list-group").append('<li class="list-group-item"><a href="/' + category.seoname + '">' + category.translate_name + '</a></li>');
             });
         }
     });
@@ -682,12 +682,7 @@ $(function(){
 
 function getResizeValue(value) {
     if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
-        for (i = 1; i < 100; i++) {
-            resizeValue = Math.round((value / i));
-            if (resizeValue <= 400) {
-                return resizeValue;
-            }
-        }
+        return 1024;
     } else {
         return value;
     }

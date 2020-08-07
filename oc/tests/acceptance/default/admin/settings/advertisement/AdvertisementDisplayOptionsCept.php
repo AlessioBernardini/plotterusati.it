@@ -127,7 +127,7 @@ $I->amOnPage('/oc-panel/tools/cache?force=1');
 
 // Enter gm_apikey
 $I->amOnPage('/oc-panel/Config/update/gm_api_key');
-$I->fillField('#formorm_config_value','AIzaSyAGRRhbCE1MuqhCzZbefdxzACk7qRI9Czg');
+$I->fillField('#formorm_config_value','231343434314');
 $I->click('button[type="submit"]');
 $I->see('Item updated. Please to see the changes delete the cache');
 $I->amOnPage('/oc-panel/tools/cache?force=1');

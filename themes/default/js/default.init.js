@@ -437,7 +437,7 @@ $('.show-all-categories').click(function(event) {
             $('#modalAllCategories .modal-body .list-group').empty();
             $('#modalAllCategories').modal('show');
             $.each(result.categories, function (idx, category) {
-                $("#modalAllCategories .modal-body .list-group").append('<a href="/' + category.seoname + '" class="list-group-item">' + category.name + '</a>');
+                $("#modalAllCategories .modal-body .list-group").append('<a href="/' + category.seoname + '" class="list-group-item">' + category.translate_name + '</a>');
             });
         }
     });
@@ -582,12 +582,7 @@ $(function(){
 
 function getResizeValue(value) {
     if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
-        for (i = 1; i < 100; i++) {
-            resizeValue = Math.round((value / i));
-            if (resizeValue <= 400) {
-                return resizeValue;
-            }
-        }
+        return 1024;
     } else {
         return value;
     }
@@ -752,7 +747,7 @@ $(function(){
 if ($('input#cf_whatsapp').length) {
     if ($("input#cf_whatsapp").attr('data-country-code') && !$('input#cf_whatsapp').val()) {
         var country_code = $('input#cf_whatsapp').data('country-code');
-        $('input#cf_whatsapp').val('00'+country_code);
+        $('input#cf_whatsapp').val('+'+country_code);
     }
 }
 

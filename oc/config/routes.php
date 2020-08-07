@@ -74,6 +74,15 @@ Route::set('map', URL::title(__('map')).'.html')
 ->defaults(array(
         'controller' => 'map',
         'action'     => 'index',));
+
+/**
+ * maps
+ */
+Route::set('calendar', URL::title(__('calendar')).'.html')
+->defaults(array(
+        'controller' => 'calendar',
+        'action'     => 'index',));
+
 /**
  * maintenance
  */
@@ -144,6 +153,25 @@ Route::set('sitejson','info.json')
 /**
  * user admin/panel route
  */
+
+Route::set('oc-panel/addons', 'oc-panel/addons/<controller>(/<action>(/<id>))')
+->defaults(array(
+        'directory'  => 'panel/addons',
+        'action'     => 'index',
+));
+
+Route::set('oc-panel/integrations', 'oc-panel/integrations/<controller>(/<action>(/<id>))')
+->defaults(array(
+        'directory'  => 'panel/integrations',
+        'action'     => 'index',
+));
+
+Route::set('oc-panel/settings', 'oc-panel/settings/<controller>(/<action>(/<id>))')
+->defaults(array(
+        'directory'  => 'panel/settings',
+        'action'     => 'index',
+));
+
 Route::set('oc-panel', 'oc-panel(/<controller>(/<action>(/<id>)))')
 ->defaults(array(
 		'directory'  => 'panel',

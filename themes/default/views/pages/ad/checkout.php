@@ -107,7 +107,7 @@
                 <?else:?>
                     <tr>
                         <td class="col-md-1" style="text-align: center"><?=$order->id_product?></td>
-                        <?if (Theme::get('premium')==1):?>
+                        <?if (Core::extra_features() == TRUE):?>
                             <td class="col-md-9">
                                 <?=$order->description?>
                                 <em>(<?=Model_Order::product_desc($order->id_product)?>
@@ -156,7 +156,7 @@
                         <?endif?>
                         <td class="col-md-2 text-center"><?=($order->id_product == Model_Order::PRODUCT_AD_SELL)?i18n::money_format(($order->coupon->loaded())?$order->original_price():$order->original_price(), $order->currency):i18n::format_currency(($order->coupon->loaded())?$order->original_price():$order->original_price(), $order->currency)?></td>
                     </tr>
-                    <?if (Theme::get('premium')==1 AND Model_Coupon::current()->loaded()):?>
+                    <?if (Core::extra_features() == TRUE AND Model_Coupon::current()->loaded()):?>
                         <?$discount = ($order->coupon->discount_amount==0)?($order->original_price() * $order->coupon->discount_percentage/100):$order->coupon->discount_amount;?>
                         <tr>
                             <td class="col-md-1" style="text-align: center">
@@ -220,7 +220,7 @@
         <?=StripeKO::button_connect($order)?>
         <?=StripeCheckout::button_connect($order)?>
 
-        <?if (Core::config('payment.paypal_account')!=''):?>
+        <?if (Core::config('payment.paypal_account')!='' AND Core::config('payment.paypal_seller') == 1 AND $order->id_product == Model_Order::PRODUCT_AD_SELL):?>
             <p class="text-right">
                 <a class="btn btn-success btn-lg" href="<?=Route::url('default', array('controller'=> 'paypal','action'=>'pay' , 'id' => $order->id_order))?>">
                     <?=_e('Pay with Paypal')?> <span class="glyphicon glyphicon-chevron-right"></span>
@@ -237,6 +237,14 @@
         <?endif?>
 
         <?if ($order->id_product!=Model_Order::PRODUCT_AD_SELL):?>
+            <?if (Core::config('payment.paypal_account')!=''):?>
+                <p class="text-right">
+                    <a class="btn btn-success btn-lg" href="<?=Route::url('default', array('controller'=> 'paypal','action'=>'pay' , 'id' => $order->id_order))?>">
+                        <?=_e('Pay with Paypal')?> <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </p>
+            <?endif?>
+
             <?if ( ($user = Auth::instance()->get_user())!=FALSE AND ($user->is_admin() OR $user->is_moderator())):?>
                 <ul class="list-inline text-right">
                     <li>
@@ -246,7 +254,7 @@
                     </li>
                 </ul>
             <?endif?>
-            <?if (Theme::get('premium')==1) :?>
+            <?if (Core::extra_features() == TRUE) :?>
                 <?=Controller_Authorize::form($order)?>
                 <div class="text-right">
                     <ul class="list-inline">

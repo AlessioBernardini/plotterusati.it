@@ -249,7 +249,7 @@ class Controller_Panel_Profile extends Auth_Frontcontroller {
 
 
         $pagination = Pagination::factory(array(
-                    'view'           => 'oc-panel/crud/pagination',
+                    'view'           => 'pagination',
                     'total_items'    => $orders->count_all(),
         ))->route_params(array(
                     'controller' => $this->request->controller(),
@@ -330,7 +330,7 @@ class Controller_Panel_Profile extends Auth_Frontcontroller {
 
 
         $pagination = Pagination::factory(array(
-                    'view'           => 'oc-panel/crud/pagination',
+                    'view'           => 'pagination',
                     'total_items'    => $orders->count_all(),
         ))->route_params(array(
                     'controller' => $this->request->controller(),
@@ -356,60 +356,49 @@ class Controller_Panel_Profile extends Auth_Frontcontroller {
     * list all subscription for a given user
     * @return view
     */
-   public function action_subscriptions()
-   {
+    public function action_subscriptions()
+    {
         $this->template->title = __('My subscriptions');
+        $this->template->styles = array('//cdn.jsdelivr.net/sweetalert/1.1.3/sweetalert.css' => 'screen');
+        $this->template->scripts['footer'][] = '//cdn.jsdelivr.net/sweetalert/1.1.3/sweetalert.min.js';
+
         Breadcrumbs::add(Breadcrumb::factory()->set_title(__('My subscriptions')));
 
    		Controller::$full_width = TRUE;
 
-   		$subscriptions = new Model_Subscribe();
+   		$subscriptions = (new Model_Subscribe())
+            ->where('id_user', '=', $this->user->id_user);
 
-   		$user = Auth::instance()->get_user()->id_user;
+        $total_subscriptions = $subscriptions->count_all();
 
-		//get all for this user
-		$query = $subscriptions->where('id_user','=',$user)
-							   ->find_all();
+        $pagination = NULL;
 
-   		if(core::count($query) != 0)
-   		{
-   			// get categories, location, date, and price range to show in view
+        if ($total_subscriptions > 0)
+        {
+            $pagination = Pagination::factory([
+                'view' => 'pagination',
+                'total_items' => $total_subscriptions,
+            ])->route_params([
+                'controller' => $this->request->controller(),
+                'action'     => $this->request->action(),
+            ]);
 
+            $subscriptions = $subscriptions
+                ->limit($pagination->items_per_page)
+                ->offset($pagination->offset)
+                ->find_all();
+        }
+        else
+        {
+            Alert::set(Alert::INFO, __('No Subscriptions'));
+        }
 
-			$subs = $query->as_array();
-			foreach ($subs as $s)
-			{
+        if ($this->user->subscriber == 0)
+        {
+            Alert::set(Alert::INFO,  __('You can not receive emails. Enable it in your profile.'));
+        }
 
-				$min_price = $s->min_price;
-				$max_price = $s->max_price;
-				$created   = $s->created;
-
-				$category = new Model_Category($s->id_category);
-				$location = new Model_Location($s->id_location);
-
-				$list[] = array('min_price'=>$min_price,
-								'max_price'=>$max_price,
-								'created'=>$created,
-								'category'=>$category->name,
-								'location'=>$location->name,
-								'id'=>$s->id_subscribe);
-			}
-
-            if ($this->user->subscriber == 0)
-            {
-                Alert::set(Alert::INFO,  __('You can not receive emails. Enable it in your profile.'));
-            }
-
-            $this->template->styles = array('//cdn.jsdelivr.net/sweetalert/1.1.3/sweetalert.css' => 'screen');
-
-            $this->template->scripts['footer'][] = '//cdn.jsdelivr.net/sweetalert/1.1.3/sweetalert.min.js';
-
-			$this->template->content = View::factory('oc-panel/profile/subscriptions', array('list'=>$list));
-   		}
-   		else
-   		{
-   			Alert::set(Alert::INFO, __('No Subscriptions'));
-   		}
+        $this->template->content = View::factory('oc-panel/profile/subscriptions', compact('subscriptions', 'pagination'));
     }
 
 	public function action_unsubscribe()

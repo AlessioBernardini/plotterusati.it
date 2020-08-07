@@ -95,6 +95,8 @@ $('form').change(function () {
 
     if (emailService == 'elasticemail') {
         $('#tab-settings a[href="#tabSettingsElasticEmail"]').tab('show')
+    } else if (emailService == 'mailgun') {
+        $('#tab-settings a[href="#tabSettingsMailgun"]').tab('show')
     } else if (emailService == 'smtp') {
         $('#tab-settings a[href="#tabSettingsSMTPConfiguration"]').tab('show')
     }

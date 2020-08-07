@@ -1,5 +1,32 @@
 <?php defined('SYSPATH') or die('No direct script access.');
                 return array (
+  '4.0.1' => 
+  array (
+    'codename' => 'ReErebus',
+    'released' => '2020-07-25',
+    'blog' => '',
+    'changelog' => 'https://github.com/yclas/yclas/compare/4.0.0...4.0.1',
+    'issues' => 'https://github.com/yclas/yclas/milestone/42?closed=1',
+    'download' => 'https://j.mp/yc_401',
+  ),
+  '4.0.0' => 
+  array (
+    'codename' => 'Erebus',
+    'released' => '2020-07-21',
+    'blog' => '',
+    'changelog' => 'https://github.com/yclas/yclas/compare/3.8.0...4.0.0',
+    'issues' => 'https://github.com/yclas/yclas/milestone/42?closed=1',
+    'download' => 'https://j.mp/yc_400',
+  ),
+  '3.8.0' => 
+  array (
+    'codename' => 'Carnival',
+    'released' => '2020-02-13',
+    'blog' => '',
+    'changelog' => 'https://github.com/yclas/yclas/compare/3.7.0...3.8.0',
+    'issues' => 'https://github.com/yclas/yclas/milestone/44?closed=1',
+    'download' => 'https://j.mp/yc_380',
+  ),
   '3.7.0' => 
   array (
     'codename' => 'Malkoha',

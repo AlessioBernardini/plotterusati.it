@@ -85,7 +85,7 @@
                 <div class="form-group">
                     <label class="" for="price-max"><?=_e('Price to')?></label>
                     <div class="control mr-30">
-                        <input type="text" id="price-max" name="price-max" class="form-control" value="<?=HTML::chars(core::get('price-max'))?>" placeholder="<?=__('Price to')?>">
+                        <input type="text" id="price-max" name="price-max" class="form-control" value="<?=HTML::chars(core::get('price-max'))?>" placeholder="<?=__('to')?>">
                     </div>
                 </div>
                 <?endif?>
@@ -124,7 +124,7 @@
                 <?endforeach?>
                 <div class="form-group">
                     <label></label>
-                    <div class="control mr-30 cerca">
+                    <div class="control mr-30">
                         <?= FORM::button('submit', _e('Search'), array('type'=>'submit', 'class'=>'btn btn-primary pull-right', 'action'=>Route::url('search')))?>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * HTML template for the install
  *
@@ -9,7 +9,7 @@
  * @license    GPL v3
  */
 
-ob_start(); 
+ob_start();
 error_reporting(E_ERROR | E_WARNING | E_PARSE | E_NOTICE);
 ini_set('display_errors', 1);
 @set_time_limit(0);
@@ -46,13 +46,13 @@ $is_compatible  = install::is_compatible();
  * Class with install functions helper
  */
 class install{
-    
+
     /**
-     * 
+     *
      * Software install settings
      * @var string
      */
-    const VERSION   = '3.7.0';
+    const VERSION   = '4.0.1';
 
     /**
      * default locale/language of the install
@@ -74,7 +74,7 @@ class install{
 
     /**
      * checks that your hosting has everything that needs to have
-     * @return array 
+     * @return array
      */
     public static function requirements()
     {
@@ -87,8 +87,8 @@ class install{
             OR (strpos(@shell_exec('/usr/local/apache/bin/apachectl -l'), 'mod_rewrite') !== FALSE)
             OR (isset($_SERVER['IIS_UrlRewriteModule'])));
         $mod_msg = ($mod_result)?NULL:'Can not check if mod_rewrite is installed, probably everything is fine. Try to proceed with the installation anyway ;)';
-                
-                
+
+
         /**
          * all the install checks
          */
@@ -149,9 +149,9 @@ class install{
                                     'mandatory' => TRUE,
                                     'result'    => (extension_loaded('curl'))
                                     ),
-                'GD'        =>array('message'   => 'Install requires the <a href="http://php.net/gd">GD</a> v2 for the Image class',
+                'Imagick'   =>array('message'   => 'Install requires the <a href="https://www.php.net/manual/en/book.imagick.php">Imagick</a> class',
                                     'mandatory' => TRUE,
-                                    'result'    => (function_exists('gd_info'))
+                                    'result'    => (class_exists('Imagick'))
                                     ),
                 'MySQL'     =>array('message'   => 'Install requires the <a href="http://php.net/mysqli">MySQLi</a> extension to support MySQL databases.',
                                     'mandatory' => TRUE,
@@ -170,7 +170,7 @@ class install{
 
     /**
      * checks from requirements if its compatible or not. Also fills the msg variable
-     * @return boolean 
+     * @return boolean
      */
     public static function is_compatible()
     {
@@ -186,21 +186,21 @@ class install{
         }
 
         return $compatible;
-            
+
     }
 
 
     /**
      * get phpinfo clean in a string
-     * @return strin 
+     * @return strin
      */
     public static function phpinfo()
     {
-        ob_start();                                                                                                        
-        @phpinfo();                                                                                                     
-        $phpinfo = ob_get_contents();                                                                                         
-        ob_end_clean();  
-        //strip the body html                                                                                                  
+        ob_start();
+        @phpinfo();
+        $phpinfo = ob_get_contents();
+        ob_end_clean();
+        //strip the body html
         return preg_replace('%^.*<body>(.*)</body>.*$%ms', '$1', $phpinfo);
     }
 
@@ -215,13 +215,13 @@ class install{
 
     /**
      * return HTML select for the timezones
-     * @param  string $select_name 
-     * @param  string $selected    
-     * @return string              
+     * @param  string $select_name
+     * @param  string $selected
+     * @return string
      */
     public static function get_select_timezones($select_name='TIMEZONE', $selected=NULL)
     {
-        if ($selected=='UTC') 
+        if ($selected=='UTC')
             $selected='Europe/London';
 
         $timezones = core::get_timezones();
@@ -230,7 +230,7 @@ class install{
         {
             $sel.= '<optgroup label="'.$continent.'">';
             foreach( $timezone as $city=>$cityname )
-            {            
+            {
                 $seloption = ($city==$selected) ? ' selected="selected"' : '';
                 $sel .= "<option value=\"$city\"$seloption>$cityname</option>";
             }
@@ -240,11 +240,11 @@ class install{
 
         return $sel;
     }
-    
+
     /**
      * returns array of OC languages available
      * @TODO better get them by an ajax request
-     * 
+     *
      * @return array
      */
     public static function get_languages()
@@ -287,7 +287,7 @@ class install{
 
         return $locales;
     }
-    
+
     /**
      * returns suggested installation url
      * @return string
@@ -295,7 +295,7 @@ class install{
     public static function get_url()
     {
         // Try to guess installation URL
-        // Check whether we are using HTTPS or not 
+        // Check whether we are using HTTPS or not
         if (isset($_SERVER['HTTPS']))
         {
             if ('on' == strtolower($_SERVER['HTTPS']) OR '1' == $_SERVER['HTTPS'])
@@ -311,15 +311,15 @@ class install{
         {
             $url = 'http://'.$_SERVER['SERVER_NAME'];
 
-            if ($_SERVER['SERVER_PORT'] != '80') 
+            if ($_SERVER['SERVER_PORT'] != '80')
                 $url = $url.':'.$_SERVER['SERVER_PORT'];
         }
 
         $url .= self::get_folder();
-        
+
         return $url;
     }
-    
+
     /**
      * returns suggested installation folder
      * @return string
@@ -328,7 +328,7 @@ class install{
     {
         // Getting the folder, erasing the install-openclassifieds
         $folder = str_replace('/install-yclas.php','', $_SERVER['SCRIPT_NAME']).'/';
-        
+
         return $folder;
     }
 }
@@ -340,10 +340,10 @@ class core{
      * @param  string  $source    from
      * @param  string  $dest      to
      * @param  integer $overwrite 0=do not overwrite 1=force overwrite 2=overwrite only is size is different
-     * @return void             
+     * @return void
      */
     public static function copy($source, $dest, $overwrite = 0)
-    { 
+    {
         //be sure source exists..
         if (!is_readable($source))
             die('File ('.$source.') could not be readed, likely a permissions problem.');
@@ -354,7 +354,7 @@ class core{
             $copy_file = FALSE;
 
             //if doesnt exists OR we want to overwrite always OR different size copy the file.
-            if( !is_file( $dest ) OR $overwrite == 1 OR ( $overwrite == 2 AND filesize($source)===filesize($dest) ) ) 
+            if( !is_file( $dest ) OR $overwrite == 1 OR ( $overwrite == 2 AND filesize($source)===filesize($dest) ) )
                 $copy_file = TRUE;
 
             if ($copy_file === TRUE)
@@ -363,48 +363,48 @@ class core{
                     copy($source, $dest);
                 } catch (Exception $e) {
                     die('File ('.$source.') could not be copied, likely a permissions problem.');
-                }     
+                }
             }
-            
+
             //always return if its a file, so we dont move forward
             return;
         }
-        
+
         //was not a file, so folder...lets check exists, if not create it
         if(!is_dir($dest))
-            mkdir($dest);     
+            mkdir($dest);
 
         //read folder contents
         $objects = scandir($source);
-        foreach ($objects as $object) 
+        foreach ($objects as $object)
         {
             if($object != '.' && $object != '..')
-            { 
-                $from = $source . '/' . $object; 
+            {
+                $from = $source . '/' . $object;
                 $to   = $dest   . '/' . $object;
-                Core::copy($from, $to, $overwrite);                  
-            } 
-        } 
-        
+                Core::copy($from, $to, $overwrite);
+            }
+        }
+
     }
 
     /**
      * recursively deletes file or directory
-     * @param  string $file 
-     * @return void       
+     * @param  string $file
+     * @return void
      */
     public static function delete($file)
     {
-        if (is_dir($file)) 
+        if (is_dir($file))
         {
             $objects = scandir($file);
-            foreach ($objects as $object) 
+            foreach ($objects as $object)
             {
-                if ($object != '.' AND $object != '..') 
+                if ($object != '.' AND $object != '..')
                 {
-                    if (is_dir($file.'/'.$object)) 
+                    if (is_dir($file.'/'.$object))
                         core::delete($file.'/'.$object); //recursive
-                    else 
+                    else
                         unlink($file.'/'.$object);
                 }
             }
@@ -426,7 +426,7 @@ class core{
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($c, CURLOPT_URL, $url);
         curl_setopt($c, CURLOPT_SSL_VERIFYHOST, FALSE);
-        curl_setopt($c, CURLOPT_TIMEOUT,30); 
+        curl_setopt($c, CURLOPT_TIMEOUT,30);
         curl_setopt($c, CURLOPT_NOPROGRESS, false);
         curl_setopt($c, CURLOPT_PROGRESSFUNCTION, array(new core, 'write_curl_progress'));
         // curl_setopt($c, CURLOPT_FOLLOWLOCATION, TRUE);
@@ -443,71 +443,71 @@ class core{
      * @param  integer $maxredirect hoe many redirects we allow
      * @return contents
      */
-    public static function curl_exec_follow($ch, $maxredirect = 5) 
-    { 
+    public static function curl_exec_follow($ch, $maxredirect = 5)
+    {
         //using normal curl redirect
-        if (ini_get('open_basedir') == '' AND ini_get('safe_mode' == 'Off')) 
-        { 
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, $maxredirect > 0); 
-            curl_setopt($ch, CURLOPT_MAXREDIRS, $maxredirect); 
-        } 
+        if (ini_get('open_basedir') == '' AND ini_get('safe_mode' == 'Off'))
+        {
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, $maxredirect > 0);
+            curl_setopt($ch, CURLOPT_MAXREDIRS, $maxredirect);
+        }
         //using safemode...WTF!
-        else 
-        { 
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, FALSE); 
-            if ($maxredirect > 0) 
-            { 
-                $newurl = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL); 
+        else
+        {
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, FALSE);
+            if ($maxredirect > 0)
+            {
+                $newurl = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
 
-                $rch = curl_copy_handle($ch); 
-                curl_setopt($rch, CURLOPT_HEADER, TRUE); 
-                curl_setopt($rch, CURLOPT_NOBODY, TRUE); 
-                curl_setopt($rch, CURLOPT_FORBID_REUSE, FALSE); 
-                curl_setopt($rch, CURLOPT_RETURNTRANSFER, TRUE); 
+                $rch = curl_copy_handle($ch);
+                curl_setopt($rch, CURLOPT_HEADER, TRUE);
+                curl_setopt($rch, CURLOPT_NOBODY, TRUE);
+                curl_setopt($rch, CURLOPT_FORBID_REUSE, FALSE);
+                curl_setopt($rch, CURLOPT_RETURNTRANSFER, TRUE);
 
-                do 
-                { 
-                    curl_setopt($rch, CURLOPT_URL, $newurl); 
-                    $header = curl_exec($rch); 
+                do
+                {
+                    curl_setopt($rch, CURLOPT_URL, $newurl);
+                    $header = curl_exec($rch);
                     if (curl_errno($rch))
-                        $code = 0; 
-                    else 
-                    { 
-                        $code = curl_getinfo($rch, CURLINFO_HTTP_CODE); 
-                        if ($code == 301 OR $code == 302) 
-                        { 
-                            preg_match('/Location:(.*?)\n/', $header, $matches); 
-                            $newurl = trim(array_pop($matches)); 
+                        $code = 0;
+                    else
+                    {
+                        $code = curl_getinfo($rch, CURLINFO_HTTP_CODE);
+                        if ($code == 301 OR $code == 302)
+                        {
+                            preg_match('/Location:(.*?)\n/', $header, $matches);
+                            $newurl = trim(array_pop($matches));
                         }
-                        else 
-                            $code = 0; 
-                    } 
-                } 
-                while ($code AND --$maxredirect); 
+                        else
+                            $code = 0;
+                    }
+                }
+                while ($code AND --$maxredirect);
 
-                curl_close($rch); 
+                curl_close($rch);
 
-                if (!$maxredirect) 
-                { 
-                    if ($maxredirect === NULL) 
-                        trigger_error('Too many redirects. When following redirects, libcurl hit the maximum amount.', E_USER_WARNING); 
-                    else  
-                        $maxredirect = 0; 
+                if (!$maxredirect)
+                {
+                    if ($maxredirect === NULL)
+                        trigger_error('Too many redirects. When following redirects, libcurl hit the maximum amount.', E_USER_WARNING);
+                    else
+                        $maxredirect = 0;
 
-                    return FALSE; 
-                } 
+                    return FALSE;
+                }
 
-                curl_setopt($ch, CURLOPT_URL, $newurl); 
-            } 
-        } 
+                curl_setopt($ch, CURLOPT_URL, $newurl);
+            }
+        }
 
-        return curl_exec($ch); 
-    } 
+        return curl_exec($ch);
+    }
 
     /**
      * rss reader
-     * @param  string $url 
-     * @return array      
+     * @param  string $url
+     * @return array
      */
     public static function rss($url)
     {
@@ -550,7 +550,7 @@ class core{
     {
         return (core::post($key)!==NULL)?core::post($key):core::get($key,$default);
     }
-    
+
     /**
      * write progress.json file of curl download progress
      * @param  string $resource
@@ -563,12 +563,12 @@ class core{
     public static function write_curl_progress($resource, $download_size, $downloaded, $upload_size, $uploaded )
     {
         static $previousProgress = 0;
-        
+
         if ($download_size == 0)
             $progress = 0;
         else
             $progress = round($downloaded * 100 / $download_size);
-        
+
         if ($progress > $previousProgress)
         {
             $previousProgress = $progress;
@@ -580,10 +580,10 @@ class core{
 
     /**
      * gets the offset of a date
-     * @param  string $offset 
-     * @return string       
+     * @param  string $offset
+     * @return string
      */
-    public static function format_offset($offset) 
+    public static function format_offset($offset)
     {
             $hours = $offset / 3600;
             $remainder = $offset % 3600;
@@ -599,7 +599,7 @@ class core{
 
     /**
      * returns timezones ins a more friendly array way, ex Madrid [+1:00]
-     * @return array 
+     * @return array
      */
     public static function get_timezones()
     {
@@ -632,7 +632,7 @@ class core{
     }
 
     /**
-     * Parse Accept-Language HTTP header to detect user's language(s) 
+     * Parse Accept-Language HTTP header to detect user's language(s)
      * and get the most favorite one
      *
      * Adapted from
@@ -702,12 +702,12 @@ function __($msgid)
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
       <script type="text/javascript" src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>    <![endif]-->
-    
+
     <link href="//cdn.jsdelivr.net/npm/bootstrap@3.4.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="//cdn.jsdelivr.net/fontawesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="//cdn.jsdelivr.net/animatecss/3.3.0/animate.min.css" rel="stylesheet">
     <link href="//cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/css/selectize.bootstrap3.min.css" rel="stylesheet">
-    
+
     <style type="text/css">
         body {
             background-color: #f3f3f4;
@@ -939,10 +939,10 @@ function __($msgid)
                 file_put_contents('progress.json', '');
                 $file_content = core::curl_get_contents($versions[$last_version]['download']);
                 file_put_contents('oc.zip', $file_content);
-                
+
                 $zip = new ZipArchive;
                 // open zip file, extract to dir
-                if ($zip_open = $zip->open('oc.zip')) 
+                if ($zip_open = $zip->open('oc.zip'))
                 {
                     if ( !($folder_update = $zip->getNameIndex(0)) )
                     {
@@ -951,26 +951,26 @@ function __($msgid)
                     }
 
                     $zip->extractTo(DOCROOT);
-                    $zip->close();  
-                    
+                    $zip->close();
+
                     core::copy($folder_update, DOCROOT);
-                    
+
                     // delete downloaded zip file
                     core::delete($folder_update);
                     @unlink('oc.zip');
                     @unlink('progress.json');
                     @unlink($_SERVER['SCRIPT_FILENAME']);
-                    
+
                     // redirect to install
-                    header("Location: index.php");    
-                }   
-                else 
+                    header("Location: index.php");
+                }
+                else
                     hosting_view();
             }
             //normally if compatible just display the form
             elseif ($is_compatible === TRUE)
             {?>
-                <?if (!empty(install::$msg) OR !empty(install::$error_msg)) 
+                <?if (!empty(install::$msg) OR !empty(install::$error_msg))
                         hosting_view();?>
             <?}
             //not compatible
@@ -1025,16 +1025,16 @@ function __($msgid)
                                                 <label for="DB_HOST" class="control-label"><?=__("Host name")?></label>
                                                 <input type="text" id="DB_HOST" name="DB_HOST" class="form-control" value="<?=core::request('DB_HOST','localhost')?>" required>
                                             </div>
-                                            <div class="form-group">                
+                                            <div class="form-group">
                                                 <label for="DB_NAME" class="control-label"><?=__("Database name")?></label>
                                                 <input type="text" id="DB_NAME" name="DB_NAME" class="form-control" value="<?=core::request('DB_NAME','openclassifieds')?>" required>
                                                 <p class="help-block"><small><a target="_blank" href="https://docs.yclas.com/create-mysql-database/"><?=__("How to create a MySQL database?")?></a></small></p>
                                             </div>
-                                            <div class="form-group">                
+                                            <div class="form-group">
                                                 <label for="DB_USER" class="control-label"><?=__("User name")?></label>
                                                 <input type="text" id="DB_USER" name="DB_USER" class="form-control"  value="<?=core::request('DB_USER','root')?>" required>
                                             </div>
-                                            <div class="form-group">                
+                                            <div class="form-group">
                                                 <label for="DB_PASS" class="control-label"><?=__("Password")?></label>
                                                 <input type="text" id="DB_PASS" name="DB_PASS" class="form-control" value="<?=core::request('DB_PASS')?>">
                                             </div>
@@ -1054,7 +1054,7 @@ function __($msgid)
                                             </div>
                                             <div class="form-group hidden animated db-adv">
                                                 <label form="TABLE_PREFIX" class="control-label"><?=__("Table prefix")?>:</label>
-                                                <input type="text" id="TABLE_PREFIX" name="TABLE_PREFIX" class="form-control" value="<?=core::request('TABLE_PREFIX','oc2_')?>" required>
+                                                <input type="text" id="TABLE_PREFIX" name="TABLE_PREFIX" class="form-control" value="<?=core::request('TABLE_PREFIX','yc4_')?>" required>
                                             </div>
                                             <p><button type="button" class="btn btn-default btn-block validate-db"><?=__('Continue')?></button></p>
                                             <div class="row">
@@ -1065,14 +1065,14 @@ function __($msgid)
                                                     <p class="text-right"><button type="button" id="show-adv-db" class="btn btn-link btn-xs"><?=__('Show advanced options')?></button></p>
                                                 </div>
                                             </div>
-    
+
                                             <div class="panel-3">
                                                 <h3><?=__('Site Configuration')?></h3>
                                                 <div class="form-group">
                                                     <label for="LANGUAGE" class="control-label"><?=__("Site Language")?></label>
                                                     <select id="LANGUAGE" name="LANGUAGE" class="form-control" required>
                                                         <?php
-                                                            foreach (install::get_languages() as $language) 
+                                                            foreach (install::get_languages() as $language)
                                                             {
                                                                 $selected = ( strtolower($language)==strtolower(core::request('LANGUAGE', install::$locale))) ? ' selected="selected"' : '';
                                                                 echo "<option $selected value=\"$language\">$language</option>";
@@ -1163,8 +1163,8 @@ function __($msgid)
                 </div>
             </div>
         </div>
-    </div> 
-    
+    </div>
+
     <script src="//cdn.jsdelivr.net/jquery/1.12.3/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@3.4.0/dist/js/bootstrap.min.js"></script>
     <script src="//cdn.jsdelivr.net/jquery.validation/1.13.1/jquery.validate.min.js"></script>
@@ -1186,7 +1186,7 @@ function __($msgid)
                 $('#phpinfo').addClass('hidden');
             }
         });
-        
+
         jQuery.fn.animateAuto = function(prop, speed, callback){
             var elem, height, width;
             return this.each(function(i, el){
@@ -1198,12 +1198,12 @@ function __($msgid)
                 if(prop === "height")
                     el.animate({"height":height}, speed, callback);
                 else if(prop === "width")
-                    el.animate({"width":width}, speed, callback);  
+                    el.animate({"width":width}, speed, callback);
                 else if(prop === "both")
                     el.animate({"width":width,"height":height}, speed, callback);
             });
         }
-        
+
         $(function(){
             var panelDB =   $('.panel-2').scotchPanel({
                                 containerSelector: '.panel-1',
@@ -1221,7 +1221,7 @@ function __($msgid)
                                     $('.panel-1 .scotch-panel-wrapper:first').animateAuto("height", 300);
                                 },
                             });
-            
+
             var panelSite =   $('.panel-3').scotchPanel({
                                 containerSelector: '.panel-2',
                                 direction: 'right',
@@ -1241,7 +1241,7 @@ function __($msgid)
                                     $('.panel-1 .scotch-panel-wrapper:first').animate({height:height}, 300);
                                 },
                             });
-                            
+
             var panelSuccess = $('.panel-4').scotchPanel({
                                 containerSelector: '.panel-3',
                                 direction: 'right',
@@ -1256,10 +1256,10 @@ function __($msgid)
                                     $('.panel-1 .scotch-panel-wrapper:first').animate({height:height}, 300);
                                 }
                             });
-            
+
             $(".validate-db").click(function(event) {
                 var validate = $(this).closest('form').validate();
-                
+
                 if (validate.element('#DB_HOST') === true
                     && validate.element('#DB_NAME') === true
                     && validate.element('#DB_USER') === true
@@ -1276,7 +1276,7 @@ function __($msgid)
                     });
                 }
             });
-            
+
             $(".install.submit").click(function(event) {
                 $form = $(this).closest('form');
                 if ($form.valid()) {
@@ -1306,17 +1306,17 @@ function __($msgid)
                     });
                 }
             });
-            
+
             if ($( ".alert-danger" ).length > 0) {
                 panelDB.open();
             }
-            
+
             $(".download.submit").click(function(event) {
                 $btn = $(this);
                 $form = $btn.closest('form');
                 $(".progress").removeClass('hidden').addClass('active');
                 $btn.attr('disabled', 'disabled').addClass('hidden');
-                progress = setInterval(function(){ 
+                progress = setInterval(function(){
                                 $.get( 'progress.json', function(data) {
                                     if (data.progress == 100)
                                     {
@@ -1324,7 +1324,7 @@ function __($msgid)
                                         $(".progress > div").width(data.progress + '%').html('Uncompressing...');
                                         return;
                                     }
-                                    
+
                                     $(".progress > div").width(data.progress + '%').html(data.progress + '%');
                                 });
                             }, 1500);
@@ -1339,7 +1339,7 @@ function __($msgid)
                             });
             });
         });
-        
+
         $("#show-adv-db").click(function() {
             $(this).hide();
             $(".db-adv").removeClass('hidden').addClass('fadeIn');
@@ -1354,7 +1354,7 @@ function __($msgid)
             $('.panel-2 .scotch-panel-wrapper:first').animate({height:height}, 300);
             $('.panel-1 .scotch-panel-wrapper:first').animate({height:height}, 300);
         });
-        
+
         jQuery.validator.setDefaults({
             highlight: function (element, errorClass, validClass) {
                 if (element.type === "radio") {
@@ -1376,9 +1376,9 @@ function __($msgid)
             },
             errorPlacement: function () {}
         });
-        
+
         $('select').selectize();
-        
+
         $('.list-requirements li').each(function(i){
             var l = $(this);
             var color = $(this).data('color');

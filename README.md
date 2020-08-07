@@ -1,6 +1,5 @@
-#  Yclas 3.5.0.
+#  Yclas 4.0.1.
 
-[![Build Status](https://travis-ci.org/yclas/yclas.svg?branch=master)](https://travis-ci.org/yclas/yclas)
 
 # Description
 Yclas self-hosted is a powerful script that can transform any domain into a fully customizable classifieds site within a few seconds. Thousands of web developers trust Yclas to run their big classifieds website. Yclas can be used to create car/auto sales, job search board, buying & selling real estate and almost anything you can think of. And when you’re ready for more, there are themes and premium support available to transform your site into anything you can imagine.
@@ -17,7 +16,7 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md)
 
 # Yclas works thanks to other GPL software
 
-* Kohana 3.3.4 http://kohanaframework.org/
+* Koseven https://koseven.dev
 * KO Formmanager https://github.com/colinbm/kohana-formmanager
 * PHP-Gettext https://github.com/neo22s/php-gettext
 * Pear File_Gettext http://pear.php.net/package/File_Gettext

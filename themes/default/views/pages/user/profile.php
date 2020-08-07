@@ -49,7 +49,7 @@
             <?if ($user->last_login!=NULL):?>
             <li><strong><?=_e('Last Login')?>:</strong> <?= Date::format($user->last_login, core::config('general.date_format'))?></li>
             <?endif?>
-            <?if (Theme::get('premium')==1):?>
+            <?if (Core::extra_features() == TRUE):?>
                 <?foreach ($user->custom_columns(TRUE) as $name => $value):?>
                 	<?if($value!=''):?>
                         <?if($name!='whatsapp' AND $name!='skype' AND $name!='telegram'):?>
@@ -68,7 +68,7 @@
                 <?endforeach?>
             <?endif?>
         </ul>
-        <?if (Theme::get('premium')==1):?>
+        <?if (Core::extra_features() == TRUE):?>
             <?if(isset($user->cf_whatsapp) AND strlen($user->cf_whatsapp) > 6):?>
                 <a href="https://api.whatsapp.com/send?phone=<?=$user->cf_whatsapp?>" title="Chat with <?=$user->name?>" alt="Whatsapp"><i class="fa fa-2x fa-whatsapp" style="color:#43d854"></i></a>
             <?endif?>
@@ -160,7 +160,7 @@
                     <img class="img-responsive" src="//maps.googleapis.com/maps/api/staticmap?language=<?=i18n::get_gmaps_language(i18n::$locale)?>&amp;zoom=<?=Core::config('advertisement.map_zoom')?>&amp;scale=false&amp;size=600x300&amp;maptype=roadmap&amp;format=png&amp;visual_refresh=true&amp;markers=size:large%7Ccolor:red%7Clabel:·%7C<?=$user->latitude?>,<?=$user->longitude?>&amp;key=<?=core::config('advertisement.gm_api_key')?>" alt="<?=HTML::chars($user->name)?> <?=_e('Map')?>" style="width:100%;">
                 </p>
                 <p>
-                    <a class="btn btn-default btn-sm" href="<?=Route::url('map')?>?id_user=<?=$user->id_user?>" target="<?=THEME::$is_mobile ? '_blank' : NULL?>">
+                    <a class="btn btn-default btn-sm" href="<?=Route::url('map')?>?id_user=<?=$user->id_user?>" >
                         <span class="glyphicon glyphicon-globe"></span> <?=_e('Map View')?>
                     </a>
                 </p>

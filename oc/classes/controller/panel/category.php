@@ -29,7 +29,7 @@ class Controller_Panel_Category extends Auth_Crud {
                                          '//cdn.jsdelivr.net/bootstrap.tagsinput/0.3.9/bootstrap-tagsinput.css' => 'screen');
 
         $this->template->scripts['footer'][] = 'js/jquery-sortable-min.js';
-        $this->template->scripts['footer'][] = 'js/oc-panel/categories.js';
+        $this->template->scripts['footer'][] = 'js/oc-panel/categories.js?v='.Core::VERSION;
         $this->template->scripts['footer'][] = '//cdn.jsdelivr.net/bootstrap.tagsinput/0.3.9/bootstrap-tagsinput.min.js';
 
         $cats  = Model_Category::get_as_array();
@@ -104,8 +104,6 @@ class Controller_Panel_Category extends Auth_Crud {
     {
         $this->template->title = __('Update').' '.__($this->_orm_model).' '.$this->request->param('id');
         $this->template->styles = array('css/sortable.css' => 'screen');
-        $this->template->styles = array('css/fontawesome-iconpicker.min.css' => 'screen');
-        $this->template->scripts['footer'][] = 'js/oc-panel/fontawesome-iconpicker.min.js';
         $this->template->scripts['footer'][] = 'js/oc-panel/category_edit.js';
 
         $form = new FormOrm($this->_orm_model,$this->request->param('id'));
@@ -411,7 +409,7 @@ class Controller_Panel_Category extends Auth_Crud {
 
 		$category = new Model_Category($this->request->param('id'));
 
-		if (core::config('image.aws_s3_active'))
+		if (Core::selfhosted() AND Core::config('image.aws_s3_active'))
         {
             require_once Kohana::find_file('vendor', 'amazon-s3-php-class/S3','php');
             $s3 = new S3(core::config('image.aws_access_key'), core::config('image.aws_secret_key'));
@@ -547,7 +545,7 @@ class Controller_Panel_Category extends Auth_Crud {
     {
         $category = new Model_Category($this->request->param('id'));
 
-        if (Theme::get('premium') != 1)
+        if (Core::extra_features() == FALSE)
         {
             Alert::set(Alert::INFO, __('Translations is only available in the PRO version!') . ' ' . __('Upgrade your Yclas site to activate this feature.'));
             $this->redirect(Route::url('oc-panel', array('controller' => 'category', 'action' => 'update', 'id' => $category->id_category)));

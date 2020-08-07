@@ -180,16 +180,16 @@ class I18n extends Kohana_I18n {
      * @param string $language
      * @return string
      */
-    public static function get_language_path($language = NULL)
+    public static function get_language_path($language = NULL,$translation_file = 'messages')
     {
         if ($language===NULL)
-            return DOCROOT.'languages/messages.po';
+            return DOCROOT.'languages/'.$translation_file.'.po';
         else
         {
-            if (file_exists($custom_po = self::get_language_custom_path($language)))
+            if (file_exists($custom_po = self::get_language_custom_path($language,$translation_file)))
                 return $custom_po;
             else
-                return DOCROOT.'languages/'.$language.'/LC_MESSAGES/messages.po';
+                return DOCROOT.'languages/'.$language.'/LC_MESSAGES/'.$translation_file.'.po';
         }
     }
 
@@ -198,9 +198,9 @@ class I18n extends Kohana_I18n {
      * @param string $language
      * @return array
      */
-    public static function get_language_custom_path($language)
+    public static function get_language_custom_path($language,$translation_file = 'messages')
     {
-        return DOCROOT.'languages/'.$language.'/LC_MESSAGES/custom-messages.po';
+        return DOCROOT.'languages/'.$language.'/LC_MESSAGES/custom-'.$translation_file.'.po';
     }
 
     /**
@@ -525,6 +525,7 @@ class I18n extends Kohana_I18n {
         'CYP' => array(NULL,2,'.',',',0),          //  Cyprus Pound
         'CZK' => array('K&#269;',0,'',' ',1),          //  Czech Koruna
         'DKK' => array(NULL,2,',','.',0),          //  Danish Krone
+        'DJF' => array(' Fdj',0,',','',1),          //  Djibouti Franc
         'DOP' => array(NULL,2,'.',',',0),          //  Dominican Peso
         'XCD' => array('EC$',2,'.',',',0),          //  East Caribbean Dollar
         'EGP' => array(NULL,2,'.',',',0),          //  Egyptian Pound
@@ -556,6 +557,7 @@ class I18n extends Kohana_I18n {
         'MYR' => array(NULL,2,'.',',',0),          //  Malaysian Ringgit
         'MTL' => array(NULL,2,'.',',',0),          //  Maltese Lira
         'MUR' => array(NULL,0,'',',',0),           //  Mauritius Rupee
+        'MVR' => array('Rf ',2,'.',',',0),         //  Maldivian Rufiyaa
         'MXN' => array('MX$',2,'.',',',0),          //  Mexican Peso
         'MZM' => array(NULL,2,',','.',0),          //  Mozambique Metical
         'NPR' => array(NULL,2,'.',',',0),          //  Nepalese Rupee
@@ -584,6 +586,7 @@ class I18n extends Kohana_I18n {
         'SZL' => array(NULL,2,'.',', ',0),         //  Swaziland, Lilangeni
         'SEK' => array('kr',2,',','.',1),          //  Swedish Krona
         'CHF' => array('SFr ',2,'.','\'',0),         //  Swiss Franc
+        'TND' => array('DT',3,'.',',',0),          //  Tunisian dinar
         'TZS' => array(NULL,2,'.',',',0),          //  Tanzanian Shilling
         'THB' => array('&#3647;',2,'.',',',1),          //  Thailand, Baht ฿
         'TOP' => array(NULL,2,'.',',',0),          //  Tonga, Paanga
@@ -864,6 +867,7 @@ class I18n extends Kohana_I18n {
         'CYP' => 'Cyprus Pound',
         'CZK' => 'Czech Koruna',
         'XPF' => 'XPF CFP franc',
+        'DJF' => 'Djibouti Franc',
         'DKK' => 'Danish Krone',
         'DOP' => 'Dominican Peso',
         'XCD' => 'East Caribbean Dollar',
@@ -895,6 +899,7 @@ class I18n extends Kohana_I18n {
         'MYR' => 'Malaysian Ringgit',
         'MTL' => 'Maltese Lira',
         'MUR' => 'Mauritius Rupee',
+        'MVR' => 'Maldivian Rufiyaa',
         'MXN' => 'Mexican Peso',
         'MZM' => 'Mozambique Metical',
         'NPR' => 'Nepalese Rupee',
@@ -921,6 +926,7 @@ class I18n extends Kohana_I18n {
         'KRW' => 'South Korea, Won ₩',
         'SZL' => 'Swaziland, Lilangeni',
         'SEK' => 'Swedish Krona',
+        'TND' => 'Tunisian dinar',
         'TZS' => 'Tanzanian Shilling',
         'THB' => 'Thailand, Baht ฿',
         'TOP' => 'Tonga, Paanga',

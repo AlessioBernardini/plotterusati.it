@@ -7,6 +7,40 @@
     <?=View::factory('pages/map/home')?>
 <?endif?>
 
+<section class="categories">
+    <h2>
+        <?=_e("Categories")?>
+        <?if ($user_location) :?>
+            <small><?=$user_location->translate_name() ?></small>
+        <?endif?>
+    </h2>
+        <div class="row">
+            <ul>
+            <?$i=0; foreach($categs as $c):?>
+                <?if($c['id_category_parent'] == 1 AND $c['id_category'] != 1 AND ! in_array($c['id_category'], $hide_categories)):?>
+                    <li class="col-md-3">
+                        <div class="category">
+                            <a title="<?=HTML::chars((strip_tags($c['description'])!=='')?strip_tags($c['description']):$c['translate_name'])?>" href="<?=Route::url('list', array('category'=>$c['seoname'], 'location'=>$user_location ? $user_location->seoname : NULL))?>">
+                            <? $category = new Model_Category($c['id_category']); $icon_src = $category->get_icon(); if(( $icon_src )!==FALSE ):?>
+                                    <img src="<?=Core::imagefly($icon_src,50,50)?>" alt="<?=HTML::chars($c['translate_name'])?>">
+                            	<?elseif($category->get_icon_font()):?>
+                                    <div><span class="h4"><?= $category->get_icon_font() ?></span></div>
+                                <?elseif (file_exists(DOCROOT.'images/categories/'.$c['seoname'].'_icon.png')):?>
+                                    <img src="<?=Core::imagefly(URL::base().'images/categories/'.$c['seoname'].'_icon.png',50,50)?>" alt="<?=HTML::chars($c['translate_name'])?>">
+                            	<?endif?>
+	                            <h5 id="test"><?=($c['translate_name']);?></h5>
+	                            <?if (Theme::get('category_badge')!=1) : ?>
+	                                <span class="badge"><?=number_format($c['count'])?> <?=_e('ads')?></span>
+	                            <?endif?>
+                            </a>
+                        </div>
+                    </li>
+                <? $i++; if ($i%4 == 0) echo '<div class="clear"></div>'; endif?>
+            <?endforeach?>
+            </ul>
+        </div>
+</section>
+
 <?if (Core::Config('appearance.map_active')):?>
     <section class="categories clearfix">
         <h2><?=_e('Map')?></h2>
@@ -43,21 +77,20 @@
                                     <img data-src="holder.js/360x200?<?=str_replace('+', ' ', http_build_query(array('text' => $ad->category->translate_name(), 'size' => 14, 'auto' => 'yes')))?>" class="center-block img-responsive" alt="<?=HTML::chars($ad->title)?>">
                                 <?endif?>
                             </a>
-                            <?if (Core::config('advertisement.reviews')==1):?>
-                                <?for ($j=0; $j < round($ad->rate,1); $j++):?>
-                                    <span class="glyphicon glyphicon-star"></span>
-                                <?endfor?>
-                            <?endif?>
+                            <div class="caption">
+                                <h5><a href="<?=Route::url('ad', array('category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>"><?=Text::limit_chars(Text::removebbcode($ad->title), 30, NULL, TRUE)?></a></h5>
+                                <p><?=Text::limit_chars(Text::removebbcode($ad->description), 120, NULL, TRUE)?></p>
+                            </div>
                             <div class="extra_info">
                                 <?if ($ad->price!=0){?>
-                                    <div class="price pull-left">
-                                        <i class="fa fa-money"></i><?=i18n::money_format( $ad->price, $ad->currency())?>
-                                    </div>
+                                <div class="price pull-left">
+                                    <i class="fa fa-money"></i><?=i18n::money_format( $ad->price, $ad->currency())?>
+                                </div>
                                 <?}?>
                                 <?if ($ad->price==0 AND core::config('advertisement.free')==1){?>
-                                    <div class="price pull-left">
-                                        <i class="fa fa-money"></i><?=_e('Free');?>
-                                    </div>
+                                <div class="price pull-left">
+                                    <i class="fa fa-money"></i><?=_e('Free');?>
+                                </div>
                                 <?}?>
                                 <div class="location pull-left">
                                     <?if(Theme::get('listing_extra_info')=='views'):?>
@@ -70,23 +103,6 @@
                                 </div>
                                 <a class="more-link pull-right hvr-icon-forward" href="<?=Route::url('ad', array('category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>"><?=_e('more')?></a>
                             </div>
-                            <div class="caption">
-                                <h5><a href="<?=Route::url('ad', array('category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>"><?=Text::limit_chars(Text::removebbcode($ad->title), 30, NULL, TRUE)?></a></h5>
-                                <p><?=Text::limit_chars(Text::removebbcode($ad->description), 120, NULL, TRUE)?></p>
-                                <?foreach ($ad->custom_columns(TRUE) as $name => $value):?>
-                                    <?if($value=='checkbox_1'):?>
-                                        <p class="aggiunto"><b><?=$name?></b>: <i class="fa fa-check"></i></p>
-                                    <?elseif($value=='checkbox_0'):?>
-                                        <p class="aggiunto"><b><?=$name?></b>: <i class="fa fa-times"></i></p>
-                                    <?else:?>
-                                        <?if(is_string($name)):?>
-                                            <p class="aggiunto"><b><?=$name?></b>: <?=$value?></p>
-                                        <?else:?>
-                                            <p class="aggiunto"><?=$value?></p>
-                                        <?endif?>
-                                    <?endif?>
-                                <?endforeach?>
-                            </div>
                         </div>
                     </div>
                     <?$i++;?>
@@ -97,40 +113,6 @@
         </section>
     <?endif?>
 <?endif?>
-
-<section class="categories">
-    <h2>
-        <?=_e("Categories")?>
-        <?if ($user_location) :?>
-            <small><?=$user_location->translate_name() ?></small>
-        <?endif?>
-    </h2>
-    <div class="row">
-        <ul>
-            <?$i=0; foreach($categs as $c):?>
-                <?if($c['id_category_parent'] == 1 AND $c['id_category'] != 1 AND ! in_array($c['id_category'], $hide_categories)):?>
-                    <li class="col-md-3">
-                        <div class="category">
-                            <a title="<?=HTML::chars((strip_tags($c['description'])!=='')?strip_tags($c['description']):$c['translate_name'])?>" href="<?=Route::url('list', array('category'=>$c['seoname'], 'location'=>$user_location ? $user_location->seoname : NULL))?>">
-                                <? $category = new Model_Category($c['id_category']); $icon_src = $category->get_icon(); if(( $icon_src )!==FALSE ):?>
-                                    <img src="<?=Core::imagefly($icon_src,50,50)?>" alt="<?=HTML::chars($c['translate_name'])?>">
-                                <?elseif($category->get_icon_font()):?>
-                                    <div><span class="h4"><?= $category->get_icon_font() ?></span></div>
-                                <?elseif (file_exists(DOCROOT.'images/categories/'.$c['seoname'].'_icon.png')):?>
-                                    <img src="<?=Core::imagefly(URL::base().'images/categories/'.$c['seoname'].'_icon.png',50,50)?>" alt="<?=HTML::chars($c['translate_name'])?>">
-                                <?endif?>
-                                <h5 id="test"><?=($c['translate_name']);?></h5>
-                                <? if (Theme::get('category_badge')!=1) : ?>
-                                    <span class="badge"><?=number_format($c['count'])?> <?=_e('ads')?></span>
-                                <?endif?>
-                            </a>
-                        </div>
-                    </li>
-                    <? $i++; if ($i%4 == 0) echo '<div class="clear"></div>'; endif?>
-            <?endforeach?>
-        </ul>
-    </div>
-</section>
 
 <?if(core::config('advertisement.homepage_map') == 2):?>
     <?=View::factory('pages/map/home')?>

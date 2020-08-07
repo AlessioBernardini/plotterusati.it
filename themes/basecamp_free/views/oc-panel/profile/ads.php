@@ -42,6 +42,13 @@
 												<li><a href="<?=Route::url('oc-panel', array('controller'=>'myads','action'=>'stats','id'=>$ad->id_ad))?>"><?=_e('Stats')?></a></li>
 												<?endif?>
 												<li><a href="<?=Route::url('oc-panel', array('controller'=>'myads','action'=>'update','id'=>$ad->id_ad))?>"><?=_e('Update')?></a></li>
+												<?if($ad->status != Model_Ad::STATUS_SOLD AND $ad->status != Model_Ad::STATUS_UNCONFIRMED):?>
+							                        <li>
+							                            <a href="#" data-toggle="modal" data-target="#soldModal<?=$ad->id_ad?>">
+							                                <?=__('Mark as Sold')?>
+							                            </a>
+							                        </li>
+						                        <?endif?>
 												<?if(core::config('advertisement.delete_ad')==TRUE):?>
 							                        <li>
 							                        <a
@@ -68,37 +75,38 @@
 												<?endif?>
 											</ul>
 									</div>
-									<? foreach($category as $cat){ if ($cat->id_category == $ad->id_category) $cat_name = $cat->seoname; }?>
-										<a class="at" href="<?=Route::url('ad', array('controller'=>'ad','category'=>$cat_name,'seotitle'=>$ad->seotitle))?>"><?= $ad->title; ?></a>
+										<a class="at" href="<?=Route::url('ad', array('controller'=>'ad','category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>"><?= $ad->title; ?></a>
 								</div>
 
-								<p><b><?=_e('Date')?> : </b><?= Date::format($ad->published, core::config('general.date_format'))?></p>
-								<? foreach($category as $cat):?>
-									<? if ($cat->id_category == $ad->id_category): ?>
-										<p><b><?=_e('Category')?> : </b><?= $cat->name ?></p>
-									<?endif?>
-								<?endforeach?>
-								<?$locat_name = NULL;?>
-								<?foreach($location as $loc):?>
-									<? if ($loc->id_location == $ad->id_location):$locat_name=$loc->name;?>
-										<p><b><?=_e('Location')?> : </b><?=$locat_name?></p>
-									<?endif?>
-								<?endforeach?>
-								<?if($locat_name == NULL):?>
-									<p><b><?=_e('Location')?> : </b>n/a</p>
-								<?endif?>
+								<p>
+									<b><?=_e('Date')?> : </b>
+				                    <? if($ad->published): ?>
+				                        <?= Date::format($ad->published, core::config('general.date_format'))?>
+				                    <? else : ?>
+				                        -
+				                    <? endif ?>
+								</p>
+								<p><b><?=_e('Category')?> : </b><?= $ad->category->name ?></p>
+
+								<? if($ad->id_location): ?>
+							        <p><b><?=_e('Location')?> : </b><?= $ad->location->name ?></p>
+							    <? else: ?>
+							        <p><b><?=_e('Location')?> : </b>n/a</p>
+							    <? endif ?>
+
 								<p><b><?=_e('Status')?> : </b>
-								<?if($ad->status == Model_Ad::STATUS_NOPUBLISHED):?>
-									<span class="badge"><?=_e('Not published')?></span>
-								<? elseif($ad->status == Model_Ad::STATUS_PUBLISHED):?>
-									<span class="badge badge-success"><?=_e('Published')?></span>
-								<? elseif($ad->status == Model_Ad::STATUS_SPAM):?>
-									<span class="badge badge-warning"> <?=_e('Spam')?></span>
-								<? elseif($ad->status == Model_Ad::STATUS_UNAVAILABLE):?>
-									<span class="badge badge-danger"><?=_e('Unavailable')?></span>
-								<? elseif($ad->status == Model_Ad::STATUS_SOLD):?>
-									<span class="badge badge-danger"><?=_e('Sold')?></span>
-								<?endif?>
+								<?
+				                    $status = [
+				                        Model_Ad::STATUS_NOPUBLISHED => _e('Not published'),
+				                        Model_Ad::STATUS_PUBLISHED => _e('Published'),
+				                        Model_Ad::STATUS_SPAM => _e('Spam'),
+				                        Model_Ad::STATUS_UNAVAILABLE => _e('Unavailable'),
+				                        Model_Ad::STATUS_UNCONFIRMED => _e('Unconfirmed'),
+				                        Model_Ad::STATUS_SOLD => _e('Sold'),
+				                    ]
+				                ?>
+
+				                <?= $status[$ad->status] ?>
 								</p>
 								<p class="text-right">
 									<?if( ($order = $ad->get_order())!==FALSE ):?>
@@ -117,6 +125,30 @@
 						</div>
 					</div>
 				</div>
+
+				<?if($ad->status != Model_Ad::STATUS_SOLD AND $ad->status != Model_Ad::STATUS_UNCONFIRMED):?>
+				    <div class="modal fade" id="soldModal<?=$ad->id_ad?>" tabindex="-1" role="dialog">
+				        <div class="modal-dialog modal-sm" role="document">
+				            <div class="modal-content">
+				                <?=FORM::open(Route::url('oc-panel', array('controller'=>'myads','action'=>'sold','id'=>$ad->id_ad)), array('enctype'=>'multipart/form-data'))?>
+				                    <div class="modal-header">
+				                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				                        <h4 class="modal-title"><?=__('Mark as Sold')?></h4>
+				                    </div>
+				                    <div class="modal-body">
+				                        <div class="form-group">
+				                            <label for="amount"><?=__('Amount')?></label>
+				                            <input name="amount" type="text" class="form-control" id="amount" placeholder="<?=i18n::format_currency(0,core::config('payment.paypal_currency'))?>">
+				                        </div>
+				                    </div>
+				                    <div class="modal-footer">
+				                        <button type="submit" class="btn btn-primary"><?=__('Submit')?></button>
+				                    </div>
+				                <?=FORM::close()?>
+				            </div>
+				        </div>
+				    </div>
+				<?endif?>
 			<?endforeach?>
 
 			<div class="text-center">

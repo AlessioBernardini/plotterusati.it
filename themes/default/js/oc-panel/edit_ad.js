@@ -756,6 +756,69 @@ function createCustomFieldsByCategory (customfields) {
                 };
                 document.getElementById(idx + '_dropbox').appendChild(Dropbox.createChooseButton(options));
                 break;
+            case 'video':
+                var videoAttributes = [];
+
+                if ($('#custom-fields').data('customfield-values')[customfield.label] !== undefined) {
+                    videoAttributes = JSON.parse($('#custom-fields').data('customfield-values')[customfield.label]);
+                }
+
+                $template.find('div[data-input]').replaceWith($('<input/>').attr({  'type'        : 'hidden',
+                                                                                    'id'          : idx,
+                                                                                    'name'        : idx,
+                                                                                    'class'       : 'form-control',
+                                                                                    'placeholder' : customfield.translated_label,
+                                                                                    'data-type'   : customfield.type,
+                                                                                    'data-toggle' : 'tooltip',
+                                                                                    'title'       : customfield.translated_tooltip,
+                                                                                    'required'    : customfield.required,
+                                                                                    'value'       : $('#custom-fields').data('customfield-values')[customfield.label],
+                                                                                }));
+
+                if (videoAttributes.url === undefined) {
+                    $('#custom-fields input[name="' + idx + '"]').before($('<br/>'));
+
+                    $('#custom-fields input[name="' + idx + '"]').after($('<button/>').attr({'id' : idx + '_cloudinary', 'class' : 'cloudinary-upload-button btn btn-default', 'type' : 'button'}).html('Upload Video'));
+                    var cloudinaryWidget = cloudinary.createUploadWidget({
+                        buttonClass : 'cloudinary-upload-button',
+                        sources: [ 'local'],
+                        multiple: false,
+                        showAdvancedOptions: false,
+                        cloudName: cloudinaryCloudName,
+                        uploadPreset: cloudinaryUploadPreset}, (error, result) => {
+                            if (!error && result && result.event === "success") {
+                                $('#' + idx + '_cloudinary').hide();
+                                $('input[data-type="video"]').val(JSON.stringify({ url: result.info.secure_url, public_id: result.info.public_id}));
+                                $('#custom-fields input[name="' + idx + '"]').after($('<div/>', {
+                                    class: '',
+                                }).append($('<video />', {
+                                    class: 'img-responsive thumbnail',
+                                    src: result.info.secure_url,
+                                    type: 'video/mp4',
+                                    controls: true
+                                })));
+                            }
+                        }
+                    )
+                    document.getElementById(idx + '_cloudinary').addEventListener("click", function(){
+                        cloudinaryWidget.open();
+                    }, false);
+                }
+                else {
+                    $('#custom-fields input[name="' + idx + '"]').after($('<a/>', {
+                        class: 'btn btn-danger',
+                        href: '?video_delete=' + idx,
+                    }).append('Delete Video'));
+                    $('#custom-fields input[name="' + idx + '"]').after($('<div/>', {
+                        class: '',
+                    }).append($('<video />', {
+                        class: 'img-responsive thumbnail',
+                        src: videoAttributes.url,
+                        type: 'video/mp4',
+                        controls: true
+                    })));
+                }
+                break;
             case 'file_gpicker':
                 $template.find('div[data-input]').replaceWith($('<input/>').attr({  'type'        : 'hidden',
                                                                                     'id'          : idx,
@@ -985,6 +1048,6 @@ function createPicker(viewId, setOAuthToken) {
 function pickerCallback(data) {
     if (data[google.picker.Response.ACTION] == google.picker.Action.PICKED) {
         doc = data[google.picker.Response.DOCUMENTS][0];
-        $('input[data-type="file"]').val(doc.downloadUrl)
+        $('input[data-type="file"]').val(doc.downloadUrl);
     }
 }

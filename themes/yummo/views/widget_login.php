@@ -10,13 +10,11 @@
             href="#"> <i class="fa fa-caret-down"></i>
         </a>
         <ul class="dropdown-menu">
-            <?if (Auth::instance()->get_user()->is_admin() OR Auth::instance()->get_user()->is_moderator()):?>
-                <li>
-                    <a href="<?=Route::url('oc-panel',array('controller'=>'home','action'=>'index'))?>">
-                        <i class="glyphicon glyphicon-cog"></i> <?=_e('Panel')?>
-                    </a>
-                </li>
-            <?endif?>
+            <li>
+                <a href="<?=Route::url('oc-panel',array('controller'=>'home','action'=>'index'))?>">
+                    <i class="glyphicon glyphicon-cog"></i> <?=_e('Panel')?>
+                </a>
+            </li>
 
             <li>
                 <a href="<?=Route::url('oc-panel',array('controller'=>'myads','action'=>'index'))?>">
@@ -29,7 +27,6 @@
                     <i class="glyphicon glyphicon-heart"></i> <?=_e('My Favorites')?>
                 </a>
             </li>
-            <?/*
             <?if(core::config('payment.paypal_seller') == TRUE OR Core::config('payment.stripe_connect')==TRUE OR Core::config('payment.escrow_pay')==TRUE):?>
             <li><a href="<?=Route::url('oc-panel',array('controller'=>'profile','action'=>'sales'))?>"><i
                    class="glyphicon glyphicon-usd"></i> <?=_e('My Sales')?></a></li>
@@ -40,7 +37,7 @@
                         <i class="glyphicon glyphicon-shopping-cart"></i> <?= _e('My Payments') ?>
                     </a>
                 </li>
-            <? endif ?> */?>
+            <? endif ?>
 
             <?if (core::config('general.messaging') == TRUE):?>
                 <li>
@@ -50,12 +47,11 @@
                 </li>
             <?endif?>
 
-            <?/*
             <li>
                 <a href="<?=Route::url('oc-panel',array('controller'=>'profile','action'=>'subscriptions'))?>">
                     <i class="glyphicon glyphicon-envelope"></i> <?=_e('Subscriptions')?>
                 </a>
-            </li>*/?>
+            </li>
 
             <li>
                 <a href="<?=Route::url('oc-panel',array('controller'=>'profile','action'=>'edit'))?>">

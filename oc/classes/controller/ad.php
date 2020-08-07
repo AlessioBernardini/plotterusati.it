@@ -190,6 +190,21 @@ class Controller_Ad extends Controller {
             $ads->where(DB::expr('DATE_ADD( published, INTERVAL '.core::config('advertisement.expire_date').' DAY)'), '>', Date::unix2mysql());
         }
 
+        //if the ad has passed event date don't show
+        if((New Model_Field())->get('eventdate'))
+        {
+            $ads->where_open()
+            ->or_where(DB::expr('cf_eventdate'), '>', Date::unix2mysql())
+            ->or_where('cf_eventdate','IS',NULL)
+            ->where_close();
+
+            //if sort by event date
+            if (core::request('sort',core::config('advertisement.sort_by')) == 'event-date')
+            {
+                $ads->where('cf_eventdate','IS NOT',NULL);
+            }
+        }
+
         //if sort by distance
         if ((core::request('sort',core::config('advertisement.sort_by')) == 'distance' OR core::request('userpos') == 1) AND Model_User::get_userlatlng())
         {
@@ -288,6 +303,13 @@ class Controller_Ad extends Controller {
                 //oldest first
                 case 'published-asc':
                     $ads->order_by('published','asc');
+                    break;
+                //event date
+                case 'event-date':
+                    if((New Model_Field())->get('eventdate'))
+                    {
+                        $ads->order_by('cf_eventdate','asc');
+                    }
                     break;
                 //newest first
                 case 'published-desc':
@@ -446,7 +468,7 @@ class Controller_Ad extends Controller {
 
 
                 if($ad->get_first_image() !== NULL)
-                    Controller::$image = $ad->get_first_image();
+                    Controller::$image = $ad->get_first_image('image');
 
                 $view_file = 'pages/ad/single';
 
@@ -629,7 +651,7 @@ class Controller_Ad extends Controller {
 
 
                 if($ad->get_first_image() !== NULL)
-                    Controller::$image = $ad->get_first_image();
+                    Controller::$image = $ad->get_first_image('image');
 
                 $reviews = new Model_Review();
                 $reviews = $reviews->where('id_ad','=',$ad->id_ad)
@@ -785,7 +807,7 @@ class Controller_Ad extends Controller {
             {
                 $quantity   = Core::request('quantity', 1);
                 $amount     = $ad->price * $quantity;
-                $currency   = $ad->currency();
+                $currency   = (isset($ad->cf_currency) AND $ad->cf_currency != '')?$ad->cf_currency:core::config('payment.paypal_currency');
 
                 if (core::config('payment.stock') == 1 AND $ad->stock < $quantity)
                 {
@@ -1122,6 +1144,15 @@ class Controller_Ad extends Controller {
 	            $ads->where(DB::expr('DATE_ADD( published, INTERVAL '.core::config('advertisement.expire_date').' DAY)'), '>', Date::unix2mysql());
 	        }
 
+            //if the ad has passed event date don't show
+            if((New Model_Field())->get('eventdate'))
+            {
+                $ads->where_open()
+                ->or_where(DB::expr('cf_eventdate'), '>', Date::unix2mysql())
+                ->or_where('cf_eventdate','IS',NULL)
+                ->where_close();
+            }
+
             if (core::request('userpos') == 1 AND Model_User::get_userlatlng())
             {
                 if (is_numeric(Core::cookie('mydistance')) AND Core::cookie('mydistance') <= 500)
@@ -1205,7 +1236,7 @@ class Controller_Ad extends Controller {
 	        $category = NULL;
 	        $location = NULL;
 
-            if (core::config('general.search_multi_catloc') AND Theme::$is_mobile === FALSE) //mobile native menus don't support multiple selection
+            if (core::config('general.search_multi_catloc') ) 
             {
                 //filter by category
                 if (is_array(core::get('category')))

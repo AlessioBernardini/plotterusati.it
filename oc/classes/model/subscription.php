@@ -72,8 +72,6 @@ class Model_Subscription extends ORM {
     {
         $plan = new Model_Plan($order->id_product);
 
-        $current_subscription = $order->user->subscription();
-
         //disable all the previous membership
         DB::update('subscriptions')->set(array('status' => 0))->where('id_user', '=',$order->id_user)->execute();
 
@@ -84,14 +82,16 @@ class Model_Subscription extends ORM {
         }
 
         //calculate amount ads left
-        if($current_subscription->loaded() AND $plan->amount_ads != -1)
+        $amount_ads_left = $plan->amount_ads;
+
+        if($plan->amount_ads != -1)
         {
-            $amount_ads_used = $current_subscription->amount_ads - $current_subscription->amount_ads_left;
+            $amount_ads_used = (New Model_Ad)
+                ->where('status', '=', Model_Ad::STATUS_PUBLISHED)
+                ->where('id_user', '=', $order->user->id_user)
+                ->count_all();
+
             $amount_ads_left = max($plan->amount_ads - $amount_ads_used, 0);
-        }
-        else
-        {
-            $amount_ads_left = $plan->amount_ads;
         }
 
         //create a new subscription for this product

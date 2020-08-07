@@ -1,7 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');?>
 
 <?if(core::count($ads)):?>
-<section class="related">
     <h2><?=_e('Related ads')?></h2>
     <div class="row">
         <ul>
@@ -17,6 +16,10 @@
                             <img data-src="holder.js/360x275?<?=str_replace('+', ' ', http_build_query(array('text' => $ad->category->translate_name(), 'size' => 14, 'auto' => 'yes')))?>" class="center-block img-responsive" alt="<?=HTML::chars($ad->title)?>">
                         <?endif?>
                     </a>
+                    <div class="caption">
+                        <h5><a href="<?=Route::url('ad', array('category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>"><?=Text::limit_chars(Text::removebbcode($ad->title), 30, NULL, TRUE)?></a></h5>
+                        <p><?=Text::limit_chars(Text::removebbcode($ad->description), 120, NULL, TRUE)?></p>
+                    </div>
                     <div class="extra_info">
                         <?if ($ad->price!=0){?>
                             <div class="price pull-left">
@@ -34,27 +37,9 @@
                         </div>
                         <a class="more-link pull-right hvr-icon-forward" href="<?=Route::url('ad', array('category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>"><?=_e('more')?></a>
                     </div>
-                    <div class="caption">
-                        <h5><a href="<?=Route::url('ad', array('category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>"><?=Text::limit_chars(Text::removebbcode($ad->title), 30, NULL, TRUE)?></a></h5>
-                        <p><?=Text::limit_chars(Text::removebbcode($ad->description), 120, NULL, TRUE)?></p>
-                        <?foreach ($ad->custom_columns(TRUE) as $name => $value):?>
-                            <?if($value=='checkbox_1'):?>
-                                <p class="aggiunto"><b><?=$name?></b>: <i class="fa fa-check"></i></p>
-                            <?elseif($value=='checkbox_0'):?>
-                                <p class="aggiunto"><b><?=$name?></b>: <i class="fa fa-times"></i></p>
-                            <?else:?>
-                                <?if(is_string($name)):?>
-                                    <p class="aggiunto"><b><?=$name?></b>: <?=$value?></p>
-                                <?else:?>
-                                    <p class="aggiunto"><?=$value?></p>
-                                <?endif?>
-                            <?endif?>
-                        <?endforeach?>
-                    </div>
                 </div>
             </li>
         <?endforeach?>
         </ul>
     </div>
-</section>
 <?endif?>

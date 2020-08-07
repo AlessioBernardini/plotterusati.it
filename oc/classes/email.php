@@ -61,8 +61,7 @@ class Email {
                 $result =  ElasticEmail::send($to,$to_name, $subject, $body, $reply, $replyName);
                 break;
             case 'mailgun':
-                //todo
-
+                $result =  Mailgun::send($to, $to_name, $subject, $body, $reply, $replyName);
                 break;
             case 'pepipost':
                 //todo

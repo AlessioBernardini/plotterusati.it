@@ -20,8 +20,10 @@ class Controller_Panel_User extends Auth_CrudAjax {
 
     protected $_search_fields = array('name','email');
 
-    protected $_fields_caption = array( 'id_role'       => array('model'=>'role','caption'=>'name'),
-                                         );
+    protected $_fields_caption = [
+        'id_role' => ['model' => 'role', 'caption' => 'name'],
+        'status' => 'Model_User::get_status_label',
+    ];
 
     function __construct(Request $request, Response $response)
     {
@@ -36,9 +38,6 @@ class Controller_Panel_User extends Auth_CrudAjax {
                                                 'title' => __('Spam'),
                                                 'class' => '',
                                                 'icon'  => 'fa fa-fw fa-fire',
-                                                'attrs'  => array(  'data-toggle' => 'confirmation',
-                                                                    'data-btnOkLabel' => __('Yes, definitely!'),
-                                                                    'data-btnCancelLabel' => __('No way!'))
                                                 ),
                                         );
 
@@ -63,6 +62,10 @@ class Controller_Panel_User extends Auth_CrudAjax {
         }
     }
 
+    public function action_index($view = NULL)
+    {
+        parent::action_index('oc-panel/pages/user/index');
+    }
 
 	/**
 	 * CRUD controller: CREATE

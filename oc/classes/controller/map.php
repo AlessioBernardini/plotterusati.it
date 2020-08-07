@@ -63,6 +63,15 @@ class Controller_Map extends Controller {
             $ads->where(DB::expr('DATE_ADD( published, INTERVAL '.core::config('advertisement.expire_date').' DAY)'), '>', Date::unix2mysql());
         }
 
+        //if the ad has passed event date don't show
+        if((New Model_Field())->get('eventdate'))
+        {
+            $ads->where_open()
+            ->or_where(DB::expr('cf_eventdate'), '>', Date::unix2mysql())
+            ->or_where('cf_eventdate','IS',NULL)
+            ->where_close();
+        }
+
         //if only 1 ad
         if (is_numeric(core::get('id_ad')))
             $ads = $ads->where('id_ad','=',core::get('id_ad'));

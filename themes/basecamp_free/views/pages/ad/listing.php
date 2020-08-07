@@ -58,6 +58,9 @@
 							<span class="glyphicon glyphicon-sort-by-attributes-alt"></span> <?=_e('Sort')?> <span class="caret"></span>
 						</button>
 							<ul class="dropdown-menu" role="menu" id="sort-list">
+								<?if((New Model_Field())->get('eventdate')):?>
+					                <li><a href="?<?=http_build_query(['sort' => 'event-date'] + Request::current()->query())?>"><?=_e('Event date')?></a></li>
+					            <?endif?>
 								<li><a href="?<?=http_build_query(['sort' => 'title-asc'] + Request::current()->query())?>"><?=_e('Name (A-Z)')?></a></li>
 								<li><a href="?<?=http_build_query(['sort' => 'title-desc'] + Request::current()->query())?>"><?=_e('Name (Z-A)')?></a></li>
 								<?if(core::config('advertisement.price')!=FALSE):?>

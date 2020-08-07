@@ -106,11 +106,13 @@ class Controller_Blog extends Controller {
                         ->where('id_forum','IS',NULL)
                         ->order_by('created','desc')
                         ->where('id_post', '<', $post->id_post)
+                        ->cached()
                         ->limit(1)->find();
             $next = new Model_Post();
             $next = $next->where('status','=',Model_Post::STATUS_ACTIVE)
                         ->where('id_forum','IS',NULL)
                         ->where('id_post', '>', $post->id_post)
+                        ->cached()
                         ->limit(1)->find();
 
             $this->template->bind('content', $content);

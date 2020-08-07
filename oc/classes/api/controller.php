@@ -160,7 +160,7 @@ class Api_Controller extends Kohana_Controller {
         {
             // 404 action doesnt exists!
             if (!method_exists($this,'action_'.$action_requested))
-                $this->error(__('Method not found ').$action_requested,404);
+                $this->_error(__('Method not found ').$action_requested,404);
         }
         //method doesnt exists
         elseif (!isset($this->_action_map[$method]))
@@ -612,6 +612,56 @@ class Api_Controller extends Kohana_Controller {
         // Send the "Method Not Allowed" response
         $this->response->status(405)
             ->headers('Allow', implode(', ', array_keys($this->_action_map)));
+    }
+
+
+    /**
+     * Executes the given action and calls the [Controller::before] and [Controller::after] methods.
+     *
+     * Can also be used to catch exceptions from actions in a single place.
+     *
+     * 1. Before the controller action is called, the [Controller::before] method
+     * will be called.
+     * 2. Next the controller action will be called.
+     * 3. After the controller action is called, the [Controller::after] method
+     * will be called.
+     *
+     * @throws  HTTP_Exception_404
+     * @return  Response
+     */
+    public function execute()
+    {
+        // Execute the "before action" method
+        $this->before();
+
+        //maintenance mode
+        if (core::config('general.maintenance')==1 AND !Auth::instance()->logged_in())
+        {
+            $this->rest_output(array('ERROR' => 'Maintenance mode'),503);
+        }
+        else
+        {
+            // Determine the action to use
+            $action = 'action_'.$this->request->action();
+
+            // If the action doesn't exist, it's a 404
+            if ( ! method_exists($this, $action))
+            {
+                throw HTTP_Exception::factory(404,
+                    'The requested URL :uri was not found on this server.',
+                    [':uri' => $this->request->uri()]
+                )->request($this->request);
+            }
+
+            // Execute the action itself
+            $this->{$action}();
+        }
+
+        // Execute the "after action" method
+        $this->after();
+
+        // Return the response
+        return $this->response;
     }
 
 

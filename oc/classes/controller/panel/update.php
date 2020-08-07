@@ -10,6 +10,49 @@
  */
 class Controller_Panel_Update extends Auth_Controller {
 
+    public function action_400()
+    {
+        //fixes yahoo login
+        try
+        {
+            DB::query(Database::UPDATE,"UPDATE `".self::$db_prefix."config` SET `config_value`= REPLACE(`config_value`,',\"Yahoo\":{\"enabled\":\"0\",\"keys\":{\"key\":',',\"Yahoo\":{\"enabled\":\"0\",\"keys\":{\"id\":') WHERE `group_name` = 'social' AND `config_key`='config' AND `config_value` LIKE '%,\"Yahoo\":{\"enabled\":\"0\",\"keys\":{\"key\":%'")->execute();
+        }catch (exception $e) {}
+
+        if(Core::config('appearance.theme') == 'default')
+        {
+            Model_Config::set_value('appearance','theme','atlantic-lite');
+        }
+    }
+
+    public function action_380()
+    {
+        $configs = array(
+            array( 'config_key'     => 'cloudinary_api_key',
+                   'group_name'     => 'advertisement',
+                   'config_value'   => ''),
+            array( 'config_key'     => 'cloudinary_api_secret',
+                   'group_name'     => 'advertisement',
+                   'config_value'   => ''),
+            array( 'config_key'     => 'cloudinary_cloud_name',
+                   'group_name'     => 'advertisement',
+                   'config_value'   => ''),
+            array( 'config_key'     => 'cloudinary_cloud_preset',
+                   'group_name'     => 'advertisement',
+                   'config_value'   => ''),
+            array( 'config_key'     => 'sms_clickatell_two_way_phone',
+                   'group_name'     => 'general',
+                   'config_value'   => ''),
+            array( 'config_key'     => 'mailgun_api_key',
+                   'group_name'     => 'email',
+                   'config_value'   => ''),
+            array( 'config_key'     => 'mailgun_domain',
+                   'group_name'     => 'email',
+                   'config_value'   => ''),
+        );
+
+        Model_Config::config_array($configs);
+    }
+
     public function action_370()
     {   //new configs
         $configs = array(
@@ -2617,7 +2660,7 @@ class Controller_Panel_Update extends Auth_Controller {
             //activate default theme
             Model_Config::set_value('appearance','theme','default');
 
-            Theme::download(Core::config('license.number'));
+            Core::download(Core::config('license.number'));
 
             //activate original theme
             Model_Config::set_value('appearance','theme',$current_theme);

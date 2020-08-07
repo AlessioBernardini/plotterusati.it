@@ -54,6 +54,13 @@ class Controller_Panel_Messages extends Auth_Frontcontroller {
     {
         Controller::$full_width = TRUE;
 
+        //Detect spam users, show him alert
+        if (core::config('general.black_list') == TRUE AND Model_User::is_spam() === TRUE)
+        {
+            Alert::set(Alert::ALERT, __('Your profile has been disable for posting, due to recent spam content! If you think this is a mistake please contact us.'));
+            $this->redirect(Route::url('default'));
+        }
+
         if ($this->request->param('id') !== NULL AND is_numeric($id_msg_thread = $this->request->param('id')))
         {
             $messages = Model_Message::get_thread($id_msg_thread, $this->user);

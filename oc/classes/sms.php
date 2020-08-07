@@ -17,11 +17,20 @@ class Sms  {
 
         $clickatell = new \Clickatell\Rest(Core::config('general.sms_clickatell_api'));
 
+        $data = [
+            'to' => [$phone],
+            'content' => $message,
+        ];
+
+        if(!empty(Core::config('general.sms_clickatell_two_way_phone'))){
+            $data['from'] = Core::config('general.sms_clickatell_two_way_phone');
+        }
+
         // Full list of support parameters can be found at https://www.clickatell.com/developers/api-documentation/rest-api-request-parameters/
         try {
-            $result = $clickatell->sendMessage(['to' => [$phone], 'content' => $message]);
+            $result = $clickatell->sendMessage($data);
 
-            foreach ($result as $message) 
+            foreach ($result as $message)
             {
                 return ($message['accepted'] == TRUE)?TRUE:$message['error'];
 
@@ -46,7 +55,7 @@ class Sms  {
 
     }
 
-    public function testAPIkey($apikey){
+    public function testAPIkey($apikey, $phone){
 
         $user = Auth::instance()->get_user();
 
@@ -62,10 +71,19 @@ class Sms  {
 
         $clickatell = new \Clickatell\Rest($apikey);
 
-        try {
-            $result = $clickatell->sendMessage(['to' => [$user->phone], 'content' => '2 Step SMS Authentication enabled - '.Core::config('general.site_name')]);
+        $data = [
+            'to' => [$user->phone],
+            'content' => '2 Step SMS Authentication enabled - '.Core::config('general.site_name'),
+        ];
 
-            foreach ($result as $message) 
+        if(!empty($phone)){
+            $data['from'] = $phone;
+        }
+
+        try {
+            $result = $clickatell->sendMessage($data);
+
+            foreach ($result as $message)
             {
                 if($message['accepted'] == TRUE){
                     return TRUE;

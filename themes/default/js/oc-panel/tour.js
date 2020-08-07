@@ -19,7 +19,7 @@ $(function (){
            content: getTourLocalization("step2_content"),
            path: getTourBasePath() + "oc-panel/category",
            placement: "top",
-           placement: "bottom",
+           redirect: true,
         },
         {
            element: "#page-general-configuration",

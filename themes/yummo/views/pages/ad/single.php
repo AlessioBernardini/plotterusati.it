@@ -48,17 +48,17 @@
                 <?endif?>
             <?endif?>
 	        <?if(core::config('advertisement.count_visits')==1):?>
-	        	<div class="col-xs-6 col-sm-2">
+	        	<div class="col-xs-12 col-sm-2">
 	        		<i class="fa fa-eye"></i><?=$hits?>
 	        	</div>
 	        <?endif?>
 	        <?if (core::config('advertisement.location') != FALSE AND $ad->id_location != 1 AND $ad->location->loaded()):?>
-	        	<div class="col-xs-6 col-sm-2">
+	        	<div class="col-xs-12 col-sm-2">
 	            	<i class="fa fa-map-marker"></i><?=$ad->location->translate_name() ?>
 	            </div>
 	        <?endif?>
 	        <div class="col-xs-12 col-sm-4">
-	        	<?= __("Posted by")?> <a href="<?=Route::url('profile',  array('seoname'=>$ad->user->seoname))?>"><?=$ad->user->name?></a> <?=$ad->user->is_verified_user();?> <?= __("il")?> <span><?= Date::format($ad->published, core::config('general.date_format'))?></span>
+	        	<?= __("Posted by")?> <a href="<?=Route::url('profile',  array('seoname'=>$ad->user->seoname))?>"><?=$ad->user->name?></a> <?=$ad->user->is_verified_user();?> <?= __("on")?> <span><?= Date::format($ad->published, core::config('general.date_format'))?></span>
 	        </div>
 	        <?if (Core::config('advertisement.reviews')==1):?>
 	        	<div class="col-xs-12 col-sm-2">

@@ -17,4 +17,6 @@
 */
 ?>
 
-<script language="JavaScript" src="//feed2js.org//feed2js.php?src=<?=urlencode($widget->rss_url)?>&num=<?=$widget->rss_limit?>&desc=0&utf=y"  charset="UTF-8" type="text/javascript"></script>
+<div class="panel-body">
+    <script language="JavaScript" src="//feed2js.org//feed2js.php?src=<?=urlencode($widget->rss_url)?>&num=<?=$widget->rss_limit?>&desc=0&utf=y"  charset="UTF-8" type="text/javascript"></script>
+</div>

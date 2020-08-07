@@ -696,6 +696,84 @@ class Model_Ad extends ORM {
     }
 
     /**
+     * Delete video from edit ad
+     * @param  string $video_field
+     * @return bool
+     */
+
+    public function delete_video($video_field)
+    {
+        if (!$this->loaded())
+            return FALSE;
+
+        if(! isset($this->{$video_field}))
+        {
+            return FALSE;
+        }
+
+        if(core::config('advertisement.cloudinary_api_key') AND core::config('advertisement.cloudinary_api_secret'))
+        {
+            $video_attributes = json_decode($this->{$video_field});
+
+            if(isset($video_attributes->public_id))
+            {
+                require_once Kohana::find_file('vendor', 'cloudinary_php/autoload','php');
+
+                \Cloudinary::config([
+                    'cloud_name' => core::config('advertisement.cloudinary_cloud_name'),
+                    'api_key' => core::config('advertisement.cloudinary_api_key'),
+                    'api_secret' => core::config('advertisement.cloudinary_api_secret'),
+                    'secure' => true,
+                ]);
+
+                $result = \Cloudinary\Uploader::destroy($video_attributes->public_id, ['resource_type' => 'video']);
+            }
+        }
+
+        $this->{$video_field} = NULL;
+        $this->save();
+
+        return TRUE;
+    }
+
+    /**
+     * Delete videos from edit ad
+     * @return bool
+     */
+
+    public function delete_videos()
+    {
+        if(! $this->loaded())
+        {
+            return FALSE;
+        }
+
+        $custom_fields = Model_Field::get_all(FALSE);
+
+        if(! isset($custom_fields))
+        {
+            return FALSE;
+        }
+
+        foreach($this->_table_columns as $value)
+        {
+            //we want only those that are custom fields
+            if(strpos($value['column_name'], 'cf_') !== FALSE)
+            {
+                $field_column_name  = $value['column_name'];
+                $field_name  = str_replace('cf_', '', $field_column_name);
+
+                if (isset($custom_fields->{$field_name}) AND $custom_fields->{$field_name}->type == 'video')
+                {
+                    $this->delete_video($field_column_name);
+                }
+            }
+        }
+
+        return TRUE;
+    }
+
+    /**
      * Set primary image by swapping ids
      * @param  integer $primary_image
      * @return void
@@ -981,6 +1059,15 @@ class Model_Ad extends ORM {
                             case 'money':
                                 $cf_value = i18n::money_format($cf_value, $this->currency());
                                 break;
+                            case 'video':
+                                $video_attributes = json_decode($cf_value);
+
+                                if($edit_ad == FALSE AND isset($video_attributes->url))
+                                {
+                                    $cf_value = '<div'.HTML::attributes(['class' => '']).'>'.'<video'.HTML::attributes(['controls' => 'controls', 'class' => 'img-responsive']).'>'.'<source'.HTML::attributes(['src' => $video_attributes->url, 'type' => 'video/mp4']).'>'.'</video>'.'</div>';
+                                }
+
+                                break;
                         }
 
                         //should it be added to the listing? //I added the isset since those who update may not have this field ;)
@@ -1064,6 +1151,15 @@ class Model_Ad extends ORM {
                 $ads->where(DB::expr('DATE_ADD( published, INTERVAL '.core::config('advertisement.expire_date').' DAY)'), '>', Date::unix2mysql());
             }
 
+            //if the ad has passed event date don't show
+            if((New Model_Field())->get('eventdate'))
+            {
+                $ads->where_open()
+                ->or_where(DB::expr('cf_eventdate'), '>', Date::unix2mysql())
+                ->or_where('cf_eventdate','IS',NULL)
+                ->where_close();
+            }
+
             $ads->limit(core::config('advertisement.related'))
                 ->order_by(DB::expr('RAND()'));
 
@@ -1143,12 +1239,20 @@ class Model_Ad extends ORM {
 
             $email_content = array( '[URL.AD]'     => $url_ad,
                                     '[AD.TITLE]'   => $this->title,
+                                    '[AD.DESCRIPTION]'   => $this->description,
+                                    '[AD.URL]'   => $url_ad,
                                     '[ORDER.ID]'   => $order->id_order,
+                                    '[ORDER.AMOUNT]'   => i18n::money_format($order->amount, $order->currency),
                                     '[PRODUCT.ID]' => $order->id_product,
                                     '[BUYER.INSTRUCTIONS]' => $buyer_instructions,
                                     '[VAT.COUNTRY]'    => (isset($order->VAT) AND $order->VAT > 0)?$order->VAT_country:'',
                                     '[VAT.NUMBER]'     => (isset($order->VAT) AND $order->VAT > 0)?$order->VAT_number:'',
-                                    '[VAT.PERCENTAGE]' => (isset($order->VAT) AND $order->VAT > 0)?$order->VAT:'');
+                                    '[VAT.PERCENTAGE]' => (isset($order->VAT) AND $order->VAT > 0)?$order->VAT:'',
+                                    '[CUSTOMER.NAME]' => $order->user->name,
+                                    '[CUSTOMER.EMAIL]' => $order->user->email,
+                                    '[CUSTOMER.PHONE]' => $order->user->phone,
+                                    '[CUSTOMER.ADDRESS]' => $order->user->address);
+
             // send email to BUYER
             $order->user->email('ads-purchased', $email_content);
 
@@ -1316,6 +1420,8 @@ class Model_Ad extends ORM {
         if ( ! $this->_loaded)
             throw new Kohana_Exception('Cannot delete :model model because it is not loaded.', array(':model' => $this->_object_name));
 
+        $this->delete_videos();
+
         $this->delete_images();
 
         //delete favorites
@@ -1332,7 +1438,6 @@ class Model_Ad extends ORM {
 
         //remove messages ads
         DB::update('messages')->set(array('id_ad' => NULL))->where('id_ad', '=',$this->id_ad)->execute();
-
 
         parent::delete();
     }
