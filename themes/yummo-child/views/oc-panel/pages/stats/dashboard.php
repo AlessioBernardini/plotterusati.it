@@ -9,20 +9,6 @@
             method="post"
             action="<?= URL::current() ?>"
             x-data
-            x-init="
-                new Pikaday({
-                    field: $refs.fromDate,
-                    toString(date, format) {
-                        return moment(date).format('YYYY-MM-DD');
-                    },
-                });
-                new Pikaday({
-                    field: $refs.toDate,
-                    toString(date, format) {
-                        return moment(date).format('YYYY-MM-DD');
-                    },
-                });
-            "
         >
             <div class="flex space-x-1 mt-4">
                 <div class="flex rounded-md shadow-sm">
