@@ -1,5 +1,5 @@
 <?php defined('SYSPATH') or die('No direct script access.');?>
-<div class="page-header">
+<div class="page-header" id="titolonuoviannunci">
 	<h1><?=_e('Publish new advertisement')?></h1>
 </div>
 <?if (Theme::get('premium')==1 AND core::count($providers = Social::get_providers())>0 AND !Auth::instance()->get_user()):?>
