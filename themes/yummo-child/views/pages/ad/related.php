@@ -2,7 +2,7 @@
 
 <?if(core::count($ads)):?>
 <section class="related">
-    <h2><?=_e('Related ads')?></h2>
+    <h2><?=_e('Annunci nelle vicinanze')?></h2>
     <div class="row">
         <ul>
         <?foreach($ads as $ad ):?>
