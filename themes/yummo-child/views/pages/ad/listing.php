@@ -81,7 +81,8 @@ $annunci = $annunci->find_all();
                                     <a href="<?=Route::url('profile',  array('seoname'=>$ad->user->seoname))?>"><i class="fa fa-user"></i><?=$ad->user->name?></a>
                                 <?endif?>
                             </div>
-                            <a class="more-link pull-right hvr-icon-forward" href="<?=Route::url('ad', array('category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>"><?=_e('more')?></a>
+                            <?php /*<a class="more-link pull-right hvr-icon-forward" href="<?=Route::url('ad', array('category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>"><?=_e('more')?></a> */?>
+                        	<div class="date pull-right"><?if ($ad->published!=0){?> <?= Date::format($ad->published, core::config('general.date_format'))?><? }?></div>	
                         </div>
                     </div>
                 </li>
@@ -215,6 +216,7 @@ $annunci = $annunci->find_all();
                                 <?endfor?>
                             <?endif?>
                         </div>
+                        <a href="<?=Route::url('ad', array('controller'=>'ad','category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>">
                         <div class="extra_info">
                             <?if ($ad->price!=0){?>
                                 <div class="price pull-left">
@@ -235,8 +237,9 @@ $annunci = $annunci->find_all();
                                     <a href="<?=Route::url('profile',  array('seoname'=>$ad->user->seoname))?>"><i class="fa fa-user"></i><?=$ad->user->name?></a>
                                 <?endif?>
                             </div>
-                            <a class="more-link pull-right hvr-icon-forward" href="<?=Route::url('ad', array('category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>"><?=_e('more')?></a>
-                        </div>
+                            <?php /* <a class="more-link pull-right hvr-icon-forward" href="<?=Route::url('ad', array('category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>"><?=_e('more')?></a> */?>
+                        	<div class="date pull-right"><?if ($ad->published!=0){?> <?= Date::format($ad->published, core::config('general.date_format'))?><? }?></div>
+                        </div></a>
                         <div class="brake-grid"></div>
                         <div class="caption pull-left">
                             <h3>
@@ -251,9 +254,13 @@ $annunci = $annunci->find_all();
                                 </div>
                             </h3>
                             <?if(core::config('advertisement.description')!=FALSE AND $ad->description):?>
+                            	<a class="nolink" href="<?=Route::url('ad', array('controller'=>'ad','category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>">
                                 <p class="description"><?=Text::limit_chars(Text::removebbcode($ad->description), 120, NULL, TRUE)?></p>
+                                </a>              
                             <?else:?>
+                                <a class="nolink" href="<?=Route::url('ad', array('controller'=>'ad','category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>">
                                 <p class="description">&nbsp;</p>
+                                </a>
                             <?endif?>
                             <?foreach ($ad->custom_columns(TRUE) as $name => $value):?>
                                 <?if($value=='checkbox_1'):?>
@@ -262,12 +269,17 @@ $annunci = $annunci->find_all();
                                     <p><b><?=$name?></b>: <i class="fa fa-times"></i></p>
                                 <?else:?>
                                     <?if(is_string($name)):?>
+                                    	<a class="nolink" href="<?=Route::url('ad', array('controller'=>'ad','category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>">
                                         <p><b><?=$name?></b>: <?=$value?></p>
+                                        </a>
                                     <?else:?>
+                                    	<a class="nolink" href="<?=Route::url('ad', array('controller'=>'ad','category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>">
                                         <p><?=$value?></p>
+                                        </a>
                                     <?endif?>
                                 <?endif?>
                             <?endforeach?>
+                            <p class="provenienza"><b>Provenienza</b>: <?if ($ad->id_location != 1):?><a href="/all/<?=strtolower($ad->location->translate_name())?>"><?=$ad->location->translate_name()?></a><?endif?></p>
                         </div>
                         <?if ($user !== NULL AND ($user->is_admin() OR $user->is_moderator())):?>
                             <br />

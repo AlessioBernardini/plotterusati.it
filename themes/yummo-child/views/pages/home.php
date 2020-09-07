@@ -53,6 +53,7 @@
                                     <span class="glyphicon glyphicon-star"></span>
                                 <?endfor?>
                             <?endif?>
+                            <a href="<?=Route::url('ad', array('controller'=>'ad','category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>">
                             <div class="extra_info">
                                 <?if ($ad->price!=0){?>
                                     <div class="price pull-left">
@@ -73,24 +74,36 @@
                                         <a href="<?=Route::url('profile',  array('seoname'=>$ad->user->seoname))?>"><i class="fa fa-user"></i><?=$ad->user->name?></a>
                                     <?endif?>
                                 </div>
-                                <a class="more-link pull-right hvr-icon-forward" href="<?=Route::url('ad', array('category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>"><?=_e('more')?></a>
-                            </div>
+                                <?php /*<a class="more-link pull-right hvr-icon-forward" href="<?=Route::url('ad', array('category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>"><?=_e('more')?></a> */?>
+                            	<div class="date pull-right"><?if ($ad->published!=0){?> <?= Date::format($ad->published, core::config('general.date_format'))?><? }?></div>
+                            </div></a>
                             <div class="caption">
                                 <h5><a href="<?=Route::url('ad', array('category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>"><?=Text::limit_chars(Text::removebbcode($ad->title), 30, NULL, TRUE)?></a></h5>
+                                <a class="nolink" href="<?=Route::url('ad', array('controller'=>'ad','category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>">
                                 <p><?=Text::limit_chars(Text::removebbcode($ad->description), 120, NULL, TRUE)?></p>
+                                </a>
                                 <?foreach ($ad->custom_columns(TRUE) as $name => $value):?>
                                     <?if($value=='checkbox_1'):?>
+                                    	<a class="nolink" href="<?=Route::url('ad', array('controller'=>'ad','category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>">
                                         <p class="aggiunto"><b><?=$name?></b>: <i class="fa fa-check"></i></p>
+                                        </a>
                                     <?elseif($value=='checkbox_0'):?>
+                                    	<a class="nolink" href="<?=Route::url('ad', array('controller'=>'ad','category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>">
                                         <p class="aggiunto"><b><?=$name?></b>: <i class="fa fa-times"></i></p>
+                                        </a>
                                     <?else:?>
                                         <?if(is_string($name)):?>
+                                        	<a class="nolink" href="<?=Route::url('ad', array('controller'=>'ad','category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>">
                                             <p class="aggiunto"><b><?=$name?></b>: <?=$value?></p>
+                                            </a>
                                         <?else:?>
+                                        	<a class="nolink" href="<?=Route::url('ad', array('controller'=>'ad','category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>">
                                             <p class="aggiunto"><?=$value?></p>
+                                            </a>
                                         <?endif?>
                                     <?endif?>
                                 <?endforeach?>
+                                <p class="provenienza-home"><b>Provenienza</b>: <?if ($ad->id_location != 1):?><a href="/all/<?=strtolower($ad->location->translate_name())?>"><?=$ad->location->translate_name()?></a><?endif?></p>
                             </div>
                         </div>
                     </div>
