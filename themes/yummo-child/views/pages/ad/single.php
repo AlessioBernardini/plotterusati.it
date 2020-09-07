@@ -148,7 +148,7 @@
                 <p><a href="<?=$ad->website?>" rel="nofollow" target="_blank"><?=$ad->website?></a></p>
             <?endif?>
             <?if (core::config('advertisement.address')):?>
-                <p><?=$ad->address?></p>
+                <p><a href="<?=Route::url('profile',  array('seoname'=>$ad->user->seoname))?>"><?=$ad->user->name?></a> <?=$ad->address?></p>
             <?endif?>
             <?=$ad->btc()?>
         </div>
