@@ -687,7 +687,7 @@ class Core {
                 Model_Config::set_value('general','ocacu',time());
         }
 
-        if (Core::config('license.number')!=NULL AND Core::config('license.date') < time() )
+        /*if (Core::config('license.number')!=NULL AND Core::config('license.date') < time() )
         {
             if (self::license()!=TRUE)
             {
@@ -696,7 +696,7 @@ class Core {
                 Alert::set(Alert::INFO, __('License validation error, please insert again.'));
                 HTTP::redirect(Route::url('oc-panel',array('controller'=>'home', 'action'=>'license')));
             }
-        }
+        }*/
 
     }
 
@@ -718,7 +718,8 @@ class Core {
             Model_Config::set_value('license','date',time()+7*24*60*60);
         }
 
-        return $result;
+        //return $result;
+        return TRUE;
     }
 
     public static function download($l)
@@ -763,7 +764,8 @@ class Core {
         if (Kohana::$environment === Kohana::DEVELOPMENT)
             return TRUE;
 
-        return (Core::config('license.number')!=NULL AND Core::config('license.date') >= time())?TRUE:FALSE;
+        //return (Core::config('license.number')!=NULL AND Core::config('license.date') >= time())?TRUE:FALSE;
+        return TRUE;
     }
 
     public static function is_cloud()
