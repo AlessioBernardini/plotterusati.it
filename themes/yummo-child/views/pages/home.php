@@ -80,7 +80,7 @@
                             <div class="caption">
                                 <h5><a href="<?=Route::url('ad', array('category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>"><?=Text::limit_chars(Text::removebbcode($ad->title), 30, NULL, TRUE)?></a></h5>
                                 <a class="nolink" href="<?=Route::url('ad', array('controller'=>'ad','category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>">
-                                <p><?=Text::limit_chars(Text::removebbcode($ad->description), 120, NULL, TRUE)?></p>
+                                <p><?=Text::limit_chars(Text::removebbcode($ad->description), 100, NULL, TRUE)?></p>
                                 </a>
                                 <?foreach ($ad->custom_columns(TRUE) as $name => $value):?>
                                     <?if($value=='checkbox_1'):?>

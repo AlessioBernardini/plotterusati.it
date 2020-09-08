@@ -59,7 +59,7 @@ $annunci = $annunci->find_all();
                         </a>
                         <div class="caption">
                             <h5><a href="<?=Route::url('ad', array('category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>"><?=Text::limit_chars(Text::removebbcode($ad->title), 30, NULL, TRUE)?></a></h5>
-                            <p><?=Text::limit_chars(Text::removebbcode($ad->description), 120, NULL, TRUE)?></p>
+                            <p><?=Text::limit_chars(Text::removebbcode($ad->description), 100, NULL, TRUE)?></p>
                         </div>
                         <div class="extra_info">
                             <?if ($ad->price!=0){?>
@@ -255,7 +255,7 @@ $annunci = $annunci->find_all();
                             </h3>
                             <?if(core::config('advertisement.description')!=FALSE AND $ad->description):?>
                             	<a class="nolink" href="<?=Route::url('ad', array('controller'=>'ad','category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>">
-                                <p class="description"><?=Text::limit_chars(Text::removebbcode($ad->description), 120, NULL, TRUE)?></p>
+                                <p class="description"><?=Text::limit_chars(Text::removebbcode($ad->description), 100, NULL, TRUE)?></p>
                                 </a>              
                             <?else:?>
                                 <a class="nolink" href="<?=Route::url('ad', array('controller'=>'ad','category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>">
