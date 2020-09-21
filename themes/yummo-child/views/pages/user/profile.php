@@ -8,8 +8,13 @@
     <article id="user_profile_info" class="well">
 	    <div class="col-xs-12 col-md-3">
 	        <?$images = $user->get_profile_images(); if ($images):?>
-                <div id="gallery">
+                <div id="gallery"> 
                     <?$i = 0; foreach ($images as $key => $image):?>
+                    <?php 
+                        if(strpos($image, "gravatar")){
+                            ?><div class="segnaposto">L'utente non ha ancora inserito la sua immagine del profilo.</div><?php
+                        }
+                    ?>
                         <a href="<?=$image?>" class="thumbnail gallery-item <?=$i > 0 ? 'hidden' : NULL?>" data-gallery>
                             <img class="img-rounded img-responsive" src="<?=Core::imagefly($image,200,200)?>" alt="<?=$user->name?>">
                         </a>
