@@ -1,0 +1,67 @@
+a {
+	color:#34495E;
+}
+a:hover {
+	color:#1FA67A;
+	text-decoration:none;
+}
+.panel-sidebar > .panel-heading {
+    color: #1FA67A;
+}
+#sidebar {
+	background:#F2F2F2;
+	padding:15px 10px 0;
+}
+#logo h1 {
+	color:#34495E;
+}
+/* Homepage main categories and locations */
+.directory h4 a {
+    color: #34495E;
+}
+.directory h4 a:hover, .directory h4 a:active, .directory h4 a:focus {
+    color: #1FA67A;
+}
+.panel-sidebar .categories .active, .panel-sidebar .categories .active:hover {
+	color:#34495E;
+}
+.pagination li > a:hover {
+	color:#1FA67A;
+}
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+	color:#34495E;
+}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+	color:#1FA67A;
+}
+.btn-warning, .btn-primary, .btn-success{
+	background:#34495E;
+	border-color: #2e4154;
+}
+.btn-warning:hover, .btn-warning:active, .btn-warning:focus,
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus,
+.btn-success:hover, .btn-success:active, .btn-success:focus{
+	background:#1FA67A!important;
+	color:#fff;
+	border-color:#1b956d!important;
+}
+.label-info{
+	background-color: #34495E;
+}
+.listings .premium.listing-row {
+	background-color: #e6e8eb!important;
+}
+.listings .listing-row:nth-child(even) {
+	background-color: #f8f9f9;
+}
+
+/* Widgets*/
+.slider-handle{
+    background-color: #34495E;
+    background-image: linear-gradient(to bottom, #34495E, #2e4154);
+}

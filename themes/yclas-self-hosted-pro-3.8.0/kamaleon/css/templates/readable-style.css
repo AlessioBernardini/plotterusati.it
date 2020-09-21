@@ -1,0 +1,52 @@
+.navbar-nav > li > a:hover {padding: 8px 12px;;}
+.subnav{min-height: 50px;}
+.subnav-fixed{top:65px;}
+a{color: #e78b24;text-decoration: none;}
+a:hover,a:focus{color: #e78b24;text-decoration: underline;}
+.label{font-weight: bold}
+.navbar-nav > li > a{margin:12.5px 3px;}
+.navbar .btn-primary-white .badge{ background-color: #4582ec; color:#FFF; padding: 3px 8px; font-size: 14px;}
+.badge{background-color: #5299e8;}
+.media .label-danger, .badge-success, .label-success{
+    color: #ffffff;
+    background-color: #2780e3;
+    border-color: #2780e3;
+}
+.media .label-danger:hover, .badge-success:hover, .label-success:hover, .label-success:active, .label-success:focus{
+    color: #fff;
+    background-color: #1967be!important;
+}
+.btn-primary-white, .btn-inverse {
+    color: #4582ec;
+    background-color: #fff;
+    border-color: #4582ec;
+}
+.btn-primary-white:hover, .btn-primary-white:active, .btn-primary-white:focus, .btn-inverse:hover, .btn-inverse:active, .btn-inverse:focus {
+    color:#4582ec;
+    border-color: #4582ec;
+    background-color: #e6e6e6;
+}
+.btn-success {
+    color: #ffffff;
+    background-color: #4582ec;
+    border-color: #4582ec;
+}
+.btn-success:hover, .btn-success:active, .btn-success:focus{
+    color: #ffffff;
+    background-color: #1863e6!important;
+    border-color: #175fdd!important;
+}
+
+/* Listing page */
+.featured-ads,.featured-item{background-color: #fae7d3;}
+
+/* Forums */
+.table > tbody > tr.success > td{
+    background-color: #fcf3e9;
+}
+.table > tbody > tr.success:hover > td {
+    background-color: #fae7d3;
+}
+
+/*yclas topbar style*/
+.yclas-bar.body_fixed .subnav-fixed {top: 105px;}

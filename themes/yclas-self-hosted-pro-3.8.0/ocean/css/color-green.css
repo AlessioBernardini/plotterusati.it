@@ -1,0 +1,71 @@
+/**
+ * Custom theme styles that overwrites theme 
+ */
+
+a {color: #727F27;}
+a:hover {color: #535F12;}
+
+.category_box_title {background-color: #AFBD5E;}
+
+.navbar-inverse {background-color: #AFBD5E; border-color: #909F3B;}
+
+.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus{background-color: #AFBD5E;}
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:hover, .navbar-inverse .navbar-nav>.active>a:focus {color: #fff; background-color: #909F3B;}
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>.open>a:focus {color: #fff;background-color: #909F3B;}
+
+.badge-success{background-color: #AFBD5E;}
+
+.featured{background: #BCCDC7;}
+
+.btn-success,
+.btn-primary{background-color: #AFBD5E; border-color: #AFBD5E;}
+.btn-success:hover,
+.btn-success:active,
+.btn-success:focus,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open > dropdown-toggle.btn-primary {background-color: #909F3B!important; border-color: #717F1F!important;}
+
+.btn-info, .label-info{background-color: #AFBD5E!important; border-color: #AFBD5E!important;}
+.btn-info:hover,
+.btn-info:focus,
+.btn-info:active,
+.btn-info.active,
+.open > dropdown-toggle.btn-info {background-color: #717F1F!important; border-color: #535F0C!important;}
+
+.panel-home-categories > .panel-heading {
+    background-color: #AFBD5E;
+}
+.panel-sidebar > .panel-heading {
+    border-top-color: #AFBD5E;
+}
+.featured-ads,.featured-item{background:#eff1de;}
+.text-info{color:#565f23;}
+
+/* Pagination */
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+    background-color: #717F1F;
+    border-color: #717F1F;
+}
+.pagination > li > a, .pagination > li > span {
+    color: #717F1F;
+}
+.pagination > li > a:focus, .pagination > li > a:hover, .pagination > li > span:focus, .pagination > li > span:hover {
+    color: #535F0C;
+}
+
+/* Widgets*/
+.slider-handle{
+    background-color: #AFBD5E;
+    background-image: linear-gradient(to bottom, #AFBD5E, #909F3B);
+}
+
+/* Forums */
+.table > tbody > tr.success > td{
+    background-color: #f8f9f2;
+}
+.table > tbody > tr.success:hover > td {
+    background-color: #f2f4e5;
+}

@@ -1,0 +1,22 @@
+ul.nav.navbar-nav.navbar-btn{
+	margin-top: 0;
+	margin-bottom: 0; 
+}
+
+.subnav{min-height: 50px;}
+.subnav-fixed{top:57px;}
+a{color: #e78b24;text-decoration: none;}
+a:hover,a:focus{color: #e78b24;text-decoration: underline;}
+.featured-text{font-size: 85%;}
+.featured-ads,.featured-item{
+    background-color: transparent;
+    border: 2px solid #2a9fd6 !important;
+}
+/* grid view */
+.grid-view .triangle-top-left { 
+    border-top: 90px solid #2a9fd6;
+}
+/* list view */
+.triangle-top-left { 
+    border-top: 90px solid #2a9fd6;
+}

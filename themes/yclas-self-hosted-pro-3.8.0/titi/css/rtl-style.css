@@ -1,0 +1,35 @@
+ul.dropdown-menu{position: absolute;
+margin: auto;
+float: left;
+left: 200px;}
+.navbar-right{float:left!important;}
+.pull-left{float:right!important;}
+.pull-right{float:left!important;}
+.media-left{padding-left:10px;}
+.item.list-group-item img{float:right;
+margin-left: 20px;
+margin-right: 0px;}
+.thumbnail ul{padding-right: 0px;}
+/*Dropdown menu*/
+.select2-results__option{text-align:right;}
+.select2-selection__rendered{text-align:right;}
+.select2-search__field{text-align:right;}
+.select2-container .select2-search--inline{float:right;}
+input[type="checkbox"]{position:relative!important;margin-left:20px!important;margin-right:0px!important;}
+.dropdown-submenu > .dropdown-menu {right:auto; left: 100%;}
+.badged-name {padding-right: 0; padding-left: 30px;}
+.carousel-control.left{background-image: none}
+.carousel-control.right{background-image: none}
+.sceditor-container {
+    overflow: visible !important;
+}
+#st_gdpr_iframe {
+    right: -5000px !important;
+    left: auto !important;
+}
+@media (max-width: 575px) {
+    div.sceditor-dropdown {
+        left: auto!important;
+        right: 0!important;
+    }
+}

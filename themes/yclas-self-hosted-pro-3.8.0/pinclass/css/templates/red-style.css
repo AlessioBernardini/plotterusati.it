@@ -1,0 +1,27 @@
+::-moz-selection{background-color: #f44336;}::selection{background-color: #f44336;}.btn-primary,h1:after,h2:after,h3:before,h4:before,h5:before,h6:before, .bannergroup,.category a.active,.category a:focus,.category a:hover,.pagination .active a,.single .extra_info .price, .filter .active,.filter .active:focus,.filter .active:hover,.bannergroup, .category a.active, .category a:focus, .category a:hover, .pagination .active a, .extra_info .price,.dropdown-menu>.active>a, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover{background:#f44336}a{color:#f44336}a.active,a:focus,a:hover{color:#ef5350}.footer-copyright a.active,.footer-copyright a:focus,.footer-copyright a:hover,.hvr-icon-forward:before,.latest_ads .extra_info .more-link i,.list-group .caption h3 a:focus,.list-group .caption h3 a:hover,.listing_ads .extra_info .more-link i,.navbar-nav>li>a:focus,.navbar-nav>li>a:hover,.pagination li a,.pagination li span,.panel-sidebar .panel-body ul a.active,.panel-sidebar .panel-body ul a:focus,.panel-sidebar .panel-body ul a:hover,.tabbed ul li button.active,.tabbed ul li button:focus,.tabbed ul li button:hover,footer a.active,footer a:focus,footer a:hover{color:#f44336}.btn-primary{border-color:#f44336}.btn-primary:active,.btn-primary:focus,.btn-primary:active:focus,.btn-primary:hover,.open>.dropdown-toggle.btn-primary,.open>.dropdown-toggle.btn-primary:focus,.open>.dropdown-toggle.btn-primary:hover{background:#ef5350;border-color:#ef5350}.featured-ads .extra_info,.featured-item .extra_info,.featured-ads,.featured-item,.featured-ads .image_holder,.featured-item .image_holder,.filter #sort,.pagination .active a,.single #gallery .thumbnail.active,.single #gallery .thumbnail:focus,.single #gallery .thumbnail:hover,.tabbed-content{border-color:#f44336}.featured-ads,.featured-item{border:2px solid #f44336!important;background-color:#ebebeb;}.featured-ads .triangle-top-left,.featured-item .triangle-top-left{border-top:100px solid #f44336;}.bannergroup,.category a.active,.category a:focus,.category a:hover,.pagination .active a,.extra_info .price{background:#f44336}.filter .active,.filter .active:focus,.filter .active:hover{background:#f44336;border-color:#f44336}.wizard li.active span.round-tab{border-color:#f44336;}.wizard li.active span.round-tab i{color:#f44336;}.grid figure.effect-sadie figcaption::before {background: -webkit-linear-gradient(top, rgba(244,67,54,0) 50%, rgba(244,67,54,0.8) 100%);background: linear-gradient(to bottom, rgba(244,67,54,0) 50%, rgba(244,67,54,0.8)100%);}.categories .category h5 {border-bottom:2px solid #f44336;}.btn-primary .badge{color:#f44336;}
+footer .f-box-header{color: #f44336;}
+.btn-success{
+	border-color: #f44336;
+	background-color: #f44336;
+}
+.btn-success:hover, .btn-success:active, .btn-success:focus{
+	border-color: #ef5350!important;
+	background-color: #ef5350!important;
+}
+.label-info, .label-info:hover, .label-info:active, .label-info:focus{
+	background-color: #f88e86!important;
+}
+
+/* Widgets*/
+.slider-handle{
+    background-color: #f44336;
+    background-image: linear-gradient(to bottom, #f44336, #ef5350);
+}
+
+/* Forums */
+.table > tbody > tr.success > td{
+    background-color: #fef3f2;
+}
+.table > tbody > tr.success:hover > td {
+    background-color: #fde8e6;
+}

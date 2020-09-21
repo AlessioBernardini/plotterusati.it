@@ -1,0 +1,47 @@
+.navbar .dropdown-menu a {
+    color: #262626;
+}
+.featured-ads,.featured-item{background-color: #f8dad0;}
+
+/* Buttons and labels */
+.btn-inverse{
+    color: #000;
+    background-color: #fff;
+    border-color: #adadad;
+}
+.btn-inverse:hover, .btn-inverse:focus, .btn-inverse:active, .btn-inverse.active, .open .dropdown-toggle.btn-inverse{
+    color: #000;
+    background-color: #e6e6e6!important;
+    border-color: #c2c2c2!important;
+}
+
+.btn-success, .label-success{
+    background-color: #dd4814;
+    border-color: #dd4814;
+    color: #ffffff;
+}
+
+.btn-success:hover, .btn-success:active, .btn-success:focus, .label-success:hover, .label-success:active, .label-success:focus {
+    background-color: #ae3910!important;
+    border-color: #a5360f!important;
+    color: #ffffff!important;
+    background-image: none!important;
+}
+.navbar .btn-primary-white .badge{ background-color: #000;color: #fff;}
+
+/* Widgets*/
+.slider-handle{
+    background-color: #dd4814;
+    background-image: linear-gradient(to bottom, #dd4814, #c64012);
+}
+
+/* Forums */
+.table > tbody > tr.success > td{
+    background-color: #f6f6f5;
+}
+.table > tbody > tr.success:hover > td {
+    background-color: #eeedeb;
+}
+
+/* Other */
+.text-info{color:#682209;}

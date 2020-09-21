@@ -1,0 +1,20 @@
+::-moz-selection{background-color:#41bb19;}::selection{background-color:#41bb19;}.btn-primary,h1:after,h2:after,h3:before,h4:before,h5:before,h6:before, .bannergroup,.category a.active,.category a:focus,.category a:hover,.pagination .active a,.single .extra_info .price, .filter .active,.filter .active:focus,.filter .active:hover,.bannergroup, .category a.active, .category a:focus, .category a:hover, .pagination .active a, .extra_info .price,.dropdown-menu>.active>a, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover{background:#41bb19}a{color:#41bb19}a.active,a:focus,a:hover{color:#359914}.footer-copyright a.active,.footer-copyright a:focus,.footer-copyright a:hover,.hvr-icon-forward:before,.latest_ads .extra_info .more-link i,.list-group .caption h3 a:focus,.list-group .caption h3 a:hover,.listing_ads .extra_info .more-link i,.navbar-nav>li>a:focus,.navbar-nav>li>a:hover,.pagination li a,.pagination li span,.panel-sidebar .panel-body ul a.active,.panel-sidebar .panel-body ul a:focus,.panel-sidebar .panel-body ul a:hover,.tabbed ul li button.active,.tabbed ul li button:focus,.tabbed ul li button:hover,footer a.active,footer a:focus,footer a:hover{color:#41bb19}.btn-primary{border-color:#41bb19}.btn-primary:active,.btn-primary:focus,.btn-primary:active:focus,.btn-primary:hover,.open>.dropdown-toggle.btn-primary,.open>.dropdown-toggle.btn-primary:focus,.open>.dropdown-toggle.btn-primary:hover{background:#359914;border-color:#359914}.featured-ads .extra_info,.featured-item .extra_info,.featured-ads .image_holder,.featured-item .image_holder,.filter #sort,.pagination .active a,.single #gallery .thumbnail.active,.single #gallery .thumbnail:focus,.single #gallery .thumbnail:hover,.tabbed-content{border-color:#41bb19}.featured-ads,.featured-item{border:2px solid #41bb19!important;background-color:#ebebeb;}.featured-ads .triangle-top-left,.featured-item .triangle-top-left{border-top:100px solid #41bb19;}.bannergroup,.category a.active,.category a:focus,.category a:hover,.pagination .active a,.extra_info .price{background:#41bb19}.filter .active,.filter .active:focus,.filter .active:hover{background:#41bb19;border-color:#41bb19}.wizard li.active span.round-tab{border-color:#41bb19;}.wizard li.active span.round-tab i{color:#41bb19;}.grid figure.effect-sadie figcaption::before {background: -webkit-linear-gradient(top, rgba(65,187,25,0) 50%, rgba(65,187,25,0.8) 100%);background: linear-gradient(to bottom, rgba(65,187,25,0) 50%, rgba(65,187,25,0.8)100%);}.categories .category h5 {border-bottom:2px solid #41bb19;}
+.btn-success{
+	border-color: #41bb19;
+	background-color: #41bb19;
+}
+.btn-success:hover, .btn-success:active, .btn-success:focus{
+	border-color: #359914!important;
+	background-color: #359914!important;
+}
+.label-info, .label-info:hover, .label-info:active, .label-info:focus{
+	background-color: #8dd675!important;
+}
+
+/* Forums */
+.table > tbody > tr.success > td{
+    background-color: #f1faee;
+}
+.table > tbody > tr.success:hover > td {
+    background-color: #e4f5de;
+}

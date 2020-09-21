@@ -1,0 +1,66 @@
+.subnav{min-height: 50px;}
+.subnav-fixed{top:60px;}
+a{color: #000;text-decoration: none;}
+.subnav .nav > li > a{border: none;}
+.subnav .nav > li:first-child > a, .subnav .nav > li:first-child > a:hover{border-left: none;}
+
+.chosen-container-single .chosen-single{
+    height: 43px !important;
+    padding: 8px 10px;
+}
+.chosen-container-single .chosen-single div b {
+    margin-top: 10px;
+}
+.chosen-container-multi .chosen-choices {
+    height: 43px !important;
+    padding: 8px 6px;
+}
+.chosen-container-multi .chosen-choices li.search-field input[type="text"] {
+    color: #999999;
+    font-family: Georgia,​"Times New Roman",​Times,​serif!important;
+}
+.featured-ads, .featured-item {
+    background: #EEEEEE;
+    color: #333;
+}
+.btn-inverse, .btn-success{
+    color: #000;
+    background-color: #fff;
+    border-color: #adadad;
+}
+.btn-inverse:hover, .btn-inverse:focus, .btn-inverse:active, .btn-inverse.active, .open .dropdown-toggle.btn-inverse, .btn-success:hover, .btn-success:focus, .btn-success:active {
+    color: #000!important;
+    background-color: #e6e6e6!important;
+    border-color: #c2c2c2!important;
+}
+.label-danger, .badge-success, .label-success{
+    color: #ffffff;
+    background-color: #eb6864;
+    border-color: #eb6864;
+}
+.media .label-danger:hover, .badge-success:hover, .label-success:hover, .label-success:active, .label-success:focus{
+    color: #ffffff;
+    background-color: #e53c37!important;
+    border-color: #e4332e!important;
+}
+li.price{
+	color: #eb6864;
+}
+/* Widgets*/
+.slider-handle{
+    background-color: #000000;
+    background-image: linear-gradient(to bottom, #000000, #000000);
+}
+/* Other */
+.navbar .btn-primary-white .badge{ background-color: #000; color:#FFF; top:1px; padding: 1px 8px; font-size: 14px;}
+.text-info{color:#000;}
+
+/* Forums */
+.table > tbody > tr.success > td{
+    background-color: #f4f4f4;
+}
+.table > tbody > tr.success:hover > td {
+    background-color: #eaeaea;
+}
+/*yclas topbar style*/
+.yclas-bar.body_fixed .subnav-fixed {top: 100px;}

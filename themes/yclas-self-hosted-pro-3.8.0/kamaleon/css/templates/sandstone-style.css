@@ -1,0 +1,46 @@
+.subnav-fixed {top: 61px;}
+.panel-sidebar {
+    background-color: #f8f5f0;
+    border: 1px solid transparent;
+    box-shadow: none;
+}
+.panel-sidebar .panel-title {
+    color: #3e3f3a;
+}
+.btn-inverse{
+    color: #000;
+    background-color: #fff;
+    border-color: #adadad;
+}
+.btn-inverse:hover, .btn-inverse:focus, .btn-inverse:active, .btn-inverse.active, .open .dropdown-toggle.btn-inverse{
+    color: #000;
+    background-color: #e6e6e6!important;
+    border-color: #c2c2c2!important;
+}
+.btn-success{
+    background-color: #93c54b;
+}
+.btn-success:hover, .btn-success:active, .btn-success:focus{background-color: #759d3c;}
+.featured-ads,.featured-item{background-color: #e9f3db;}
+li.price{color: #325d88;}
+.media .label-danger{background-color: #93c54b;}
+
+/* Widgets*/
+.slider-handle{
+    background-color: #3e3f3a;
+    background-image: linear-gradient(to bottom, #3e3f3a, #373834);
+}
+
+/* Forums */
+.table > tbody > tr.success > td{
+    background-color: #eaeef3;
+}
+.table > tbody > tr.success > td > a{
+    color: #325d88;
+}
+.table > tbody > tr.success:hover > td {
+    background-color: #d6dee7;
+}
+
+/*yclas topbar style*/
+.yclas-bar.body_fixed .subnav-fixed {top: 102px;}

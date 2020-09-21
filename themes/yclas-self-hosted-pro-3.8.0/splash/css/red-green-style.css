@@ -1,0 +1,188 @@
+.slider-overlay {
+  background: #7B00FF;
+}
+.categories .categorie {
+  border: 1px solid #7B00FF;
+}
+.categories .categorie:hover,
+.categories .categorie:focus,
+.categories .categorie.active {
+  border-color: #00B244;
+}
+.categories .categorie:hover .icon,
+.categories .categorie:focus .icon,
+.categories .categorie.active .icon {
+  background: #00B244;
+}
+.categories .categorie:hover .h3,
+.categories .categorie:focus .h3,
+.categories .categorie.active .h3 {
+  color: #00B244;
+}
+.categories .categorie .h3 {
+  color: #7B00FF;
+}
+.categories .categorie .icon {
+  background: #7B00FF;
+}
+.categories .categorie ul a:hover,
+.categories .categorie ul a:focus {
+  color: #00B244;
+}
+#related li .overlay-related {
+  background-color: #00B244;
+}
+#related li:last-of-type {
+  background: #00B244;
+}
+#page-header .breadcrumb li:hover,
+#page-header .breadcrumb li:focus,
+#page-header .breadcrumb li.active {
+  color: #00B244;
+}
+#page-header .overlay {
+  background-color: #7B00FF;
+}
+.filter a:hover,
+.filter button:hover,
+.filter a:focus,
+.filter button:focus,
+.filter a.active,
+.filter button.active {
+  background: #00B244;
+}
+.listing-overview li .list-image-overlay {
+  background: #7B00FF;
+}
+.listing-overview li .text .h2 {
+  color: #00B244;
+}
+.listing-overview li .text span a {
+  color: #7B00FF;
+}
+/* Featured ad */
+.featured {
+  border: 2px solid #00B244 !important;
+}
+.featured .triangle-top-left {
+  border-top: 100px solid #00B244;
+}
+.featured span a {
+  color: #00B244 !important;
+}
+.featured .list-image-overlay {
+  background: #00B244 !important;
+}
+.detaillist li span {
+  color: #00B244;
+}
+.detaillist .price .pricebtn {
+  background: #00B244;
+}
+.btn-success,
+.color-primary {
+  background: #00B244;
+  color: #ffffff!important;
+  border: none;
+}
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active,
+.color-primary:hover,
+.color-primary:focus,
+.color-primary.active {
+  background-color: #00B225!important;
+  color: #ffffff!important;
+  text-decoration: none!important;
+  border: none!important;
+}
+.color-secondary {
+  background: #7B00FF;
+  color: #ffffff!important;
+}
+.color-secondary:hover,
+.color-secondary:focus,
+.color-secondary.active {
+  background-color: #6218B2!important;
+  color: #ffffff!important;
+  text-decoration: none;
+}
+footer {
+  background: url("../img/footer-top.png") top repeat-x #7B00FF;
+}
+.copyright {
+  background: #6218B2;
+}
+.mainmenu li:hover,
+.mainmenu li:focus,
+.mainmenu li:active {
+  color: #00B244;
+}
+.navbar-nav .active a {
+  color: #00B244 !important;
+}
+.standard-frm .upload-image .image-container .overlay-image {
+  background: #00B244;
+}
+.standard-frm .upload-image button {
+  color: #00B244;
+}
+.findus-frm span {
+  color: #00B244;
+}
+.latest-module li:hover,
+.latest-module li:focus {
+  border: 2px solid #00B244;
+}
+.latest-module li:hover .latest-module-overlay,
+.latest-module li:focus .latest-module-overlay {
+  background: #00B244;
+}
+.latest-module li .latest-module-overlay {
+  background: #7B00FF;
+}
+.tags-module li:hover,
+.tags-module li:focus,
+.tags-module li.active {
+  background: #00B244;
+}
+.categories-module li a:hover,
+.categories-module li a:focus,
+.categories-module li a.active {
+  color: #00B244;
+}
+.categories-module li a:hover .icon:before,
+.categories-module li a:focus .icon:before,
+.categories-module li a.active .icon:before {
+  background: #00B244;
+}
+.categories-module li .icon:before {
+  background: #7B00FF;
+}
+.categories-module li .icon {
+  background: #7B00FF;
+}
+aside .location:hover a,
+aside .location:hover .location-icon, 
+aside .location:focus a,
+aside .location:focus .location-icon  {
+  color: #00B244;
+}
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+    background-color: #7B00FF;
+    border-color: #7B00FF;
+}
+.pagination > li > a:focus, .pagination > li > a:hover, .pagination > li > span:focus, .pagination > li > span:hover {
+    color: #7B00FF;
+}
+.pagination > li > a, .pagination > li > span {
+    color: #7B00FF;
+}
+
+/* Forums */
+.table > tbody > tr.success > td{
+    background-color: #e5f7ec;
+}
+.table > tbody > tr.success:hover > td {
+    background-color: #ccefd9;
+}

@@ -1,0 +1,67 @@
+a {
+	color:#9B59B6;
+}
+a:hover {
+	color:#1ABC9C;
+	text-decoration:none;
+}
+.panel-sidebar > .panel-heading {
+    color: #1ABC9C;
+}
+#sidebar {
+	background:#F2F2F2;
+	padding:15px 10px 0;
+}
+#logo h1 {
+	color:#9B59B6;
+}
+/* Homepage main categories and locations */
+.directory h4 a {
+    color: #9B59B6;
+}
+.directory h4 a:hover, .directory h4 a:active, .directory h4 a:focus {
+    color: #1ABC9C;
+}
+.panel-sidebar .categories .active, .panel-sidebar .categories .active:hover {
+	color:#9B59B6;
+}
+.pagination li > a:hover {
+	color:#1ABC9C;
+}
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+	color:#9B59B6;
+}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+	color:#1ABC9C;
+}
+.btn-warning, .btn-primary, .btn-success{
+	background:#9B59B6;
+	border-color: #8b50a3;
+}
+.btn-warning:hover, .btn-warning:active, .btn-warning:focus,
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus,
+.btn-success:hover, .btn-success:active, .btn-success:focus{
+	background:#1ABC9C!important;
+	color:#fff;
+	border-color:#17a98c!important;
+}
+.label-info{
+	background-color: #9B59B6;
+}
+.listings .premium.listing-row {
+	background-color: #f1e7f4!important;
+}
+.listings .listing-row:nth-child(even) {
+	background-color: #fcf9fc;
+}
+
+/* Widgets*/
+.slider-handle{
+    background-color: #9B59B6;
+    background-image: linear-gradient(to bottom, #9B59B6, #8b50a3);
+}

@@ -1,0 +1,72 @@
+h1, h2, h3, h4, h5, h6 {
+    color: #009688;
+}
+a:hover{
+	color: #005a51;
+}
+.nav-cat-cont, .dropdown-menu li > a:hover {
+    background-color: #009688;
+}
+li.dropdown a {
+    color: #009688;
+}
+.nav-cat a, #slider-fixed-products .thumbnail .caption h5 a {
+    color: #009688;
+}
+.categories ul li.cathead {
+    border-bottom-color: #009688;
+}
+.footer {
+    border-color: #009688;
+}
+.well.featured {
+    background:rgba(0, 150, 156, 0.2);
+}
+.label-warning{
+	background-color: #009688;
+}
+.price{
+	color: #00877a;
+}
+.btn-success, .btn-success:hover, .btn-success:active, .btn-success:focus,
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:focus  {
+    color: #fff;
+    background-color: #009688!important;
+    border-color: #00877a!important;
+}
+#sidebar .widget-header, .label-default, .label-success {
+    background: none repeat scroll 0 0 #005a51;
+}
+.label-default:hover, .label-default:active,.label-default:focus, .label-success:hover, .label-success:active, .label-success:focus {
+    background-color: #005a51!important;
+}
+.label-info{
+    background-color: #70D0C6;
+    border-color: #2EAB9E;
+    color: #FFF;
+}
+.btn-info{
+    background-color: #70D0C6;
+    border-color: #2EAB9E;
+    color: #000;
+}
+.btn-info:hover, .btn-info:focus, .btn-info:active, .open > .dropdown-toggle.btn-info {
+    background-color: #2EAB9E!important;
+    border-color: #009688!important;
+    color: #fff;
+}
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+    background-color: #009688;
+    border-color: #009688;
+}
+.pagination > li > a:focus, .pagination > li > a:hover, .pagination > li > span:focus, .pagination > li > span:hover {
+    color: #009688;
+}
+.pagination > li > a, .pagination > li > span {
+    color: #009688;
+}
+/* Widgets*/
+.slider-handle{
+    background-color: #009688;
+    background-image: linear-gradient(to bottom, #009688, #005a51);
+}

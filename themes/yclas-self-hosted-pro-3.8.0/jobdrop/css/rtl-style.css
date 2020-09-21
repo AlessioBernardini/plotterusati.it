@@ -1,0 +1,27 @@
+.dropdown-menu{
+    right: -20px !important;
+}
+.subnav .dropdown-large {
+    position: static !important;
+}
+.dropdown-menu-large {
+    right: inherit !important;
+    margin-left: 16px !important;
+    margin-right: 0px !important;
+}
+input[name="search"]{
+    width: 100%;
+}
+.sceditor-container {
+    overflow: visible !important;
+}
+#st_gdpr_iframe {
+    right: -5000px !important;
+    left: auto !important;
+}
+@media (max-width: 575px) {
+    div.sceditor-dropdown {
+        left: auto!important;
+        right: 0!important;
+    }
+}

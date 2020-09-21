@@ -1,0 +1,67 @@
+a {
+	color:#B27130;
+}
+a:hover {
+	color:#83AF9B;
+	text-decoration:none;
+}
+.btn-warning, .btn-primary, .btn-success{
+	background:#b27130;
+	border-color: #a0652b;
+}
+.btn-warning:hover, .btn-warning:active, .btn-warning:focus,
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus,
+.btn-success:hover, .btn-success:active, .btn-success:focus{
+	background:#83af9b!important;
+	color:#fff;
+	border-color:#759d8b!important;
+}
+.panel-sidebar > .panel-heading {
+    color: #83AF9B;
+}
+#sidebar {
+	background:#F2F2F2;
+	padding:15px 10px 0;
+}
+#logo h1 {
+	color:#B27130;
+}
+/* Homepage main categories and locations */
+.directory h4 a {
+    color: #B27130;
+}
+.directory h4 a:hover, .directory h4 a:active, .directory h4 a:focus {
+    color: #83AF9B;
+}
+.panel-sidebar .categories .active, .panel-sidebar .categories .active:hover {
+	color:#B27130;
+}
+.pagination li > a:hover {
+	color:#83AF9B;
+}
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+	color:#B27130;
+}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+	color:#83AF9B;
+}
+.label-info{
+	background-color: #B27130;
+}
+.listings .premium.listing-row {
+	background-color: #efe2d5!important;
+}
+.listings .listing-row:nth-child(even) {
+	background-color: #fcfaf8;
+}
+
+/* Widgets*/
+.slider-handle{
+    background-color: #b27130;
+    background-image: linear-gradient(to bottom, #b27130, #a0652b);
+}

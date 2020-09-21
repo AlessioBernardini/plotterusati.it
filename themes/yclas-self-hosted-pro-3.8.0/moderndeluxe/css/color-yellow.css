@@ -1,0 +1,125 @@
+/**
+ * Custom theme styles that overwrites theme 
+ */
+
+/* Link and hover styling */
+a, .categories-box .row ul li a, .pagination li a {color:#FFC107;}
+a:hover, a:focus {color:#FFB300;}
+
+/* Header colours */ 
+.header {
+	background: #FFC107;
+	background: -moz-linear-gradient(top,  #e9e9e9 0%, #FFC107 120%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e9e9e9), color-stop(120%,#FFC107));
+	background: -webkit-linear-gradient(top,  #e9e9e9 0%,#FFC107 120%);
+	background: -o-linear-gradient(top,  #e9e9e9 0%,#FFC107 120%);
+	background: -ms-linear-gradient(top,  #e9e9e9 0%,#FFC107 120%);
+	background: linear-gradient(to bottom,  #e9e9e9 0%,#FFC107 120%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e9e9e9', endColorstr='#FFC107',GradientType=0 );
+}
+.navbar-inverse {border-color:#FFC107;}
+.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus{color: #FFC107;}
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:hover, .navbar-inverse .navbar-nav>.active>a:focus {color: #909F3B;}
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>.open>a:focus {color: #909F3B;}
+.navbar-header .navbar-toggle{ background-color: #FFC107; }
+
+header .btn-success{
+	background-color: #FFC107;
+	background-image: none;
+}
+header .btn-success:hover, header .btn-success:active, header .btn-success:focus,
+.nav .open > a, .nav .open > a:focus, .nav .open > a:hover{
+	background-color: #FFB300!important;
+	border-color: #FFB300!important;
+	background-image: none;
+}
+header .btn-success .badge{ color: #FFB300; }
+
+/* Other */
+.label-info, .label-success{background-color: #FFB300 !important;}
+.label-success:hover, .label-success:active, .label-success:focus, .badge-success:hover, .badge-success:active, .badge-success:focus {
+    background-color: #FFC107 !important;
+}
+.badge-success {background-color: #FFB300 !important;}
+
+/* Buttons */
+.btn-primary{background-color: #FFC107; border-color: #FFB300;}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open > dropdown-toggle.btn-primary {background: #FFB300!important; border-color: #FFB300!important; background-image: none; color:white}
+.btn-info.active, .btn-info:hover, .btn-info:active, .open > .dropdown-toggle.btn-info {
+    color: #fff;
+    background-color: #FFC107!important;
+    border-color: #FFB300!important;
+}
+.btn-success {
+  	color: #ffffff;
+  	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  	background-color: #FFC107;
+  	background-image: -moz-linear-gradient(top, #FFC107, #cc8f00);
+  	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FFC107), to(#cc8f00));
+  	background-image: -webkit-linear-gradient(top, #FFC107, #cc8f00);
+  	background-image: -o-linear-gradient(top, #FFC107, #cc8f00);
+  	background-image: linear-gradient(to bottom, #FFC107, #cc8f00);
+ 	background-repeat: repeat-x;
+  	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff62c462', endColorstr='#ff51a351', GradientType=0);
+  	border-color: #cc8f00 #cc8f00 #FFC107;
+  	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  	filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+
+.btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success:active, .btn-success.active, .btn-success.disabled, .btn-success[disabled] {
+  	color: #ffffff;
+	background-color: #FFC107!important;
+	background-image: none!important;
+	border-color: #FFC107!important;
+}
+
+/* Ad page */
+.text-info{ color: #996b00; }
+.media .label-danger {
+    background-color: #FFC107;
+    font-size: 87%;
+}
+
+/* Listing page */
+.featured{background: #BCCDC7;}
+.featured-ads,.featured-item {background: #fff2cd!important;}
+.featured-item .label-danger{background-color: #FFC107;}
+li.price { color: #996b00; }
+
+/* Categories */
+.panel-home-categories > .panel-heading {background-color: #FFC107;}
+.panel-sidebar > .panel-heading {border-top-color: #FFC107;}
+.sidebar-nav h3, footer, .panel-heading {border-color:#FFC107;}
+.categories .category-container .panel-heading {border-color:#FFB300; background:#FFC107; color:white;}
+.categories .category-container .panel-heading a {color:white; text-shadow:none;}
+
+/* Pagination hovers */
+.pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover {
+  color: #FFB300;
+}
+
+/* Widgets*/
+.slider-handle{
+    background-color: #FFC107;
+    background-image: linear-gradient(to bottom, #FFC107, #cc8f00);
+}
+
+/* Forums */
+.table > tbody > tr.success > td{
+    background-color: #fff8e6;
+}
+.table > tbody > tr.success > td > a{
+    color: #332601;
+}
+.table > tbody > tr.success:hover > td {
+    background-color: #fff2cd;
+}
+
+/* Footer edits */
+footer {
+	background: #FFC107;
+}

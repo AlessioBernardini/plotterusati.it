@@ -1,0 +1,21 @@
+.navbar-nav,
+.navbar-right{float: left!important;}
+.categories-navegation > ul > li {float: right!important;}
+#post-new{float: right;}
+ul.dropdown-menu{position: absolute;
+margin: auto;
+float: left;
+left: 200px;}
+.sceditor-container {
+    overflow: visible !important;
+}
+#st_gdpr_iframe {
+    right: -5000px !important;
+    left: auto !important;
+}
+@media (max-width: 575px) {
+    div.sceditor-dropdown {
+        left: auto!important;
+        right: 0!important;
+    }
+}

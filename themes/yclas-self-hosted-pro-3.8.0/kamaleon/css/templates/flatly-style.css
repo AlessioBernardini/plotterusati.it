@@ -1,0 +1,54 @@
+.subnav .nav > li > a{border: none;}
+.subnav .nav > li:first-child > a, .subnav .nav > li:first-child > a:hover{border-left: none;}
+.nav-pills .open .dropdown-toggle{background-color: #2c3e50;}
+.subnav .nav > li > a:hover{background-color: #2c3e50;}
+.subnav{margin-top: 10px;}
+.subnav-fixed {top: 50px;}
+.panel-sidebar {
+    background-color: #ecf0f1;
+    border: 1px solid transparent;
+}
+
+/* Buttons and labels*/
+.badge-success{background-color: #18bc9c;}
+.btn-inverse{
+    color: #000;
+    background-color: #fff;
+    border-color: #adadad;
+}
+.btn-inverse:hover, .btn-inverse:focus, .btn-inverse:active, .btn-inverse.active, .open .dropdown-toggle.btn-inverse{
+    color: #000;
+    background-color: #e6e6e6;
+    border-color: #c2c2c2;
+}
+
+.btn-success{
+    color: #ffffff;
+    background-color: #2c3e50;
+    border-color: #2c3e50;
+}
+.btn-success:hover, .btn-success:active, .btn-success:focus{
+    color: #ffffff;
+    background-color: #1a242f!important;
+    border-color: #161f29!important;
+}
+
+/* Listing page */
+li.price{color:#2c3e50;}
+.featured-ads, .featured-item {
+    background: #d0f1eb;
+}
+
+/* Ad details */
+.media .label-danger{background-color: #2c3e50;}
+
+/* Widgets*/
+.slider-handle{
+    background-color: #2c3e50;
+    background-image: linear-gradient(to bottom, #2c3e50, #273748);
+}
+/* Other */
+.navbar .btn-primary-white .badge{ background-color: #2c3e50;}
+
+/*yclas topbar style*/
+.yclas-bar.body_fixed .subnav-fixed {top: 90px;}

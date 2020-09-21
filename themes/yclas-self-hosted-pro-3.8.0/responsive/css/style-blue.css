@@ -1,0 +1,51 @@
+h1, h2, h3, h4, h5, h6 {
+    color: #337ab7;
+}
+.nav-cat-cont, .dropdown-menu li > a:hover {
+    background-color: #337ab7;
+}
+li.dropdown a {
+    color: #337ab7;
+}
+.nav-cat a, #slider-fixed-products .thumbnail .caption h5 a {
+    color: #337ab7;
+}
+.categories ul li.cathead {
+    border-bottom-color: #337ab7;
+}
+.footer {
+    border-color: #337ab7;
+}
+.well.featured {
+    background:rgba(51, 122, 183, 0.2);
+}
+.btn-success{
+    color: #fff;
+    background-color: #337ab7!important;
+    border-color: #2e6da4!important;
+}
+.btn-success:hover, .btn-success:active, .btn-success:focus{
+    color: #fff;
+    background-color: #286090!important;
+    border-color: #204d74!important;
+}
+.label-warning{
+	background-color: #337ab7;
+}
+.price{
+	color: #1e496d;;
+}
+#sidebar .widget-header, .label-default, .label-success {
+    background: none repeat scroll 0 0 #1e496d;
+}
+.label-default:hover, .label-default:active,.label-default:focus, .label-success:hover, .label-success:active, .label-success:focus {
+    background-color: #1e496d!important;
+}
+
+/* Forums */
+.table > tbody > tr.success > td{
+    background-color: #f1f8fe;
+}
+.table > tbody > tr.success:hover > td {
+    background-color: #e4f2fd;
+}

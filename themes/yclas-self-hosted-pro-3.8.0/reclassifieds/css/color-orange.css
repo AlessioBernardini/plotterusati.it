@@ -1,0 +1,96 @@
+/**
+ * Custom theme styles that overwrites theme 
+ */
+
+body, .sidebar-nav.well, footer {background:#BF763B;}
+footer {color:#fff;}
+.breadcrumb {background:#f5f5f5; border: 1px solid #e3e3e3;}
+
+/* Link and hover styling */
+a, .logo h1, .categories-box .row ul li a, .pagination li a {color:#BF763B;}
+a:hover {color:#9F571D;}
+
+/* Header colours */ 
+
+.navbar-inverse,
+.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus,
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:hover, .navbar-inverse .navbar-nav>.open>a:focus {
+  color: #BF763B!important;
+  background-color: #BF763B!important;
+  border-color: #BF763B!important;
+}
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:hover, .navbar-inverse .navbar-nav>.active>a:focus{
+  color: #BF763B!important;
+}
+/* Subnav */
+.subcategories-box, .categories-navegation > ul > li.active, .dropped-cat  {background-color: #9F571D; color:white;}
+.categories-navegation > ul > li {background: #BF763B; color:white;}
+.categories-navegation > ul > li a {color:white;}
+
+/* Other */
+.label-success, .badge-success {background-color: #9F571D !important;}
+.btn-success .badge {color: #BF763B;}
+.featured{background: #BCCDC7;}
+
+/* Buttons */
+.btn-primary{background-image: linear-gradient(to bottom,#BF763B,#9F571D); background-color: #BF763B; border-color: #9F571D;}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open > dropdown-toggle.btn-primary,
+.btn-success, .btn-success:hover, .btn-success:focus, .btn-success:active {
+  background-color: #BF763B;
+  background-image: -moz-linear-gradient(top, #BF763B, #9F571D);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#BF763B), to(#9F571D));
+  background-image: -o-linear-gradient(top, #BF763B, #9F571D);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#BF763B', endColorstr='#9F571D', GradientType=0);
+  border-color: #BF763B #9F571D;
+}
+.btn-success i {
+	color:white;
+}
+
+.label-warning{
+	background-color: #BF763B;
+}
+.label-info{
+  background-color: #BF763B;
+}
+
+/* Categories */
+.panel-home-categories > .panel-heading {color:#9F571D;}
+.panel-sidebar > .panel-heading {border-top-color: #BF763B;}
+.sidebar-nav h3, footer, .panel-heading {}
+.categories .category-container .panel-heading {border-color:#535F12; background:#BF763B; color:white;}
+.categories .category-container .panel-heading a {color:white; text-shadow:none;}
+.panel-home-categories .panel-heading a {color:#9F571D;}
+
+/* Pagination hovers */
+.pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover {
+  	color: #535F12;
+}
+#products .item.grid-group-item.featured-ads .thumbnail,
+#products .item.grid-group-item.featured-item .thumbnail,
+#products .item.list-group-item.featured-ads .thumbnail,
+#products .item.list-group-item.featured-item .thumbnail,
+#products .item.list-group-item.featured-ads, #products .item.list-group-item.featured-item {
+  background: #f2e3d7!important;
+}
+
+/* Featured Ads */
+.category_box_title{ background-color: #BF763B;}
+
+/* Widgets*/
+.slider-handle{
+    background-color: #BF763B;
+    background-image: linear-gradient(to bottom, #BF763B, #9F571D);
+}
+
+/* Forums */
+.table > tbody > tr.success > td{
+    background-color: #fff7ed;
+}
+.table > tbody > tr.success:hover > td {
+    background-color: #fff0db;
+}

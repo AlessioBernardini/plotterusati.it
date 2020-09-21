@@ -1,0 +1,23 @@
+.glyphicon,label, small,cite,td,p,a{color:#fff!important;}
+a:hover{color:#888;}
+.sweet-alert p {
+    color: #797979!important;
+}
+.error {
+    color: #ee5f5b!important;
+}
+.chosen-container .chosen-results li {
+    color: #272b30;
+}
+.chosen-container-single .chosen-single span {
+    color: #7a8288;
+}
+.slide_title {
+    background: rgba(0,0,0,0.5);
+}
+.select2-results__option, .select2-selection--multiple{color:#333;}
+
+.slider-handle{
+	background-color: #7a8288;
+	background-image: linear-gradient(to bottom, #7a8288, #8a9196);
+}

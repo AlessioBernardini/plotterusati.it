@@ -1,0 +1,56 @@
+.navbar-btn:hover {
+    margin-top: 6px;
+}
+.subnav-fixed {top: 53px!important;}
+.modal-backdrop {z-index: -1;}
+.featured-ads,.featured-item{background-color: #d0e8f1;}
+li.price{color:#158cba;}
+
+/* Buttons and labels */
+.btn-inverse{
+    color: #000;
+    background-color: #fff;
+    border-color: #adadad;
+}
+.btn-inverse:hover, .btn-inverse:focus, .btn-inverse:active, .btn-inverse.active, .open .dropdown-toggle.btn-inverse{
+    color: #000;
+    background-color: #e6e6e6!important;
+    border-color: #c2c2c2!important;
+}
+
+.media .label-danger, .label-success, .label-success:hover{
+    color: #ffffff;
+    background-color: #158cba!important;
+    border-color: #127ba3!important;
+    background-image: none!important;
+}
+.navbar .btn-primary-white .badge {padding: 1px 7px;}
+.btn-success, .btn-success:hover, .btn-success:active, .btn-success:focus{
+    color: #ffffff;
+    background-color: #158cba!important;
+    border-color: #127ba3!important;
+    background-image: none!important;
+}
+
+/* Single page */
+.text-info, .text-info:hover{color:#158cba;}
+
+/* Widgets*/
+.slider-handle{
+    background-color: #158cba;
+    background-image: linear-gradient(to bottom, #158cba, #127ba3);
+}
+
+/* Forums */
+.table > tbody > tr.success > td{
+    background-color: #f6f6f6;
+}
+.table > tbody > tr.success > td > a{
+    color: #158cba!important;
+}
+.table > tbody > tr.success:hover > td {
+    background-color: #f3f3f3;
+}
+
+/*yclas topbar style*/
+.yclas-bar.body_fixed .subnav-fixed {top: 93px;}

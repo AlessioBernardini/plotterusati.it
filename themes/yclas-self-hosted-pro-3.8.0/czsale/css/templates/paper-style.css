@@ -1,0 +1,16 @@
+.content-right #slides .slidesjs-slide {
+    -webkit-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+.featured-ads,.featured-item{
+    border: 2px solid #2196f3 !important;
+}
+/* list view */
+.triangle-top-left { 
+    border-top: 90px solid #2196f3;
+}
+/* grid view */
+.grid-view .triangle-top-left { 
+    border-top: 90px solid #2196f3;
+}
