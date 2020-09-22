@@ -39,6 +39,21 @@
                 	<?if($i%3 == 0 OR $i==0):?><div class="row"><?endif?>
                     <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
                         <div class="latest_ads">
+                        	
+                        	<?php $user = Auth::instance()->get_user();?>
+                            <div class="pull-right favorite" id="fav-<?=$ad->id_ad?>">
+                                <?if (Auth::instance()->logged_in()):?>
+                                    <?$fav = Model_Favorite::is_favorite($user,$ad);?>
+                                    <a data-id="fav-<?=$ad->id_ad?>" class="add-favorite <?=($fav)?'remove-favorite':''?>" title="<?=__('Add to Favorites')?>" href="<?=Route::url('oc-panel', array('controller'=>'profile', 'action'=>'favorites','id'=>$ad->id_ad))?>">
+                                        <i class="glyphicon glyphicon-heart<?=($fav)?'':'-empty'?>"></i>
+                                    </a>
+                                <?else:?>
+                                    <a data-toggle="modal" data-dismiss="modal" href="<?=Route::url('oc-panel',array('directory'=>'user','controller'=>'auth','action'=>'login'))?>#login-modal">
+                                        <i class="glyphicon glyphicon-heart-empty"></i>
+                                    </a>
+                                <?endif?>
+                            </div>
+                            
                             <a href="<?=Route::url('ad', array('category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>">
                                 <?if($ad->get_first_image()!== NULL):?>
                                     <?=HTML::picture($ad->get_first_image('image'), ['w' => 360, 'h' => 200], ['1200px' => ['w' => '360', 'h' => '200'], '992px' => ['w' => '455', 'h' => '252'], '768px' => ['w' => '720', 'h' => '400'], '480px' => ['w' => '738', 'h' => '410'], '320px' => ['w' => '450', 'h' => '250']], ['class' => 'center-block img-responsive', 'alt' => HTML::chars($ad->title)])?>
