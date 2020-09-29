@@ -9,13 +9,13 @@
 class SA_USERSONLINE
 {
 
-    protected $DB_HOST = "localhost";
+    protected $DB_HOST = "89.46.111.211";
 
-    protected $DB_NAME = "plott219_open540";
+    protected $DB_NAME = "Sql1450861_2";
 
-    protected $DB_USER = "plott219_open540";
+    protected $DB_USER = "Sql1450861";
 
-    protected $DB_PWD = "33nApS7(u.";
+    protected $DB_PWD = "524818o2t0";
 
     protected $session_id = null;
 
@@ -85,8 +85,15 @@ class SA_USERSONLINE
     }
 }
 
+$user = Auth::instance()->get_user();
+if($user){
+    $username= "<span>Ciao <b>$user->name</b> - ";
+}else{
+    $username= "";
+}
+
 $usersOnline = new SA_USERSONLINE();
-$html = "<p id='online_user'> Utenti on-line: ";
+$html = "<p id='online_user'>$username Utenti on-line: ";
 $html .= "<b>";
 $html .= $usersOnline->get_online_users();
 $html .= "</b>";
