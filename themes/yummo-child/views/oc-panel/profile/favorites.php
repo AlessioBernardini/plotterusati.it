@@ -61,8 +61,8 @@
     <? } ?>
     <?
     if($ceck == 0){
-        $domain = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'];
-        echo '<h3 class="no-border light text-center">Non hai ancora nessun annuncio preferito. Fai un giro sul <a href="'.$domain.'">sito</a> e scopri quali sono!</a></h3>';
+        //$domain = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'];
+        echo '<h3 class="no-border light text-center">Non hai ancora nessun annuncio preferito. Fai un giro sul <a href="https://www.plotterusati.it">sito</a> e scopri quali sono!</a></h3>';
     }
     ?>
 </div>
