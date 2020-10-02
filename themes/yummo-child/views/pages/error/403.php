@@ -74,7 +74,7 @@
       <div class="page-header">
         <h1><?=Core::config('general.site_name')?></h1>
         <h2><?=__('Sito Demo dedicato agli sviluppatori')?></h2>
-        <p>Vai al sito in produzione: <a href="https://plotterusati.online">plotterusati.online</a><br>
+        <p>Vai al sito pubblico: <a href="https://www.plotterusati.it">www.plotterusati.it</a><br>
         oppure contattaci all'indirizzo: <a href="mailto:info@plotterusati.it?subject=Richiesta info da sito Demo">info@plotterusati.it</a></p>
       </div>
     <?endif?>
@@ -105,9 +105,10 @@
             <button type="submit" class="btn btn-primary">
                 <i class="glyphicon glyphicon-user glyphicon"></i> <?=__('Login')?>
             </button>
-            <a data-toggle="modal" data-dismiss="modal" class="btn btn-info" href="<?=Route::url('oc-panel',array('directory'=>'user','controller'=>'auth','action'=>'request'))?>#request-modal">
+            <?php /* <a data-toggle="modal" data-dismiss="modal" class="btn btn-info" href="<?=Route::url('oc-panel',array('directory'=>'user','controller'=>'auth','action'=>'request'))?>#request-modal">
                 <?=__('Request Access')?>
-              </a>
+              </a> */?>
+              <a class="btn btn-info" href="https://www.plotterusati.it">Vai al sito pubblico</a>
         </div>
         <?=Form::CSRF('login')?>
     </form>
