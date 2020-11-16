@@ -244,10 +244,10 @@ $annunci = $annunci->find_all();
                         <div class="caption pull-left">
                             <h3>
                                 <a class="big-txt <?=(core::cookie('list/grid')==0)?'hide':''?>" title="<?=HTML::chars($ad->title)?>" href="<?=Route::url('ad', array('controller'=>'ad','category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>" >
-                                    <?= $ad->title ?>
+                                    <?=Text::limit_chars(Text::removebbcode($ad->title), 20, NULL, TRUE)?>
                                 </a>
                                 <a class="small-txt <?=(core::cookie('list/grid')==1)?'hide':''?>" title="<?=HTML::chars($ad->title)?>" href="<?=Route::url('ad', array('controller'=>'ad','category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>" >
-                                    <?= $ad->title ?>
+                                    <?=Text::limit_chars(Text::removebbcode($ad->title), 20, NULL, TRUE)?>
                                 </a>
                                 <div class="details">
                                     <?= _e('Posted by');?> <?=$ad->user->name?> <?if ($ad->id_location != 1):?><?= _e('from');?> <?=$ad->location->translate_name() ?><?endif?> <?if ($ad->published!=0){?><?= _e('on');?> <?= Date::format($ad->published, core::config('general.date_format'))?><? }?>
