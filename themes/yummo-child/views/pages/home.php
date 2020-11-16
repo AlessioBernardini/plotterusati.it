@@ -93,7 +93,7 @@
                             	<div class="date pull-right"><?if ($ad->published!=0){?> <?= Date::format($ad->published, core::config('general.date_format'))?><? }?></div>
                             </div></a>
                             <div class="caption">
-                                <h5><a href="<?=Route::url('ad', array('category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>"><?=Text::limit_chars(Text::removebbcode($ad->title), 30, NULL, TRUE)?></a></h5>
+                                <h5><a href="<?=Route::url('ad', array('category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>"><?=Text::limit_chars(Text::removebbcode($ad->title), 20, NULL, TRUE)?></a></h5>
                                 <a class="nolink" href="<?=Route::url('ad', array('controller'=>'ad','category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>">
                                 <p><?=Text::limit_chars(Text::removebbcode($ad->description), 100, NULL, TRUE)?></p>
                                 </a>
@@ -126,7 +126,7 @@
                     <?if($i%3 == 0):?></div><?endif?>
                 <?endforeach?>
                 <?if($i%3 != 0):?></div><?endif?>
-            </div>
+            </div> <a class="home vedi-tutti sotto" href="/all">Vedi tutti <span class="count_ads">(<?=core::count($annunci)?>)</span></a>
         </section>
     <?endif?>
 <?endif?>
