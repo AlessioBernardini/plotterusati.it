@@ -48,7 +48,7 @@
                     </div>
                 </section>
             <?else:?>
-                <section class="<?=(Theme::get('sidebar_position')!='none')?'col-lg-9 col-md-9 col-sm-12 col-xs-12':'col-lg-12'?> <?=(Theme::get('sidebar_position')=='left')?'pull-right':'pull-left'?>" id="page">
+                <section class="<?=(Theme::get('sidebar_position')!='none')?'col-lg-10 col-md-10 col-sm-12 col-xs-12':'col-lg-12'?> <?=(Theme::get('sidebar_position')=='left')?'pull-right':'pull-left'?>" id="page">
                     <?=Alert::show()?>
 
                     <div class="row">
