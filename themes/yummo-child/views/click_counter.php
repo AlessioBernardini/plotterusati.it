@@ -52,6 +52,8 @@ if(isset($_GET["id"])){
 
 <h1 class="click_title"><b>Plotterusati.it</b> Contatore Click Banner</h1>
 
+<p class="click_small">I contatori sono stati azzerati il 17/11/2020</p>
+
 <table id="click_counter">
   <tr>
   	<th>Immagine</th>
