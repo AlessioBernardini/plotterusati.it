@@ -143,16 +143,16 @@
                                     <?else:?>
                                         <?if(is_string($name)):?>
                                         	<a class="nolink" href="<?=Route::url('ad', array('controller'=>'ad','category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>">
-                                            <p class="aggiunto"><b><?=$name?></b>: <?=$value?></p>
+                                            <p class="aggiunto"><?=$name?>: <b><?=$value?></b></p>
                                             </a>
                                         <?else:?>
                                         	<a class="nolink" href="<?=Route::url('ad', array('controller'=>'ad','category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>">
-                                            <p class="aggiunto"><?=$value?></p>
+                                            <p class="aggiunto"><b><?=$value?></b></p>
                                             </a>
                                         <?endif?>
                                     <?endif?>
                                 <?endforeach?>
-                                <p class="provenienza-home"><b>Provenienza</b>: <?if ($ad->id_location != 1):?><a href="/all/<?=strtolower($ad->location->translate_name())?>"><?=$ad->location->translate_name()?></a><?endif?></p>
+                                <p class="provenienza-home">Provenienza: <?if ($ad->id_location != 1):?><b><a href="/all/<?=strtolower($ad->location->translate_name())?>"><?=$ad->location->translate_name()?></a></b><?endif?></p>
                             </div>
                         </div>
                     </div>

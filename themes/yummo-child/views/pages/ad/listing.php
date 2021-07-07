@@ -270,16 +270,16 @@ $annunci = $annunci->find_all();
                                 <?else:?>
                                     <?if(is_string($name)):?>
                                     	<a class="nolink" href="<?=Route::url('ad', array('controller'=>'ad','category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>">
-                                        <p><b><?=$name?></b>: <?=$value?></p>
+                                        <p><?=$name?>: <b><?=$value?></b></p>
                                         </a>
                                     <?else:?>
                                     	<a class="nolink" href="<?=Route::url('ad', array('controller'=>'ad','category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>">
-                                        <p><?=$value?></p>
+                                        <p><b><?=$value?></b></p>
                                         </a>
                                     <?endif?>
                                 <?endif?>
                             <?endforeach?>
-                            <p class="provenienza"><b>Provenienza</b>: <?if ($ad->id_location != 1):?><a href="/all/<?=strtolower($ad->location->translate_name())?>"><?=$ad->location->translate_name()?></a><?endif?></p>
+                            <p class="provenienza">Provenienza: <?if ($ad->id_location != 1):?><b><a href="/all/<?=strtolower($ad->location->translate_name())?>"><?=$ad->location->translate_name()?></a></b><?endif?></p>
                         </div>
                         <?if ($user !== NULL AND ($user->is_admin() OR $user->is_moderator())):?>
                             <br />

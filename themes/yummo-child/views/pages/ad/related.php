@@ -44,9 +44,9 @@
                                 <p class="aggiunto"><b><?=$name?></b>: <i class="fa fa-times"></i></p>
                             <?else:?>
                                 <?if(is_string($name)):?>
-                                    <p class="aggiunto"><b><?=$name?></b>: <?=$value?></p>
+                                    <p class="aggiunto"><?=$name?>: <b><?=$value?></b></p>
                                 <?else:?>
-                                    <p class="aggiunto"><?=$value?></p>
+                                    <p class="aggiunto"><b><?=$value?></b></p>
                                 <?endif?>
                             <?endif?>
                         <?endforeach?>
