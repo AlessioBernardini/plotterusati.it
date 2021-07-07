@@ -87,6 +87,14 @@ class Controller_Panel_Location extends Auth_Crud {
                 {
                     $location->description = Kohana::$_POST_ORIG['description'];
                 }
+                elseif ($name=='latitude')
+                {
+                    $location->latitude = empty($value) ? NULL : $value;
+                }
+                elseif ($name=='longitude')
+                {
+                    $location->longitude = empty($value) ? NULL : $value;
+                }
                 elseif($name != 'submit')
                 {
                     $location->$name = $value;
@@ -151,6 +159,13 @@ class Controller_Panel_Location extends Auth_Crud {
                 if ($form->object->id_location == $form->object->id_location_parent)
                 {
                     Alert::set(Alert::INFO, __('You can not set as parent the same location'));
+                    $this->redirect(Route::get($this->_route_name)->uri(array('controller'=> Request::current()->controller(),'action'=>'update','id'=>$form->object->id_location)));
+                }
+
+                // parent location is different than a child location
+                if ($form->object->id_location == $form->object->parent->id_location_parent)
+                {
+                    Alert::set(Alert::INFO, __('You can not set as parent a child location'));
                     $this->redirect(Route::get($this->_route_name)->uri(array('controller'=> Request::current()->controller(),'action'=>'update','id'=>$form->object->id_location)));
                 }
 
@@ -503,7 +518,7 @@ class Controller_Panel_Location extends Auth_Crud {
 
         $location = new Model_Location($this->request->param('id'));
 
-        if (core::config('image.aws_s3_active'))
+        if (Core::is_selfhosted() AND Core::config('image.aws_s3_active'))
         {
             require_once Kohana::find_file('vendor', 'amazon-s3-php-class/S3','php');
             $s3 = new S3(core::config('image.aws_access_key'), core::config('image.aws_secret_key'));

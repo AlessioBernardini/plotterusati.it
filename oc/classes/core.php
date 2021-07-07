@@ -16,7 +16,7 @@ class Core {
      * OC version
      * @var string
      */
-    const VERSION = '4.0.1';
+    const VERSION = '4.2.0';
 
     /**
      * @var string used to populate data from valid domain
@@ -581,7 +581,7 @@ class Core {
     public static function imagefly($image,$width=NULL,$height=NULL,$mode='crop')
     {
         //usage of WP CDN, if they use AWS also!
-        if ( (Theme::get('cdn_files') == TRUE OR Core::config('image.aws_s3_active') == TRUE)
+        if ( Core::config('image.aws_s3_active') == TRUE
             AND Valid::url($image) == TRUE
             AND Kohana::$environment!== Kohana::DEVELOPMENT)
         {
@@ -687,7 +687,7 @@ class Core {
                 Model_Config::set_value('general','ocacu',time());
         }
 
-        /*if (Core::config('license.number')!=NULL AND Core::config('license.date') < time() )
+        if (Core::config('license.number')!=NULL AND Core::config('license.date') < time() )
         {
             if (self::license()!=TRUE)
             {
@@ -696,7 +696,7 @@ class Core {
                 Alert::set(Alert::INFO, __('License validation error, please insert again.'));
                 HTTP::redirect(Route::url('oc-panel',array('controller'=>'home', 'action'=>'license')));
             }
-        }*/
+        }
 
     }
 
@@ -704,58 +704,69 @@ class Core {
     public static function license($l = NULL)
     {
         if (Kohana::$environment === Kohana::DEVELOPMENT)
-            return TRUE;
+        {
+            $result = TRUE;
+            $l = 'DEVEL';
+        }
+        else
+        {
+            if ($l === NULL)
+                $l = Core::config('license.number');
 
-        if ($l === NULL)
-            $l = Core::config('license.number');
-
-        $api_url = Core::yclas_url_().'/api/v1/license/check/'.$l.'/?domain='.parse_url(URL::base(), PHP_URL_HOST);
-        $result  = json_decode(Core::curl_get_contents($api_url));
+            $api_url = Core::yclas_url_().'/api/v1/license/check/'.$l.'/?domain='.parse_url(URL::base(), PHP_URL_HOST);
+            $result  = json_decode(Core::curl_get_contents($api_url));
+        }
 
         if ($result == TRUE)
         {
-            Model_Config::set_value('license','number',core::request('license'));
+            Model_Config::set_value('license','number',$l);
             Model_Config::set_value('license','date',time()+7*24*60*60);
         }
 
-        //return $result;
-        return TRUE;
+        return $result;
     }
+
 
     public static function download($l)
     {
         $download_url = Core::yclas_url_().'/api/v1/license/download/'.$l.'/?domain='.parse_url(URL::base(), PHP_URL_HOST);
-        $fname = DOCROOT.'themes/'.$l.'.zip'; //root folder
-        $file_content = core::curl_get_contents($download_url);
 
-        if ($file_content!='false')
+        if ( ($url_location = get_headers($download_url,1)) != FALSE AND is_array($url_location) AND isset($url_location['Location']) )
         {
-            // saving zip file to dir.
-            file_put_contents($fname, $file_content);
+            //d($url_location);
+            $download_url = end($url_location['Location']);
+            //d($download_url);
 
-            try {
-                $zip = new ZipArchive;
-                if ($zip_open = $zip->open($fname))
-                {
-                    //if theres nothing in that ZIP file...zip corrupted :(
-                    if ($zip->getNameIndex(0)===FALSE)
-                        return FALSE;
+            $fname = DOCROOT.'themes/'.$l.'.zip'; //root folder
+            $file_content = core::curl_get_contents($download_url);
 
-                    $theme_name = (substr($zip->getNameIndex(0), 0,-1));
-                    File::delete(DOCROOT.'themes/'.$theme_name);
-                    $zip->extractTo(DOCROOT.'themes/');
-                    $zip->close();
-                    File::delete($fname);
-                    Alert::set(Alert::SUCCESS, $theme_name.' Updated');
-                    return $theme_name;
+            if ($file_content!='false')
+            {
+                // saving zip file to dir.
+                file_put_contents($fname, $file_content);
+
+                try {
+                    $zip = new ZipArchive;
+                    if ($zip_open = $zip->open($fname))
+                    {
+                        //if theres nothing in that ZIP file...zip corrupted :(
+                        if ($zip->getNameIndex(0)===FALSE)
+                            return FALSE;
+
+                        $theme_name = (substr($zip->getNameIndex(0), 0,-1));
+                        File::delete(DOCROOT.'themes/'.$theme_name);
+                        $zip->extractTo(DOCROOT.'themes/');
+                        $zip->close();
+                        File::delete($fname);
+                        Alert::set(Alert::SUCCESS, $theme_name.' Updated');
+                        return $theme_name;
+                    }
+                } catch (Exception $e) {
+                    return FALSE;
                 }
-            } catch (Exception $e) {
-                return FALSE;
             }
 
-            
         }
-
         return FALSE;
     }
 
@@ -764,8 +775,7 @@ class Core {
         if (Kohana::$environment === Kohana::DEVELOPMENT)
             return TRUE;
 
-        //return (Core::config('license.number')!=NULL AND Core::config('license.date') >= time())?TRUE:FALSE;
-        return TRUE;
+        return (Core::config('license.number')!=NULL AND Core::config('license.date') >= time())?TRUE:FALSE;
     }
 
     public static function is_cloud()

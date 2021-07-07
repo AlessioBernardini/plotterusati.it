@@ -39,7 +39,19 @@ abstract class Image extends Kohana_Image {
                 break;
 
                 case 3:
-                    $rotate = 180;
+                    $rotate = 0;
+
+                    // Fix rotation for Safari iOS <= 12
+                    if (Request::user_agent('browser') === 'Safari')
+                    {
+                        $version = preg_replace("/(.*) OS ([0-9]*)_(.*)/","$2", Request::$user_agent);
+
+                        if ((int) $version < 13)
+                        {
+                            $rotate = 180;
+                        }
+                    }
+
                     $flip = FALSE;
                 break;
 
@@ -54,7 +66,19 @@ abstract class Image extends Kohana_Image {
                 break;
 
                 case 6:
-                    $rotate = 270;
+                    $rotate = 180;
+
+                    // Fix rotation for Safari iOS <= 12
+                    if (Request::user_agent('browser') === 'Safari')
+                    {
+                        $version = preg_replace("/(.*) OS ([0-9]*)_(.*)/","$2", Request::$user_agent);
+
+                        if ((int) $version < 13)
+                        {
+                            $rotate = 270;
+                        }
+                    }
+
                     $flip = FALSE;
                 break;
 
@@ -64,7 +88,19 @@ abstract class Image extends Kohana_Image {
                 break;
 
                 case 8:
-                    $rotate = 90;
+                    $rotate = 180;
+
+                    // Fix rotation for Safari iOS <= 12
+                    if (Request::user_agent('browser') === 'Safari')
+                    {
+                        $version = preg_replace("/(.*) OS ([0-9]*)_(.*)/","$2", Request::$user_agent);
+
+                        if ((int) $version < 13)
+                        {
+                            $rotate = 90;
+                        }
+                    }
+
                     $flip = FALSE;
                 break;
             }

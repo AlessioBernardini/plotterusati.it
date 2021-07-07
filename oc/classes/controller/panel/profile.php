@@ -309,6 +309,189 @@ class Controller_Panel_Profile extends Auth_Frontcontroller {
 
     }
 
+    public function action_order_received()
+    {
+        if (! core::config('general.ewallet') AND ! core::config('payment.stripe_escrow'))
+        {
+            throw HTTP_Exception::factory(404,__('Page not found'));
+        }
+
+        $id_order = $this->request->param('id');
+
+        $order = (new Model_Order)
+            ->where('id_order', '=', $id_order)
+            ->where('received', 'IS', NULL);
+
+        //if admin we do not verify the user
+        if ($this->user->id_role != Model_Role::ROLE_ADMIN)
+        {
+            $order->where('id_user','=',$this->user->id_user);
+        }
+
+        $order->find();
+
+        if (! $order->loaded())
+        {
+            Alert::set(ALERT::WARNING, __('Order could not be loaded'));
+
+            $this->redirect(Route::url('oc-panel', ['controller'=>'profile','action'=>'orders']));
+        }
+
+        if (! in_array($order->id_product, [Model_Order::PRODUCT_AD_SELL, Model_Order::PRODUCT_AD_CUSTOM]))
+        {
+            Alert::set(ALERT::WARNING, __('Order could not be loaded'));
+
+            $this->redirect(Route::url('oc-panel', ['controller'=>'profile','action'=>'orders']));
+        }
+
+        $order->mark_as_received();
+
+        if (core::config('payment.stripe_escrow'))
+        {
+            StripeKO::payout($order);
+        }
+
+        Alert::set(ALERT::SUCCESS, __('Order marked as received.'));
+
+        $this->redirect(Route::url('oc-panel', ['controller' => 'profile', 'action' => 'orders']));
+    }
+
+    public function action_order_shipped()
+    {
+        if (! core::config('payment.stripe_escrow'))
+        {
+            throw HTTP_Exception::factory(404,__('Page not found'));
+        }
+
+        $id_order = $this->request->param('id');
+
+        $order = (new Model_Order)
+            ->join('ads')
+            ->using('id_ad')
+            ->where('order.id_order', '=', $id_order)
+            ->where('shipped', 'IS', NULL);
+
+        //if admin we do not verify the user
+        if ($this->user->id_role != Model_Role::ROLE_ADMIN)
+        {
+            $order->where('ads.id_user','=',$this->user->id_user);
+        }
+
+        $order->find();
+
+        if (! $order->loaded())
+        {
+            Alert::set(ALERT::WARNING, __('Order could not be loaded'));
+
+            $this->redirect(Route::url('oc-panel', ['controller'=>'profile','action'=>'sales']));
+        }
+
+        if (! in_array($order->id_product, [Model_Order::PRODUCT_AD_SELL, Model_Order::PRODUCT_AD_CUSTOM]))
+        {
+            Alert::set(ALERT::WARNING, __('Order could not be loaded'));
+
+            $this->redirect(Route::url('oc-panel', ['controller'=>'profile', 'action'=>'sales']));
+        }
+
+        $order->mark_as_shipped(Core::post('tracking_code'), Core::post('provider_name'));
+
+        $url = $order->user->ql('oc-panel', [
+            'controller' => 'profile',
+            'action' => 'order',
+            'id' => $order->id_order,
+        ], TRUE);
+
+        $order->user->email('order-shipped', [
+            '[ORDER.ID]' => $order->id_order,
+            '[ORDER.DESC]' => $order->description,
+            '[ORDER.SHIPPING_TRACKING_CODE]' => Core::post('tracking_code'),
+            '[ORDER.SHIPPING_PROVIDER_NAME]' => Core::post('provider_name'),
+            '[URL.QL]' => $url,
+        ]);
+
+        Alert::set(ALERT::SUCCESS, __('Order marked as shipped.'));
+
+        $this->redirect(Route::url('oc-panel', ['controller' => 'profile', 'action' => 'sales']));
+    }
+
+    public function action_cancel_order()
+    {
+        if (! core::config('payment.stripe_escrow'))
+        {
+            throw HTTP_Exception::factory(404,__('Page not found'));
+        }
+
+        $id_order = $this->request->param('id');
+
+        $order = (new Model_Order)
+            ->join('ads')
+            ->using('id_ad')
+            ->where('order.id_order', '=', $id_order)
+            ->where('cancelled', 'IS', NULL)
+            ->where('shipped', 'IS', NULL);
+
+        //if admin we do not verify the user
+        if ($this->user->id_role != Model_Role::ROLE_ADMIN)
+        {
+            $order->where_open()
+                ->or_where('ads.id_user', '=', $this->user->id_user)
+                ->or_where('order.id_user', '=', $this->user->id_user)
+                ->where_close();
+        }
+
+        $order->find();
+
+        if (! $order->loaded())
+        {
+            Alert::set(ALERT::WARNING, __('Order could not be loaded'));
+
+            if ($this->user->id_user === $order->user->id_user)
+            {
+                $this->redirect(Route::url('oc-panel', ['controller'=>'profile','action'=>'orders']));
+            }
+
+            $this->redirect(Route::url('oc-panel', ['controller'=>'profile','action'=>'sales']));
+        }
+
+        if (! in_array($order->id_product, [Model_Order::PRODUCT_AD_SELL, Model_Order::PRODUCT_AD_CUSTOM]))
+        {
+            Alert::set(ALERT::WARNING, __('Order could not be loaded'));
+
+            if ($this->user->id_user === $order->user->id_user)
+            {
+                $this->redirect(Route::url('oc-panel', ['controller'=>'profile','action'=>'orders']));
+            }
+
+            $this->redirect(Route::url('oc-panel', ['controller'=>'profile','action'=>'sales']));
+        }
+
+        $order->mark_as_cancelled();
+
+        $order->user->email('order-cancelled', [
+            '[ORDER.ID]' => $order->id_order,
+            '[ORDER.DESC]' => $order->description,
+        ]);
+
+        $order->ad->user->email('order-cancelled', [
+            '[ORDER.ID]' => $order->id_order,
+            '[ORDER.DESC]' => $order->description,
+        ]);
+
+        if (core::config('payment.stripe_escrow'))
+        {
+            StripeKO::reverse_transfer($order);
+        }
+
+        Alert::set(ALERT::SUCCESS, __('Order marked as cancelled.'));
+
+        if ($this->user->id_user === $order->user->id_user)
+        {
+            $this->redirect(Route::url('oc-panel', ['controller'=>'profile','action'=>'orders']));
+        }
+
+        $this->redirect(Route::url('oc-panel', ['controller'=>'profile','action'=>'sales']));
+    }
+
     public function action_sales()
     {
         //check pay to featured top is enabled check stripe config too
@@ -324,8 +507,8 @@ class Controller_Panel_Profile extends Auth_Frontcontroller {
         $orders = new Model_Order();
         $orders = $orders->join('ads')
                         ->using('id_ad')
-                        ->where('order.status','=',Model_Order::STATUS_PAID)
-                        ->where('order.id_product','=',Model_Order::PRODUCT_AD_SELL)
+                        ->where('order.status', 'in', [Model_Order::STATUS_PAID, Model_Order::STATUS_REFUND])
+                        ->where('order.id_product','in',[Model_Order::PRODUCT_AD_SELL, Model_Order::PRODUCT_AD_CUSTOM])
                         ->where('ads.id_user', '=', $user->id_user);
 
 
@@ -574,6 +757,81 @@ class Controller_Panel_Profile extends Auth_Frontcontroller {
 
             $this->redirect(Route::url('oc-panel', array('controller'=>'profile','action'=>'edit')));
         }
+    }
+
+    public function action_verify()
+    {
+        $verification_code = $this->request->param('id');
+
+        if ($this->user->verification_code == $verification_code )
+        {
+            $this->user->status = Model_User::STATUS_ACTIVE;
+
+            try {
+                $this->user->save();
+
+                if (Core::config('general.ewallet_gamification') AND Core::config('general.ewallet_gamification_earn_on_sign_up') > 0)
+                {
+                    Model_Transaction::deposit($this->user, NULL, NULL, Core::config('general.ewallet_gamification_earn_on_sign_up'));
+                }
+
+                Alert::set(Alert::SUCCESS, __('You have verified your email.'));
+            } catch (Exception $e) {
+                //throw 500
+                throw HTTP_Exception::factory(500,$e->getMessage());
+            }
+        }
+
+        $this->redirect(Route::url('oc-panel', ['controller' => 'profile', 'action' => 'edit']));
+    }
+
+    public function action_transfer()
+    {
+        if (! $this->request->post())
+        {
+            throw HTTP_Exception::factory(404,__('Page not found'));
+        }
+
+        $seoname = $this->request->param('id', NULL);
+
+        if (is_null($seoname) OR ! Core::config('general.ewallet'))
+        {
+            throw HTTP_Exception::factory(404,__('Page not found'));
+        }
+
+        $user = (new Model_User())
+            ->where('seoname','=', $seoname)
+            ->where('status','=', Model_User::STATUS_ACTIVE)
+            ->limit(1)
+            ->cached()
+            ->find();
+
+        if (! $user->loaded())
+        {
+            throw HTTP_Exception::factory(404,__('Page not found'));
+        }
+
+        $validation = Validation::factory($this->request->post())
+            ->rule('amount', 'not_empty')
+            ->rule('amount', 'digit');
+
+        if (! $validation->check())
+        {
+            HTTP::redirect(Route::url('profile', array('seoname' => $user->seoname)));
+        }
+
+        $transaction = Model_Transaction::transfer($this->user, $user, NULL, $validation->data()['amount']);
+
+        if (! $transaction)
+        {
+            Alert::set(Alert::INFO, __('Transfer declined.'));
+
+            HTTP::redirect(Route::url('profile', array('seoname' => $user->seoname)));
+        }
+
+        Alert::set(Alert::INFO, __('Money sent.'));
+
+        HTTP::redirect(Route::url('profile', array('seoname' => $user->seoname)));
     }
 
    /**

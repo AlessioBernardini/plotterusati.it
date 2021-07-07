@@ -126,6 +126,11 @@ class Model_Field {
                     ->string($this->_name_prefix.$name, 145);
                 break;
 
+           case 'json':
+                $table->add_column()
+                    ->json($this->_name_prefix.$name);
+                break;
+
             case 'string':
             default:
                 $table->add_column()
@@ -173,6 +178,7 @@ class Model_Field {
                             'categories'=> $categories,
                             'required'  => $options['required'],
                             'searchable'=> $options['searchable'],
+                            'text_searchable'=> $options['text_searchable'],
                             'admin_privilege'   => $options['admin_privilege'],
                             'show_listing'      => $options['show_listing'],
                             'grouped_values'    => isset($grouped_values) ? $grouped_values : NULL
@@ -287,6 +293,7 @@ class Model_Field {
             'categories' => $categories,
             'required' => $options['required'],
             'searchable' => $options['searchable'],
+            'text_searchable'=> $options['text_searchable'],
             'admin_privilege' => $options['admin_privilege'],
             'show_listing' => $options['show_listing'],
             'grouped_values' => isset($fields[$name]['grouped_values']) ? $grouped_values : NULL
@@ -537,7 +544,7 @@ class Model_Field {
      * list with fields we dont show to users
      * @return array
      */
-    public function fields_to_hide()
+    public static function fields_to_hide()
     {
         return array (
             'cf_buyer_instructions',

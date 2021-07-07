@@ -83,14 +83,7 @@ class Controller extends Kohana_Controller
         }
 
         //expired subscription
-        if (strtolower($this->request->controller())!='plan' AND
-            strtolower($this->request->controller())!='auth' AND
-            strtolower($this->request->controller())!='stripecheckout' AND
-            strtolower($this->request->action())!='checkoutfree' AND
-            strtolower($this->request->action())!='pay' AND
-            Core::extra_features() == TRUE AND 
-            Auth::instance()->logged_in() AND
-            $this->user->expired_subscription(TRUE))
+        if ($this->redirect_on_expired_subscription())
         {
             Alert::set(Alert::INFO, __('Please, choose a plan first'));
             HTTP::redirect(Route::url('pricing'));
@@ -180,11 +173,17 @@ class Controller extends Kohana_Controller
             //adblock detection
             if (Core::config('general.adblock')==1)
             {
-                Theme::$styles = array_merge(Theme::$styles, array('css/adi.js/jquery.adi.css' => 'screen',));
+                Theme::$styles = array_merge(Theme::$styles, array('css/adi.js/jquery.adiadi.css' => 'screen',));
 
-                Theme::$scripts['footer'] [] = 'js/advertisement.js';
                 Theme::$scripts['footer'] [] = 'js/jquery.adi.js';
+                Theme::$scripts['footer'] [] = 'js/jquery.adiadi.js';
                 $this->template->scripts['footer'][] = Route::url('default',array('controller'=>'jslocalization','action'=>'adi'));
+            }
+
+            //smartarget
+            if (Core::config('general.smartarget_id') AND is_subclass_of($this,'Auth_Controller') === FALSE)
+            {
+                Theme::$scripts['footer'] [] = 'https://smartarget.online/loader.js?u=' . Core::config('general.smartarget_id') . '&source=yclas';
             }
 
     		// Add defaults to template variables.
@@ -258,6 +257,76 @@ class Controller extends Kohana_Controller
             // Return the response
             die($this->response);
         }
+    }
+
+    private function redirect_on_expired_subscription()
+    {
+        if (! Core::extra_features())
+        {
+            return FALSE;
+        }
+
+        if (! Auth::instance()->logged_in())
+        {
+            return FALSE;
+        }
+
+        if (! $this->user->expired_subscription(TRUE))
+        {
+            return FALSE;
+        }
+
+        if (Core::config('general.subscriptions_expire_dont_limit_access'))
+        {
+            if (strtolower($this->request->controller()) == 'new')
+            {
+                return TRUE;
+            }
+
+            if (strtolower($this->request->controller()) == 'myads' AND strtolower($this->request->action()) == 'update')
+            {
+                return TRUE;
+            }
+
+            return FALSE;
+        }
+
+        if (strtolower($this->request->controller()) == 'plan')
+        {
+            return FALSE;
+        }
+
+        if (strtolower($this->request->controller()) == 'auth')
+        {
+            return FALSE;
+        }
+
+        if (strtolower($this->request->controller()) == 'stripecheckout')
+        {
+            return FALSE;
+        }
+
+        if (strtolower($this->request->controller()) == 'checkoutfree')
+        {
+            return FALSE;
+        }
+
+        if (strtolower($this->request->controller()) == 'pay')
+        {
+            return FALSE;
+        }
+
+        if (!(strtolower($this->request->controller()) == 'profile' AND strtolower($this->request->action()) == 'edit'))
+        {
+            return FALSE;
+        }
+
+        if (!(strtolower($this->request->controller()) == 'profile' AND strtolower($this->request->action()) == 'orders'))
+        {
+            return FALSE;
+        }
+
+        return TRUE;
     }
 
 }

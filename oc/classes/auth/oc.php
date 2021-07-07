@@ -64,7 +64,7 @@ class Auth_OC extends Kohana_Auth {
 			return FALSE;
 
 
-		if ($user instanceof Model_User AND $user->loaded() AND 
+		if ($user instanceof Model_User AND $user->loaded() AND
 			$user->has_access($controller, $action, $directory) )
 		{
 			return TRUE;
@@ -150,29 +150,24 @@ class Auth_OC extends Kohana_Auth {
 			// Load the user from the token
 			$user = new Model_User;
 			$user ->where('token', '=', $token)
-			->where('status','in',array(Model_User::STATUS_ACTIVE,Model_User::STATUS_SPAM))
+			->where('status','in', [Model_User::STATUS_ACTIVE, Model_User::STATUS_SPAM, Model_User::STATUS_UNVERIFIED])
 			->where('token_expires','>',Date::unix2mysql())
 			->limit(1)
 			->find();
 
 			if ($user->loaded())
 			{
-				//only allowed autologin form exactly same browser!
-				if ($user->user_agent === sha1(Request::$user_agent))
-				{
-					// Complete the login with the found data, and new token
-					$user->complete_login($this->_config['lifetime']);
+				// Complete the login with the found data, and new token
+				$user->complete_login($this->_config['lifetime']);
 
-					// Set the new token
-					Cookie::set('authautologin', $user->token, $this->_config['lifetime']);
+				// Set the new token
+				Cookie::set('authautologin', $user->token, $this->_config['lifetime']);
 
-					//writes the session
-					$this->complete_login($user);
+				//writes the session
+				$this->complete_login($user);
 
-					// Automatic login was successful
-					return $user;
-				}
-
+				// Automatic login was successful
+				return $user;
 			}
 		}
 
@@ -213,7 +208,7 @@ class Auth_OC extends Kohana_Auth {
      */
     public function social_login($provider, $identifier)
     {
-        // Load the user 
+        // Load the user
         $user = new Model_User;
         $user ->where('hybridauth_provider_name', '=', $provider)
         ->where('hybridauth_provider_uid','=',$identifier)
@@ -235,7 +230,7 @@ class Auth_OC extends Kohana_Auth {
             // social login was successful
             return $user;
         }
-        
+
 
         return FALSE;
     }
@@ -254,7 +249,7 @@ class Auth_OC extends Kohana_Auth {
         ->limit(1)
         ->find();
 
-        if ($user->loaded() AND $code ===  Session::instance()->get('sms_auth_code'))
+        if ($user->loaded() AND SMS::verify_auth_code(Session::instance()->get('sms_auth_code'), $code))
         {
             // Complete the login with the found data, and new token
             $user->complete_login($this->_config['lifetime']);
@@ -290,7 +285,7 @@ class Auth_OC extends Kohana_Auth {
 		$this->_session->delete('auth_forced');
         Cookie::delete('google_authenticator');
         Cookie::delete('sms_auth');
-        
+
 		if ($token = Cookie::get('authautologin'))
 		{
 			// Delete the autologin cookie to prevent re-login
@@ -306,7 +301,7 @@ class Auth_OC extends Kohana_Auth {
                 if ($user->loaded())
                     $user->create_token();
             }
-			 
+
 		}
 
 		return parent::logout($destroy);
@@ -438,7 +433,7 @@ class Auth_OC extends Kohana_Auth {
                 {
                     $user->failed_attempts  = 0;
                     $user->last_failed      = NULL;
-                    try 
+                    try
                     {
                         // Save the user
                         $user->update();
@@ -459,16 +454,18 @@ class Auth_OC extends Kohana_Auth {
 
 		return FALSE;
 	}
-	
+
 	/**
-     * 
+     *
      * Redirects the user to the home or to the admin, used in the controller for login
      */
     public function login_redirect()
     {
         $redirect = Core::request('auth_redirect');
-        if ($redirect === NULL OR strpos($redirect,Route::url('default'))!==FALSE )
+
+        if ($redirect === NULL OR strpos($redirect,Route::url('default'))!=0 )
             $redirect = Route::url('oc-panel');
+
 
         HTTP::redirect($redirect);
     }

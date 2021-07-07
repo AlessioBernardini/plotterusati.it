@@ -134,6 +134,13 @@ class Controller_Panel_Category extends Auth_Crud {
                     $this->redirect(Route::get($this->_route_name)->uri(array('controller'=> Request::current()->controller(),'action'=>'update','id'=>$form->object->id_category)));
                 }
 
+                // parent category is different than a child category
+                if ($form->object->id_category == $form->object->parent->id_category_parent)
+                {
+                    Alert::set(Alert::INFO, __('You can not set as parent a child category'));
+                    $this->redirect(Route::get($this->_route_name)->uri(array('controller'=> Request::current()->controller(),'action'=>'update','id'=>$form->object->id_category)));
+                }
+
                 //check if the parent is loaded/exists avoiding errors
                 $parent_cat = new Model_Category($form->object->id_category_parent);
                 if (!$parent_cat->loaded())
@@ -409,7 +416,7 @@ class Controller_Panel_Category extends Auth_Crud {
 
 		$category = new Model_Category($this->request->param('id'));
 
-		if (Core::selfhosted() AND Core::config('image.aws_s3_active'))
+		if (Core::is_selfhosted() AND Core::config('image.aws_s3_active'))
         {
             require_once Kohana::find_file('vendor', 'amazon-s3-php-class/S3','php');
             $s3 = new S3(core::config('image.aws_access_key'), core::config('image.aws_secret_key'));

@@ -35,8 +35,14 @@ class Controller_New extends Controller
             Alert::set(Alert::ALERT, __('Your profile has been disable for posting, due to recent spam content! If you think this is a mistake please contact us.'));
             $this->redirect(Route::url('default'));
         }
-        // redirect to connect stripe
-        elseif( Core::config('payment.stripe_connect') == TRUE  AND empty($this->user->stripe_user_id))
+        // redirect to connect stripe with legacy enabled
+        elseif( Core::config('payment.stripe_connect') == TRUE AND Core::config('payment.stripe_connect_legacy') == TRUE AND empty($this->user->stripe_user_id))
+        {
+            Alert::set(Alert::INFO, __('Please, connect with Stripe'));
+            $this->redirect(Route::url('oc-panel',array('controller'=>'profile','action'=>'edit')));
+        }
+        // redirect to connect stripe when connected account is mandatory
+        elseif( Core::config('payment.stripe_connect') == TRUE AND empty($this->user->stripe_user_id) AND Core::config('payment.stripe_connect_legacy') == FALSE AND Core::config('payment.stripe_connected_account_mandatory') == TRUE)
         {
             Alert::set(Alert::INFO, __('Please, connect with Stripe'));
             $this->redirect(Route::url('oc-panel',array('controller'=>'profile','action'=>'edit')));
@@ -52,6 +58,20 @@ class Controller_New extends Controller
         {
             Alert::set(Alert::INFO, __('Please, choose a plan first'));
             HTTP::redirect(Route::url('pricing'));
+        }
+        //user subscribed but plan doesn't have ads
+        elseif (Core::config('general.subscriptions') == TRUE AND
+            $this->user->subscription()->loaded() AND
+            $this->user->subscription()->amount_ads == 0)
+        {
+            Alert::set(Alert::INFO, sprintf(__('Your subscription plan doesn’t have ads. Please, change your plan first.')));
+            HTTP::redirect(Route::url('pricing'));
+        }
+
+        if (Auth::instance()->logged_in() AND $this->user->has_reached_ad_limit_per_day())
+        {
+            Alert::set(Alert::INFO, sprintf(__('You have reached the ad limit of post %s ads per day.'), Core::config('advertisement.ads_per_day_limit')));
+            $this->redirect(Route::url('default'));
         }
 
         //validates captcha

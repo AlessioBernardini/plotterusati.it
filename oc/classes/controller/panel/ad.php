@@ -28,8 +28,10 @@ class Controller_Panel_Ad extends Auth_Controller {
         $fields = array('title','id_ad','published','created','id_category', 'id_location','status');
 
         //filter ads by status
-        $status = is_numeric(Core::get('status'))?Core::get('status'):Model_Ad::STATUS_PUBLISHED;
-        $ads = $ads->where('status', '=', $status);
+        if($status = Core::get('status') AND is_numeric($status))
+        {
+        	$ads->where('status', '=', $status);
+        }
 
 		//filter = active
         if((New Model_Field())->get('expiresat') AND Core::get('filter')=='active')
@@ -385,8 +387,16 @@ class Controller_Panel_Ad extends Auth_Controller {
 						Model_Subscription::new_ad($ad->user);
 						Model_Subscribe::notify($ad);
 
+						// Post featured ad on social media
+                        if (! is_null($ad->featured) AND Core::config('advertisement.social_post_only_featured') == TRUE)
+                        {
+                            Social::social_post_featured_ad($ad);
+                        }
 						// Post on social media
-        				Social::post_ad($ad, $ad->get_first_image('image'));
+                        else
+                        {
+                            Social::post_ad($ad, $ad->get_first_image('image'));
+                        }
 					}
 					catch (Exception $e)
 					{
@@ -475,5 +485,50 @@ class Controller_Panel_Ad extends Auth_Controller {
 		}
 
 	}
+
+    /**
+     * Mark advertisement as no published : STATUS = 0
+     */
+    public function action_send_to_moderation()
+    {
+        if (! in_array(core::config('general.moderation'), Model_Ad::$moderation_status))
+        {
+            HTTP::redirect(Route::url('oc-panel',array('controller'=>'ad','action'=>'index')));
+        }
+
+        $id = $this->request->param('id');
+        $id_ads = (isset($id) AND is_numeric($id)) ? array($id) : Core::get('id_ads');
+        $param_current_url = Core::get('current_url');
+
+        if (is_array($id_ads))
+        {
+            $ads = new Model_Ad();
+            $ads = $ads->where('id_ad', 'in', $id_ads)->find_all();
+
+            foreach ($ads as $ad)
+            {
+                if ($ad->status != Model_Ad::STATUS_NOPUBLISHED)
+                {
+                    $ad->status = Model_Ad::STATUS_NOPUBLISHED;
+
+                    try{
+                        $ad->save();
+                    }
+                    catch (Exception $e){
+                        throw HTTP_Exception::factory(500,$e->getMessage());
+                    }
+                }
+            }
+
+            Alert::set(Alert::SUCCESS, __('Advertisement sended to moderation'));
+        }
+
+        if ($param_current_url == Model_Ad::STATUS_NOPUBLISHED AND in_array(core::config('general.moderation'), Model_Ad::$moderation_status))
+            HTTP::redirect(Route::url('oc-panel',array('controller'=>'ad','action'=>'moderate')));
+        elseif ($param_current_url == Model_Ad::STATUS_PUBLISHED)
+            HTTP::redirect(Route::url('oc-panel',array('controller'=>'ad','action'=>'index')));
+        else
+            HTTP::redirect(Route::url('oc-panel',array('controller'=>'ad','action'=>'index')).'?status='.$param_current_url);
+    }
 
 }

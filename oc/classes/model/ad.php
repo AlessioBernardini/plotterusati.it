@@ -108,6 +108,23 @@ class Model_Ad extends ORM {
         return self::$_current;
     }
 
+    public static function status()
+    {
+        return [
+            self::STATUS_NOPUBLISHED => __('Not published'),
+            self::STATUS_PUBLISHED => __('Published'),
+            self::STATUS_UNCONFIRMED => __('Unconfirmed'),
+            self::STATUS_SPAM => __('Spam'),
+            self::STATUS_SOLD => __('Sold'),
+            self::STATUS_UNAVAILABLE => __('Unavailable'),
+        ];
+    }
+
+    public static function get_status_label($status)
+    {
+        return self::status()[$status] ?? NULL;
+    }
+
     /**
      * Rule definitions for validation
      *
@@ -1054,10 +1071,16 @@ class Model_Ad extends ORM {
                                     $cf_value = '<a'.HTML::attributes(['href' => $cf_value, 'title' => $cf_config->$cf_name->tooltip, 'data-toggle' => 'tooltip', 'target' => '_blank']).'>'.$cf_config->$cf_name->label.'</a>';
                                 break;
                             case 'textarea_bbcode':
-                                $cf_value = Text::bb2html($cf_value, TRUE);
+                                if ($edit_ad == FALSE)
+                                {
+                                    $cf_value = Text::bb2html($cf_value, TRUE);
+                                }
                                 break;
                             case 'money':
-                                $cf_value = i18n::money_format($cf_value, $this->currency());
+                                if ($edit_ad == FALSE)
+                                {
+                                    $cf_value = i18n::money_format($cf_value, $this->currency());
+                                }
                                 break;
                             case 'video':
                                 $video_attributes = json_decode($cf_value);
@@ -1749,6 +1772,8 @@ class Model_Ad extends ORM {
                     $values[$name] = 1;
                 if($field == '0000-00-00' OR $field == "" OR $field == NULL OR empty($field))
                     $values[$name] = NULL;
+                if(is_array($field))
+                    $values[$name] = json_encode($field, JSON_NUMERIC_CHECK);
             }
         }
 
@@ -1894,6 +1919,114 @@ class Model_Ad extends ORM {
         {
             return View::factory('pages/ad/btc',array('ad'=>$this))->render();
         }
+    }
+
+    public function is_open_on($day)
+     {
+         if (!isset($this->cf_openinghours))
+         {
+             return FALSE;
+         }
+
+         if (empty($this->cf_openinghours))
+         {
+             return FALSE;
+         }
+
+         $opening_hours = json_decode($this->cf_openinghours);
+
+         return $opening_hours->{$day}->o ?? FALSE;
+     }
+
+     public function is_open_now()
+     {
+         if (!isset($this->cf_openinghours))
+         {
+             return FALSE;
+         }
+
+         if (empty($this->cf_openinghours))
+         {
+             return FALSE;
+         }
+
+         $opening_hours = json_decode($this->cf_openinghours);
+         $current_day = strtolower(Date::formatted_time('now', 'N'));
+         $current_timestamp = (int) Date::formatted_time('now', 'U');
+         $time_from = substr($opening_hours->{$current_day}->f, 0, -2).':'.substr($opening_hours->{$current_day}->f, -2);
+         $time_to = substr($opening_hours->{$current_day}->t, 0, -2).':'.substr($opening_hours->{$current_day}->t, -2);
+
+         if (
+             $current_timestamp >= strtotime($time_from)
+             AND $current_timestamp <= strtotime($time_to))
+         {
+             return TRUE;
+         }
+
+         return FALSE;
+     }
+
+     public function is_closed_on($day)
+     {
+         if (!isset($this->cf_openinghours))
+         {
+             return TRUE;
+         }
+
+         if (empty($this->cf_openinghours))
+         {
+             return TRUE;
+         }
+
+         $opening_hours = json_decode($this->cf_openinghours);
+
+         return ! $opening_hours->{$day}->o;
+     }
+
+     public function opening_hours_for_day($day)
+     {
+         if (!isset($this->cf_openinghours))
+         {
+             return;
+         }
+
+         if (empty($this->cf_openinghours))
+         {
+             return;
+         }
+
+         if ($this->is_closed_on($day))
+         {
+             return __('Closed');
+         }
+
+         $opening_hours = json_decode($this->cf_openinghours);
+
+         $time_from = substr($opening_hours->{$day}->f, 0, -2).':'.substr($opening_hours->{$day}->f, -2);
+         $time_to = substr($opening_hours->{$day}->t, 0, -2).':'.substr($opening_hours->{$day}->t, -2);
+
+         return Date::format($time_from, 'H:i ') . __('to') . Date::format($time_to, ' H:i');
+     }
+
+     /**
+     * prints the instagram script from the view
+     * @return string HTML or false in case not loaded
+     */
+    public function instagram()
+    {
+        if(! $this->loaded())
+        {
+            return FALSE;
+        }
+
+        if(! isset($this->cf_instagramusername) AND ! isset($this->user->cf_instagramusername))
+        {
+            return FALSE;
+        }
+
+        $username = $this->cf_instagramusername ?? $this->user->cf_instagramusername;
+
+        return View::factory('pages/ad/instagram', ['username' => $username])->render();
     }
 
 } // END Model_ad

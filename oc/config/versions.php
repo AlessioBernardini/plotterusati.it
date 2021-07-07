@@ -1,5 +1,32 @@
 <?php defined('SYSPATH') or die('No direct script access.');
                 return array (
+  '4.2.0' => 
+  array (
+    'codename' => 'Ananke',
+    'released' => '2021-05-13',
+    'blog' => '',
+    'changelog' => 'https://github.com/yclas/yclas/compare/4.1.0...4.2.0',
+    'issues' => 'https://github.com/yclas/yclas/milestone/46?closed=1',
+    'download' => 'https://j.mp/yc_420',
+  ),
+  '4.1.0' => 
+  array (
+    'codename' => 'Aether',
+    'released' => '2021-01-19',
+    'blog' => '',
+    'changelog' => 'https://github.com/yclas/yclas/compare/4.0.2...4.1.0',
+    'issues' => 'https://github.com/yclas/yclas/milestone/45?closed=1',
+    'download' => 'https://j.mp/yc_410',
+  ),
+  '4.0.2' => 
+  array (
+    'codename' => 'ReReErebus',
+    'released' => '2020-09-03',
+    'blog' => '',
+    'changelog' => 'https://github.com/yclas/yclas/compare/4.0.1...4.0.2',
+    'issues' => 'https://github.com/yclas/yclas/milestone/42?closed=1',
+    'download' => 'https://j.mp/yc_402',
+  ),
   '4.0.1' => 
   array (
     'codename' => 'ReErebus',

@@ -11,6 +11,7 @@ class Controller_Ad extends Controller {
 		if(Theme::get('infinite_scroll'))
 		{
 			$this->template->scripts['footer'][] = '//cdn.jsdelivr.net/jquery.infinitescroll/2.1/jquery.infinitescroll.js';
+            $this->template->scripts['footer'][] = Route::url('default', ['controller' => 'jslocalization', 'action' => 'infinitescroll']);
 			$this->template->scripts['footer'][] = 'js/listing.js';
 		}
 		if(core::config('general.auto_locate') OR core::config('advertisement.map'))
@@ -445,8 +446,12 @@ class Controller_Ad extends Controller {
 
 				Breadcrumbs::add(Breadcrumb::factory()->set_title($ad->title));
 
-
                 $this->template->meta_description = $ad->title.' '.__('in').' '.$category->translate_name() .' '.__('on').' '.core::config('general.site_name');
+
+                if ($ad->instagram())
+                {
+                    $this->template->scripts['footer'][] = 'js/jquery.instagramFeed.min.js';
+                }
 
 				$permission = TRUE; //permission to add hit to advert and give access rights.
 				$auth_user = Auth::instance();
@@ -699,6 +704,9 @@ class Controller_Ad extends Controller {
         $ad     = new Model_Ad($id_ad);
         if ($ad->loaded())
         {
+            if($ad->status != Model_Ad::STATUS_PUBLISHED)
+                throw HTTP_Exception::factory(404,__('Page not found'));
+
             //case when payment is set to 0, it goes to top without payment, no generating order
             if(core::config('payment.pay_to_go_on_top') <= 0)
             {
@@ -759,6 +767,7 @@ class Controller_Ad extends Controller {
                 $ad->featured = Date::unix2mysql(time() + ($days * 24 * 60 * 60));
                 try {
                     $ad->save();
+                    Social::social_post_featured_ad($ad);
                 } catch (Exception $e) {
                     throw HTTP_Exception::factory(500,$e->getMessage());
                 }
@@ -1054,6 +1063,53 @@ class Controller_Ad extends Controller {
         $this->redirect(Route::url('default'));
     }
 
+    /**
+     * [action_buy] Pay for ad, and set new order
+     *
+     */
+    public function action_request_safe_payment()
+    {
+        //check pay to featured top is enabled check stripe config too
+        if(core::config('payment.paypal_seller') == FALSE AND Core::config('payment.stripe_connect')==FALSE  AND Core::config('payment.escrow_pay')==FALSE)
+            throw HTTP_Exception::factory(404,__('Page not found'));
+
+        //check ad exists
+        $ad = new Model_Ad($this->request->param('id'));
+
+        if(! $ad->loaded())
+        {
+            throw HTTP_Exception::factory(404,__('Page not found'));
+        }
+
+        if($ad->status != Model_Ad::STATUS_PUBLISHED)
+        {
+            throw HTTP_Exception::factory(404,__('Page not found'));
+        }
+
+        if($ad->status != Model_Ad::STATUS_PUBLISHED)
+        {
+            throw HTTP_Exception::factory(404,__('Page not found'));
+        }
+
+        if(core::config('payment.stock') == 1 AND $ad->stock <= 0)
+        {
+            throw HTTP_Exception::factory(404,__('Page not found'));
+        }
+
+        $url = $ad->user->ql('oc-panel', [
+            'controller' => 'profile',
+            'action' => 'edit',
+        ], TRUE);
+
+        $ad->user->email('safe-payment-requested', [
+            '[AD.NAME]' => $ad->title,
+            '[URL.QL]' => $url,
+        ]);
+
+        Alert::set(Alert::INFO, __('Safe payment requested.'));
+
+        $this->redirect(Route::url('ad', ['controller' => 'ad', 'category' => $ad->category->seoname, 'seotitle' => $ad->seotitle]));
+    }
 
     /**
      * thanks for publish
@@ -1089,6 +1145,7 @@ class Controller_Ad extends Controller {
         if (Theme::get('infinite_scroll'))
         {
             $this->template->scripts['footer'][] = '//cdn.jsdelivr.net/jquery.infinitescroll/2.1/jquery.infinitescroll.js';
+            $this->template->scripts['footer'][] = Route::url('default', ['controller' => 'jslocalization', 'action' => 'infinitescroll']);
             $this->template->scripts['footer'][] = 'js/listing.js';
         }
         if(core::config('general.auto_locate') OR core::config('advertisement.map'))
@@ -1166,15 +1223,31 @@ class Controller_Ad extends Controller {
 	        {
 	        	// if user is using search from header
 	        	if(core::get('search'))
+                {
 	        		$search_advert = core::get('search');
+                }
+
+                $ads->where_open();
+
+                $ads->where('title', 'like', '%'.$search_advert.'%');
+
+                $ads = $this->search_with_synonyms($ads, 'title', $search_advert);
 
 	        	if(core::config('general.search_by_description') == TRUE)
-                        $ads->where_open()
-                            ->where('title', 'like', '%'.$search_advert.'%')
-                            ->or_where('description', 'like', '%'.$search_advert.'%')
-                            ->where_close();
-                else
-                    $ads->where('title', 'like', '%'.$search_advert.'%');
+                {
+                    $ads = $this->search_with_synonyms($ads, 'description', $search_advert);
+                }
+
+                // text searchable custom fields
+                foreach (Model_Field::get_all() as $field_name => $field_options)
+                {
+                    if (isset($field_options['text_searchable']) AND $field_options['text_searchable'])
+                    {
+                        $ads = $this->search_with_synonyms($ads, "cf_{$field_name}", $search_advert);
+                    }
+                }
+
+                $ads->where_close();
 	        }
 
             //cf filter arrays
@@ -1236,7 +1309,7 @@ class Controller_Ad extends Controller {
 	        $category = NULL;
 	        $location = NULL;
 
-            if (core::config('general.search_multi_catloc') ) 
+            if (core::config('general.search_multi_catloc') )
             {
                 //filter by category
                 if (is_array(core::get('category')))
@@ -1270,7 +1343,10 @@ class Controller_Ad extends Controller {
                             $location = new Model_location();
                             $location->where('seoname','=',$loc)->cached()->limit(1)->find();
                             if ($location->loaded())
+                            {
                                 $loc_siblings_ids = array_merge($loc_siblings_ids,$location->get_siblings_ids());
+                                $location_filter[] = $location;
+                            }
                         }
                     }
 
@@ -1295,7 +1371,25 @@ class Controller_Ad extends Controller {
                     $location = new Model_location();
                     $location->where('seoname',(is_array(core::get('location'))?'in':'='),core::get('location'))->cached()->limit(1)->find();
                     if ($location->loaded())
+                    {
+                        $location_filter = $location;
+
+                        $ads->where_open();
+
                         $ads->where('id_location', 'IN', $location->get_siblings_ids());
+
+                        if (core::request('userpos') != 1 AND core::request('locationpos') == 1 AND $location->latitude AND $location->longitude)
+                        {
+                            if (is_numeric(Core::cookie('mydistance')) AND Core::cookie('mydistance') <= 500)
+                                $location_distance = Core::config('general.measurement') == 'imperial' ? (Num::round(Core::cookie('mydistance') * 1.60934)) : Core::cookie('mydistance');
+                            else
+                                $location_distance = Core::config('general.measurement') == 'imperial' ? (Num::round(Core::config('advertisement.auto_locate_distance') * 1.60934)) : Core::config('advertisement.auto_locate_distance');
+
+                            $ads->or_where(DB::expr('degrees(acos(sin(radians('.$location->latitude.')) * sin(radians(`latitude`)) + cos(radians('.$location->latitude.')) * cos(radians(`latitude`)) * cos(radians(abs('.$location->longitude.' - `longitude`))))) * 111.321'),'<=',$location_distance);
+                        }
+
+                        $ads->where_close();
+                    }
                 }
             }
 
@@ -1367,6 +1461,13 @@ class Controller_Ad extends Controller {
                             $ads->where($key, '>=', $cf_min);
                         elseif (is_numeric($cf_max)) // only max cf has been provided
                             $ads->where($key, '<=', $cf_max);
+                    }
+                    elseif($key == 'cf_openinghours' AND array_key_exists(str_replace('cf_','',$key), Model_Field::get_all()))
+                    {
+                         $current_day = strtolower(Date::formatted_time('now', 'N'));
+                         $ads->where(DB::expr('JSON_EXTRACT(`cf_openinghours` , \'$."' . $current_day . '".o\')'), '=', 1);
+                         $ads->where(DB::expr('JSON_EXTRACT(`cf_openinghours` , \'$."' . $current_day . '".f\')'), '<=', (int) $value);
+                         $ads->where(DB::expr('JSON_EXTRACT(`cf_openinghours` , \'$."' . $current_day . '".t\')'), '>=', (int) $value);
                     }
     	        	elseif(is_numeric($value))
     	        		$ads->where($key, '=', $value);
@@ -1487,19 +1588,76 @@ class Controller_Ad extends Controller {
 
 		$this->template->bind('content', $content);
 
-		$this->template->content = View::factory('pages/ad/advanced_search', array('ads'		      => $ads,
+        $this->template->content = View::factory('pages/ad/advanced_search', array('ads'		      => $ads,
         																		   'categories'	      => Model_Category::get_as_array(),
         																		   'order_categories' => Model_Category::get_multidimensional(),
-        																		   'locations'	      => Model_Location::get_as_array(),
-        																		   'order_locations'  => Model_Location::get_multidimensional(),
+        																		   'locations'	      => Model_Location::get_as_array(100),
+        																		   'order_locations'  => Model_Location::get_multidimensional(100),
         																		   'pagination'	      => $pagination,
         																		   'user'		      => $user,
         																		   'fields' 		  => Model_Field::get_all(),
-																				   'total_ads' 		  => $res_count
+                                                                                   'total_ads' 		  => $res_count,
+                                                                                   'location_filter'  => $location_filter ?? NULL,
         																		   ));
 
 
 	}
+
+    protected function search_with_synonyms(Kohana_ORM $ads, $field, $text)
+    {
+        $ads->or_where($field, 'like', "%{$text}%");
+
+        /**
+         * Expected word_synonyms theme option value:
+         *
+         * car,auto,automobile,coche,van
+         * bike,bycicle,scooter
+         */
+
+        $synonym_groups = str_replace("\r", '', Theme::get('word_synonyms')); // remove carriage returns
+
+        if (empty($synonym_groups))
+        {
+            return $ads;
+        }
+
+        $synonym_groups = explode(PHP_EOL, $synonym_groups);
+
+        if (! is_array($synonym_groups))
+        {
+            return $ads;
+        }
+
+        foreach ($synonym_groups as $synonym_group)
+        {
+            $synonyms = explode(',', $synonym_group);
+
+            if (! is_array($synonyms))
+            {
+                continue;
+            }
+
+            foreach ($synonyms as $synonym)
+            {
+                if (empty($synonym))
+                {
+                    continue;
+                }
+
+                if (strpos($text, $synonym) !== FALSE)
+                {
+                    foreach ($synonyms as $replace_synonym)
+                    {
+                        $text_with_replaced_synonym = str_replace($synonym, $replace_synonym, $text);
+
+                        $ads->or_where($field, 'like', "%{$text_with_replaced_synonym}%");
+                    }
+                }
+            }
+        }
+
+        return $ads;
+    }
 
 
 }// End ad controller

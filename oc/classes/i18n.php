@@ -463,9 +463,16 @@ class I18n extends Kohana_I18n {
      */
     public static function money_format($number, $currency = NULL)
     {
-        if($currency == NULL){
+        if(core::config('general.ewallet'))
+        {
+            $format = 'YCL';
+        }
+        elseif($currency == NULL)
+        {
             $format = core::config('general.number_format');
-        } else {
+        }
+        else
+        {
             $format = $currency;
         }
 
@@ -499,6 +506,7 @@ class I18n extends Kohana_I18n {
      */
     public static $currencies = array(
         'ARS' => array(NULL,2,',','.',0),          //  Argentine Peso
+        'AOA' => array(' Kz',0,',','.',1),         //  Angola Kwanza
         'AMD' => array(NULL,2,'.',',',0),          //  Armenian Dram
         'AWG' => array(NULL,2,'.',',',0),          //  Aruban Guilder
         'AUD' => array('AU$',2,'.',' ',0),          //  Australian Dollar
@@ -509,12 +517,14 @@ class I18n extends Kohana_I18n {
         'BMD' => array(NULL,2,'.',',',0),          //  Bermudian Dollar
         'BOB' => array(NULL,2,'.',',',0),          //  Bolivia, Boliviano
         'BAM' => array(NULL,2,'.',',',0),          //  Bosnia and Herzegovina, Convertible Marks
+        'BIF' => array(' FBu',0,',','.',1),        //  Burundian Franc
         'BWP' => array(NULL,2,'.',',',0),          //  Botswana, Pula
         'BRL' => array('R$',2,',','.',0),          //  Brazilian Real
         'BND' => array(NULL,2,'.',',',0),          //  Brunei Dollar
-        'BTC' => array('BTC',8,'.','',1),          //  Bitcoin
-        'CAD' => array('CA$',2,'.',',',0),          //  Canadian Dollar
+        'XAF' => array(' CFA',0,',','.',1),        //  CFA franc BEAC
+        'CAD' => array('CA$',2,'.',',',0),         //  Canadian Dollar
         'KYD' => array(NULL,2,'.',',',0),          //  Cayman Islands Dollar
+        'CDF' => array(' FC',0,',','.',1),         //  Congolese Franc
         'CLP' => array(NULL,0,'','.',0),           //  Chilean Peso
         'CNY' => array('CN&yen;',2,'.',',',0),          //  China Yuan Renminbi
         'COP' => array(NULL,2,',','.',0),          //  Colombian Peso
@@ -525,7 +535,7 @@ class I18n extends Kohana_I18n {
         'CYP' => array(NULL,2,'.',',',0),          //  Cyprus Pound
         'CZK' => array('K&#269;',0,'',' ',1),          //  Czech Koruna
         'DKK' => array(NULL,2,',','.',0),          //  Danish Krone
-        'DJF' => array(' Fdj',0,',','',1),          //  Djibouti Franc
+        'DJF' => array('Fdj',2,',','.',0),          //  Djibouti Franc
         'DOP' => array(NULL,2,'.',',',0),          //  Dominican Peso
         'XCD' => array('EC$',2,'.',',',0),          //  East Caribbean Dollar
         'EGP' => array(NULL,2,'.',',',0),          //  Egyptian Pound
@@ -539,7 +549,7 @@ class I18n extends Kohana_I18n {
         'GTQ' => array(NULL,2,'.',',',0),          //  Guatemala, Quetzal
         'HNL' => array(NULL,2,'.',',',0),          //  Honduras, Lempira
         'HKD' => array('HK$',2,'.',',',0),          //  Hong Kong Dollar
-        'HUF' => array('Ft',0,'','.',1),            //  Hungary, Forint
+        'HUF' => array('Ft',0,'','.',1),           //  Hungary, Forint
         'ISK' => array('kr',0,'','.',1),           //  Iceland Krona
         'INR' => array('&#2352;',2,'.',',',0),          //  Indian Rupee ₹
         'IDR' => array(NULL,2,',','.',0),          //  Indonesia, Rupiah
@@ -576,6 +586,7 @@ class I18n extends Kohana_I18n {
         'OMR' => array(NULL,3,'.',',',0),          //  Rial Omani
         'RON' => array(NULL,2,',','.',0),          //  Romania, New Leu
         'ROL' => array(NULL,2,',','.',0),          //  Romania, Old Leu
+        'RWF' => array(' FR',0,',',',',1),         //  Rwandan Franc
         'RUB' => array(NULL,2,',','.',0),          //  Russian Ruble
         'SAR' => array(NULL,2,'.',',',0),          //  Saudi Riyal
         'SGD' => array(NULL,2,'.',',',0),          //  Singapore Dollar
@@ -604,8 +615,10 @@ class I18n extends Kohana_I18n {
         'MAD' => array('.د.م',2,'.',',',1),          //  Moroccan Dirham
         'NGN' => array('₦',2,'.',',',0),          //  Nigerian Naira
         'DZD' => array('دج',2,'.',',',0),          //  Algerian Dinar
+        'XAF' => array(' CFA',0,',','.',1),         //  CFA franc BEAC
         'XOF' => array('CFA',2,'.',',',1),          //  West African CFA Franc
         'ZMW' => array('ZK',2,'.',',',1),          //  Zambian Kwacha
+        'YCL' => array('YCL',0,'.',',',0),          //  eWallet coin
     );
 
     /**
@@ -629,6 +642,12 @@ class I18n extends Kohana_I18n {
         //no symbol using default code
         if (self::$currencies[$currency][0] === NULL)
             self::$currencies[$currency][0] = $currency;
+
+        //ewallet format
+        if ($currency == 'YCL')
+        {
+            return Core::config('general.ewallet_money_symbol').$number;
+        }
 
         //adding the symbol in the back
         if (self::$currencies[$currency][4]===1)
@@ -841,6 +860,7 @@ class I18n extends Kohana_I18n {
         'AUD' => 'Australian Dollar',
         'ESP' => 'Euro in spanish format',
         'NOK' => 'Norwegian Krone',
+        'AOA' => 'Angola Kwanza',
         'DZD' => 'Algerian Dinar',
         'ARS' => 'Argentine Peso',
         'AMD' => 'Armenian Dram',
@@ -848,6 +868,7 @@ class I18n extends Kohana_I18n {
         'BSD' => 'Bahamian Dollar',
         'BHD' => 'Bahraini Dinar',
         'BDT' => 'Bangladesh, Taka',
+        'BIF' => 'Burundian Franc',
         'BZD' => 'Belize Dollar',
         'BMD' => 'Bermudian Dollar',
         'BOB' => 'Bolivia, Boliviano',
@@ -857,6 +878,7 @@ class I18n extends Kohana_I18n {
         'BND' => 'Brunei Dollar',
         'BTC' => 'Bitcoin',
         'KYD' => 'Cayman Islands Dollar',
+        'CDF' => 'Congolese Franc',
         'CLP' => 'Chilean Peso',
         'CNY' => 'China Yuan Renminbi',
         'COP' => 'Colombian Peso',
@@ -918,6 +940,7 @@ class I18n extends Kohana_I18n {
         'RON' => 'Romania, New Leu',
         'ROL' => 'Romania, Old Leu',
         'RUB' => 'Russian Ruble',
+        'RWF' => 'Rwandan Franc',
         'SAR' => 'Saudi Riyal',
         'SGD' => 'Singapore Dollar',
         'SKK' => 'Slovak Koruna',
@@ -937,6 +960,7 @@ class I18n extends Kohana_I18n {
         'VEF' => 'Venezuela Bolivares Fuertes',
         'VEB' => 'Venezuela, Bolivar',
         'VND' => 'Viet Nam, Dong ₫',
+        'XAF' => 'CFA franc BEAC',
         'XOF' => 'West African CFA Franc',
         'ZMW' => 'Zambian Kwacha',
         'ZWD' => 'Zimbabwe Dollar',
@@ -1263,7 +1287,7 @@ function _e($string, array $values = NULL, $lang = 'en-us')
     $string = empty($values) ? $string : strtr($string, $values);
 
     if (Core::get('edit_translation') !== '1')
-        return $string;
+        return stripslashes($string);
 
     $attributes = [
         'class' => 'editable',
@@ -1282,5 +1306,5 @@ function _e($string, array $values = NULL, $lang = 'en-us')
         $compiled_attributes .= '="'.htmlspecialchars( (string) $value, ENT_QUOTES, Kohana::$charset, TRUE).'"';
     }
 
-    return '<span '.$compiled_attributes.'>'.$string.'</span>';
+    return '<span '.$compiled_attributes.'>'.stripslashes($string).'</span>';
 }

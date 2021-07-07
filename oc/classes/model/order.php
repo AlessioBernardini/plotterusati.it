@@ -48,11 +48,13 @@ class Model_Order extends ORM {
     /**
      * Id of products
      */
-    const PRODUCT_CATEGORY      = 1; //paid to post in a paid category
-    const PRODUCT_TO_TOP        = 2; //paid to return the ad to the first page
-    const PRODUCT_TO_FEATURED   = 3; // paid to featured an ad in the site
-    const PRODUCT_AD_SELL       = 4; // a customer paid to buy the item/ad
-    const PRODUCT_APP_FEE       = 5; // application fee, thats what we cahrge to the seller
+    const PRODUCT_CATEGORY      = 1;  // paid to post in a paid category
+    const PRODUCT_TO_TOP        = 2;  // paid to return the ad to the first page
+    const PRODUCT_TO_FEATURED   = 3;  // paid to featured an ad in the site
+    const PRODUCT_AD_SELL       = 4;  // a customer paid to buy the item/ad
+    const PRODUCT_APP_FEE       = 5;  // application fee, that's what we charge to the seller
+    const PRODUCT_AD_CUSTOM     = 6;
+    const PRODUCT_ADD_MONEY     = 7;
 
     /**
      * returns the product array
@@ -66,7 +68,10 @@ class Model_Order extends ORM {
                             self::PRODUCT_TO_FEATURED   =>  __('Feature ad'),
                             self::PRODUCT_AD_SELL       =>  __('Buy product'),
                             self::PRODUCT_APP_FEE       =>  __('Application Fee'),
+                            self::PRODUCT_AD_CUSTOM     =>  __('Custom'),
+                            self::PRODUCT_ADD_MONEY     =>  __('Add money'),
                         );
+
         if (Core::config('general.subscriptions')==TRUE AND Core::extra_features() == TRUE )
         {
             $plans = new Model_Plan();
@@ -152,6 +157,7 @@ class Model_Order extends ORM {
             {
                 Model_Subscription::new_order($this);
 
+                SMS::send_transactional($this->user, 'subscription_payment');
 
                 $replace_email = array('[AD.TITLE]'     => $this->description,
                                      '[URL.AD]'         => Route::url('pricing'),
@@ -171,11 +177,19 @@ class Model_Order extends ORM {
                     case Model_Order::PRODUCT_AD_SELL:
                             $ad->sale($this);
                         break;
+                    case Model_Order::PRODUCT_AD_CUSTOM:
+                            $ad->sale($this);
+                        break;
                     case Model_Order::PRODUCT_TO_TOP:
                             $ad->to_top();
                         break;
                     case Model_Order::PRODUCT_TO_FEATURED:
                             $ad->to_feature($this->featured_days);
+
+                            SMS::send_transactional($ad->user, 'featured_ad_payment');
+                        break;
+                    case Model_Order::PRODUCT_ADD_MONEY:
+                            Model_Transaction::deposit($this->user, NULL, $this, $this->quantity);
                         break;
                     case Model_Order::PRODUCT_CATEGORY:
                             $ad->paid_category();
@@ -221,7 +235,10 @@ class Model_Order extends ORM {
     public static function new_order(Model_Ad $ad = NULL, $user, $id_product, $amount, $currency = NULL, $description = NULL, $featured_days = NULL, $quantity = 1)
     {
         if ($currency === NULL)
-            $currency = core::config('payment.paypal_currency');
+            $currency = core::config('general.ewallet') ? 'YCL' : core::config('payment.paypal_currency');
+
+        if (core::config('general.ewallet') AND $id_product !== self::PRODUCT_ADD_MONEY)
+            $currency = 'YCL';
 
         if ($description === NULL)
             $description = Model_Order::product_desc($id_product);
@@ -452,6 +469,14 @@ class Model_Order extends ORM {
             $this->save();
         }
 
+        $money = core::get('add_money');
+        if (is_numeric($money) AND ($price = Model_Transaction::get_money_price($money)) !== FALSE )
+        {
+            $this->amount = $price; //get price from config
+            $this->quantity = $money;
+            $this->save();
+        }
+
         if ($this->ad->shipping_pickup() AND core::get('shipping_pickup'))
         {
             $this->amount = $this->ad->price * $this->quantity;
@@ -514,6 +539,9 @@ class Model_Order extends ORM {
             case self::PRODUCT_TO_FEATURED:
                     $amount = Model_Order::get_featured_price($this->featured_days);
                 break;
+            case self::PRODUCT_ADD_MONEY:
+                     $amount = Model_Transaction::get_money_price($this->quantity);
+                break;
             case self::PRODUCT_AD_SELL:
                     if ($this->ad->shipping_pickup() AND core::get('shipping_pickup'))
                         $amount = $this->ad->price * $this->quantity;
@@ -521,6 +549,9 @@ class Model_Order extends ORM {
                         $amount = ($this->ad->price * $this->quantity) + $this->ad->shipping_price();
                     else
                         $amount = $this->ad->price * $this->quantity;
+                break;
+            case self::PRODUCT_AD_CUSTOM:
+                        $amount = $this->amount;
                 break;
             default:
                 $plan = new Model_Plan($this->id_product);
@@ -606,6 +637,89 @@ class Model_Order extends ORM {
         //by default we say is not fraud
         return FALSE;
 
+    }
+
+    /**
+     * mark an order as received by the user
+     */
+    public function mark_as_received()
+    {
+        if (! in_array($this->id_product, [self::PRODUCT_AD_SELL, self::PRODUCT_AD_CUSTOM]))
+        {
+            return NULL;
+        }
+
+        $this->received = Date::unix2mysql();
+
+        try {
+            $this->save();
+        } catch (Exception $e) {
+            throw HTTP_Exception::factory(500, $e->getMessage());
+        }
+
+        if (core::config('general.ewallet'))
+        {
+            Model_Transaction::deposit($this->ad->user, $this->user, $this, (int) $this->amount);
+        }
+    }
+
+    /**
+     * mark an order as shipped
+     */
+    public function mark_as_shipped($tracking_code = NULL, $provider_name = NULL)
+    {
+        if (! in_array($this->id_product, [self::PRODUCT_AD_SELL]))
+        {
+            return NULL;
+        }
+
+        $this->shipped = Date::unix2mysql();
+        $this->shipping_tracking_code = Encrypt::instance()->encode($tracking_code);
+        $this->shipping_provider_name = $provider_name;
+
+        try {
+            $this->save();
+        } catch (Exception $e) {
+            throw HTTP_Exception::factory(500, $e->getMessage());
+        }
+    }
+
+    /**
+     * mark an order as cancelled
+     */
+    public function mark_as_cancelled()
+    {
+        if (! in_array($this->id_product, [self::PRODUCT_AD_SELL]))
+        {
+            return NULL;
+        }
+
+        $this->cancelled = Date::unix2mysql();
+
+        try {
+            $this->save();
+        } catch (Exception $e) {
+            throw HTTP_Exception::factory(500, $e->getMessage());
+        }
+    }
+
+    /**
+     * mark an order as paid out
+     */
+    public function mark_as_paid_out()
+    {
+        if (! in_array($this->id_product, [self::PRODUCT_AD_SELL]))
+        {
+            return NULL;
+        }
+
+        $this->paid_out = Date::unix2mysql();
+
+        try {
+            $this->save();
+        } catch (Exception $e) {
+            throw HTTP_Exception::factory(500, $e->getMessage());
+        }
     }
 
     public static function by_user(Model_User $user)
@@ -893,6 +1007,90 @@ array (
     'is_nullable' => true,
     'ordinal_position' => 14,
     'display' => '11',
+    'comment' => '',
+    'extra' => '',
+    'key' => '',
+    'privileges' => 'select,insert,update,references',
+  ),
+  'received' =>
+  array (
+    'type' => 'string',
+    'column_name' => 'received',
+    'column_default' => NULL,
+    'data_type' => 'datetime',
+    'is_nullable' => true,
+    'ordinal_position' => 7,
+    'comment' => '',
+    'extra' => '',
+    'key' => '',
+    'privileges' => 'select,insert,update,references',
+  ),
+  'shipped' =>
+  array (
+    'type' => 'string',
+    'column_name' => 'shipped',
+    'column_default' => NULL,
+    'data_type' => 'datetime',
+    'is_nullable' => true,
+    'ordinal_position' => 7,
+    'comment' => '',
+    'extra' => '',
+    'key' => '',
+    'privileges' => 'select,insert,update,references',
+  ),
+  'cancelled' =>
+  array (
+    'type' => 'string',
+    'column_name' => 'cancelled',
+    'column_default' => NULL,
+    'data_type' => 'datetime',
+    'is_nullable' => true,
+    'ordinal_position' => 7,
+    'comment' => '',
+    'extra' => '',
+    'key' => '',
+    'privileges' => 'select,insert,update,references',
+  ),
+  'paid_out' =>
+  array (
+    'type' => 'string',
+    'column_name' => 'paid_out',
+    'column_default' => NULL,
+    'data_type' => 'datetime',
+    'is_nullable' => true,
+    'ordinal_position' => 7,
+    'comment' => '',
+    'extra' => '',
+    'key' => '',
+    'privileges' => 'select,insert,update,references',
+  ),
+  'shipping_tracking_code' =>
+  array (
+    'type' => 'string',
+    'exact' => true,
+    'column_name' => 'shipping_tracking_code',
+    'column_default' => NULL,
+    'data_type' => 'varchar',
+    'is_nullable' => true,
+    'ordinal_position' => 11,
+    'character_maximum_length' => '145',
+    'collation_name' => 'utf8_general_ci',
+    'comment' => '',
+    'extra' => '',
+    'key' => '',
+    'privileges' => 'select,insert,update,references',
+  ),
+  'shipping_provider_name' =>
+  array (
+    'type' => 'string',
+    'exact' => true,
+    'column_name' => 'shipping_provider_name',
+    'column_default' => NULL,
+    'data_type' => 'varchar',
+    'is_nullable' => true,
+    'ordinal_position' => 11,
+    'character_maximum_length' => '145',
+    'collation_name' => 'utf8_general_ci',
     'comment' => '',
     'extra' => '',
     'key' => '',

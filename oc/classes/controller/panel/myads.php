@@ -191,6 +191,12 @@ class Controller_Panel_Myads extends Auth_Frontcontroller {
                     HTTP::redirect(Route::url('pricing'));
                 }
 
+                if ($this->user->has_reached_ad_limit_per_day())
+                {
+                    Alert::set(Alert::INFO, sprintf(__('You have reached the ad limit of post %s ads per day.'), Core::config('advertisement.ads_per_day_limit')));
+                    HTTP::redirect(Route::url('oc-panel',array('controller'=>'myads','action'=>'index')));
+                }
+
                 //activate the ad
                 if ($activate === TRUE)
                 {
@@ -209,6 +215,7 @@ class Controller_Panel_Myads extends Auth_Frontcontroller {
                     try
                     {
                         $active_ad->save();
+                        Model_Subscription::new_ad($user);
                     }
                     catch (Exception $e)
                     {
@@ -281,7 +288,10 @@ class Controller_Panel_Myads extends Auth_Frontcontroller {
                     $order->confirm_payment('cash', sprintf('Done by user %d - %s', $user->id_user, $user->email));
 
                     if ($ad->sold())
+                    {
+                        Model_Subscription::ad_sold(Auth::instance()->get_user());
                         Alert::set(Alert::SUCCESS, __('Advertisement is marked as Sold'));
+                    }
                 }
                 else
                 {

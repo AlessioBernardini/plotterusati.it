@@ -8,6 +8,14 @@ class Controller_Panel_Integrations extends Auth_Controller {
 
         $integrations = [
             [
+                'name' => '2factorin',
+                'config_name' => 'general.sms_auth',
+                'label' => '2Factor',
+                'description' => __('2 step SMS authentication.'),
+                'logo' => Core::config('general.base_url') . 'themes/default/img/oc-panel/integrations/2factor.png',
+                'category' => '',
+            ],
+            [
                 'name' => 'algolia',
                 'config_name' => 'general.algolia_search',
                 'label' => 'Algolia',
@@ -21,6 +29,14 @@ class Controller_Panel_Integrations extends Auth_Controller {
                 'label' => 'Akismet',
                 'description' => __('Deals with spam posts and emails.'),
                 'logo' => Core::config('general.base_url') . 'themes/default/img/oc-panel/integrations/akismet.svg',
+                'category' => '',
+            ],
+            [
+                'name' => 'autodata',
+                'config_name' => 'general.autodata',
+                'label' => 'Auto-Data',
+                'description' => __('Get vehicle data for your website.'),
+                'logo' => Core::config('general.base_url') . 'themes/default/img/oc-panel/integrations/auto-data.jpg',
                 'category' => '',
             ],
             [
@@ -65,7 +81,7 @@ class Controller_Panel_Integrations extends Auth_Controller {
             ],
             [
                 'name' => 'googleanalytics',
-                'config_name' => 'general.analytics',
+                'config_name' => 'general.analytics_global_site_tag',
                 'label' => 'Google Analytics',
                 'description' => __('Get data of who and when visits your site.'),
                 'logo' => Core::config('general.base_url') . 'themes/default/img/oc-panel/integrations/google-analytics.png',
@@ -119,6 +135,14 @@ class Controller_Panel_Integrations extends Auth_Controller {
                 'logo' => Core::config('general.base_url') . 'themes/default/img/oc-panel/integrations/recaptcha.png',
                 'category' => '',
             ],
+            [
+                'name' => 'smartarget',
+                'config_name' => 'general.smartarget_id',
+                'label' => 'Smartarget',
+                'description' => __('Get 20 apps to improve user engagement. WhatsApp and Facebook Messenger Contact US, Popup, Message Bar and more.'),
+                'logo' => Core::config('general.base_url') . 'themes/default/img/oc-panel/integrations/smartarget.jpg',
+                'category' => '',
+            ],
         ];
 
         $social_integrations = [
@@ -136,14 +160,6 @@ class Controller_Panel_Integrations extends Auth_Controller {
                 'label' => 'Logbee',
                 'description' => __('Integrates your site with Logbee'),
                 'logo' => Core::config('general.base_url') . 'themes/default/img/oc-panel/integrations/logbee.png',
-                'category' => '',
-            ],
-            [
-                'name' => 'pinterest',
-                'config_name' => 'advertisement.pinterest',
-                'label' => 'Pinterest',
-                'description' => __('Auto post ads on Pinterest automatically.'),
-                'logo' => Core::config('general.base_url') . 'themes/default/img/oc-panel/integrations/pinterest.svg',
                 'category' => '',
             ],
             [
@@ -225,6 +241,14 @@ class Controller_Panel_Integrations extends Auth_Controller {
                 'category' => '',
             ],
             [
+                'name' => 'mollie',
+                'config_name' => 'payment.mollie_api_key',
+                'label' => 'Mollie',
+                'description' => __('Accept payments with Mollie.'),
+                'logo' => Core::config('general.base_url') . 'themes/default/img/oc-panel/integrations/mollie.jpg',
+                'category' => '',
+            ],
+            [
                 'name' => 'paguelofacil',
                 'config_name' => 'payment.paguelofacil_cclw',
                 'label' => 'Paguelofacil',
@@ -270,6 +294,14 @@ class Controller_Panel_Integrations extends Auth_Controller {
                 'label' => 'Paytabs',
                 'description' => __('Accept payments with Paytabs.'),
                 'logo' => Core::config('general.base_url') . 'themes/default/img/oc-panel/integrations/paytabs.jpg',
+                'category' => '',
+            ],
+            [
+                'name' => 'razorpay',
+                'config_name' => 'payment.razorpay_key_id',
+                'label' => 'Razorpay',
+                'description' => __('Accept payments with Razorpay.'),
+                'logo' => Core::config('general.base_url') . 'themes/default/img/oc-panel/integrations/razorpay.jpg',
                 'category' => '',
             ],
             [
@@ -333,7 +365,7 @@ class Controller_Panel_Integrations extends Auth_Controller {
             ],
             [
                 'name' => 'googleanalytics',
-                'config_name' => 'general.analytics',
+                'config_name' => 'general.analytics_global_site_tag',
                 'label' => 'Google Analytics',
                 'description' => __('Get data of who and when visits your site.'),
                 'logo' => Core::config('general.base_url') . 'themes/default/img/oc-panel/integrations/google-analytics.png',

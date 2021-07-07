@@ -43,10 +43,14 @@ class StripeCheckout {
     {
         //percentage we take, in case not passed take default
         if ($fee === NULL)
+        {
             $fee  = Core::config('payment.stripe_appfee');
+        }
+
+        $fixed_fee = Core::config('payment.stripe_appfee_fixed', 0);
 
         //initial exchange fee + stripe fee
-        return ($fee * $amount / 100);
+        return (($fee * $amount / 100) + $fixed_fee);
     }
 
 
@@ -93,7 +97,7 @@ class StripeCheckout {
         self::init();
 
         $parameters = [
-            'payment_method_types' => ['card'],
+            'payment_method_types' => Core::config('payment.stripe_ideal') ? ['card', 'ideal'] : ['card'],
             'line_items' => [[
                 'name' => Model_Order::product_desc($order->id_product),
                 'description' => Text::limit_chars(Text::removebbcode($order->description), 30, NULL, TRUE),
@@ -158,7 +162,7 @@ class StripeCheckout {
             return NULL;
         }
 
-        if ($order->id_product != Model_Order::PRODUCT_AD_SELL)
+        if (! in_array($order->id_product, [Model_Order::PRODUCT_AD_SELL, Model_Order::PRODUCT_AD_CUSTOM]))
         {
             return NULL;
         }
@@ -181,7 +185,7 @@ class StripeCheckout {
         self::init();
 
         $parameters = [
-            'payment_method_types' => ['card'],
+            'payment_method_types' => Core::config('payment.stripe_ideal') ? ['card', 'ideal'] : ['card'],
             'line_items' => [[
                 'name' => $order->ad->title,
                 'description' => Text::limit_chars(Text::removebbcode($order->description), 30, NULL, TRUE),
@@ -189,6 +193,7 @@ class StripeCheckout {
                 'currency' => $order->currency,
                 'quantity' => 1,
             ]],
+            'mode' => 'payment',
             'success_url' => Route::url('default', ['controller' => 'stripecheckout', 'action' => 'success_connect', 'id' => $order->id_order]),
             'cancel_url' => Route::url('default', ['controller' => 'ad', 'action' => 'checkout', 'id' => $order->id_order]),
             'locale' => 'auto',
@@ -290,7 +295,7 @@ class StripeCheckout {
         self::init();
 
         $parameters = [
-            'payment_method_types' => ['card'],
+            'payment_method_types' => Core::config('payment.stripe_ideal') ? ['card', 'ideal'] : ['card'],
             'line_items' => [[
                 'name' => $ad->title,
                 'description' => Text::limit_chars(Text::removebbcode($ad->description), 30, NULL, TRUE),

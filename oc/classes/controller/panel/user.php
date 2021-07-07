@@ -3,7 +3,7 @@
 class Controller_Panel_User extends Auth_CrudAjax {
 
     protected $_filter_fields = array(
-                                        'status' => array(0=>'Inactive',1=>'Active',5=>'Spam'),
+                                        'status' => array(0=>'Inactive',1=>'Active',3=>'Unconfirmed',5=>'Spam'),
                                         'id_role' => array('type'=>'SELECT','table'=>'roles','key'=>'id_role','value'=>'name'),
                                         );
 
@@ -40,6 +40,15 @@ class Controller_Panel_User extends Auth_CrudAjax {
                                                 'icon'  => 'fa fa-fw fa-fire',
                                                 ),
                                         );
+
+        if(Core::config('general.ewallet') AND Auth::instance()->get_user()->is_admin())
+        {
+            array_unshift($this->_buttons_actions,   array( 'url'   => Route::url('oc-panel', array('controller'=>'user', 'action'=>'add_money')).'/' ,
+                                                            'title' => __('Add money'),
+                                                            'class' => '',
+                                                            'icon'  => 'fa fa-fw fa-money-bill'
+                                                            ));
+        }
 
         //for OC display ads
         if (class_exists('Model_Ad'))
@@ -268,4 +277,31 @@ class Controller_Panel_User extends Auth_CrudAjax {
         else
             return parent::action_delete();
     }
+
+    public function action_add_money()
+	{
+        if (! $this->user->is_admin())
+        {
+            $this->redirect(Route::get($this->_route_name)->uri(array('controller'=> Request::current()->controller())));
+        }
+
+		$this->template->title = __('Add money').' '.__($this->_orm_model).' '.$this->request->param('id');
+
+        $form = new FormOrm($this->_orm_model,$this->request->param('id'));
+
+        $validation = Validation::factory($this->request->post())
+            ->rule('amount', 'not_empty')
+            ->rule('amount', 'digit');
+
+		if ($this->request->post() AND $validation->check())
+		{
+            Model_Transaction::deposit($form->object, NULL, NULL, $validation->data()['amount']);
+
+            Alert::set(Alert::SUCCESS, __('Money added'));
+
+            $this->redirect(Route::get($this->_route_name)->uri(array('controller'=> Request::current()->controller())));
+		}
+
+		return $this->render('oc-panel/pages/user/add_money', array('errors' => $validation->errors('validation'), 'form' => $form));
+	}
 }
