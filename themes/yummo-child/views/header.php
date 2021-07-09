@@ -22,6 +22,8 @@
             </div>
             <div class="col-xs-9 col-sm-10 col-md-4">
                 <div class="navbar-btn pull-right">
+                <!-- Icona Facebook -->
+                <a id="iconaFB" href="https://www.facebook.com/Plotterusati-110096181336704" target="_blank"><img src="/images/facebook.png"></a>
                     <?if ((Core::config('advertisement.only_admin_post')!=1) OR (Core::config('advertisement.only_admin_post')==1 AND Auth::instance()->logged_in() AND (Auth::instance()->get_user()->is_admin() OR Auth::instance()->get_user()->is_moderator()))):?>
                         <a class="btn btn-primary pull-right hidden-xs" href="<?=Route::url('post_new')?>">
                             <i class="fa fa-pencil "></i> <?=_e('Publish new')?>
