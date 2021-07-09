@@ -104,6 +104,17 @@
                             <?endif?>
                             <a href="<?=Route::url('ad', array('controller'=>'ad','category'=>$ad->category->seoname,'seotitle'=>$ad->seotitle))?>">
                             <div class="extra_info">
+                                    
+                                <?php 
+                                    if($ad->cf_video !=null OR strpos($ad->description, 'youtube') !== false){
+                                        ?>
+                                        <div class="convideo">
+                                            <i class="glyphicon glyphicon-play"></i> CON VIDEO
+                                        </div>
+                                        <?php
+                                    }
+                                ?>
+
                                 <?if ($ad->price!=0){?>
                                     <div class="price pull-left">
                                         <i class="fa fa-money"></i><?=i18n::money_format( $ad->price, $ad->currency())?>

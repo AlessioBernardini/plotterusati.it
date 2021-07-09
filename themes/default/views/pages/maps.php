@@ -65,7 +65,7 @@
                 controls_on_map: false,
                 map_options: {
                     <?if(Core::config('advertisement.map_zoom')) :?>
-                        maxZoom: <?=Core::config('advertisement.map_zoom')?>,
+                        maxZoom: 60,
                     <?endif?>
                 },
                 <?if(! Core::config('advertisement.map_zoom')) :?>

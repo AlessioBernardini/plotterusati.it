@@ -1,3 +1,15 @@
+.extra_info{
+    position: relative;
+}
+
+.convideo{
+    position: absolute;
+    top: -38px;
+    background-color: red;
+    color: #FFF;
+    padding: 0 8px;
+}
+
 #iconaFB{
     margin-right: 10px;
 }
