@@ -52,7 +52,7 @@ if(isset($_GET["id"])){
 
 <h1 class="click_title"><b>Plotterusati.it</b> Contatore Click Banner</h1>
 
-<p class="click_small">I contatori sono stati azzerati il 07/07/2021</p>
+<p class="click_small">I contatori sono stati azzerati il <?=$clicks->get_clicks_byID(1)['data_aggiornamento']?></p>
 
 <table id="click_counter">
   <tr>
@@ -78,7 +78,7 @@ if(isset($_GET["id"])){
       }else{
         ?>
     	<tr>
-    	<td><?php echo '<a href="'.$click["link"].'" target="_blank"><img src="https://www.plotterusati.it/banner/'.$click['name'].'.jpg"></a>' ?></td>
+    	<td><?php echo '<a href="'.$click["link"].'" target="_blank"><img src="https://www.plotterusati.it/banner/'.$click['name'].$click['estensione'].'"></a>' ?></td>
         <td class="name"><?=$click["name"]?></td>
         <td><a href="<?=$click["link"]?>" target="_blank"><?=$click["link"]?></a></td>
         <td><?=$click["count"]?></td>
