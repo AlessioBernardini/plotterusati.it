@@ -4,6 +4,14 @@
     <h1><?=_e('My Advertisements')?></h1>
 </div>
 
+<?php $domain = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST']; ?>
+
+<form method="POST" class="form-inline well">
+  <input class="form-control" placeholder="Filtra annunci per nome" type="text" id="search" name="search" value=<?=$search?>>
+  <input class="btn btn-primary" type="submit" value="Cerca">
+  <a class="btn btn-warning" href="<?=$domain?>/oc-panel/myads">Azzera filtri</a>
+</form>
+
 <div class="panel panel-default">
     <? $ceck = 0; ?>
     <? foreach ($ads as $ad) {$ceck++;} ?>
@@ -207,7 +215,6 @@
     <? } ?>
     <?
     if($ceck == 0){
-        $domain = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'];
         echo '<h3 class="no-border light text-center">Non hai ancora inserito nessun annuncio. Fai un giro sul <a href="'.$domain.'">sito</a> oppure <a href="'.$domain.'/pubblicare-nuovi.html">inserisci un nuovo annuncio!</a></h3>';
     }
     ?>

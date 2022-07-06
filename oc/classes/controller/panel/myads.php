@@ -2,15 +2,20 @@
 
 class Controller_Panel_Myads extends Auth_Frontcontroller {
 
-
 	public function action_index()
 	{
 		$user = Auth::instance()->get_user();
 		$ads = new Model_Ad();
 
+        if(null !== core::post('search')){   
+            $search = core::post('search');
+        }else{
+            $search="";
+        }
+
 		Controller::$full_width = TRUE;
 
-		$my_adverts = $ads->where('id_user', '=', $user->id_user);
+		$my_adverts = $ads->where('id_user', '=', $user->id_user)->and_where('title', 'like', '%'.$search.'%');
 
 		$res_count = $my_adverts->count_all();
 
@@ -40,6 +45,7 @@ class Controller_Panel_Myads extends Auth_Frontcontroller {
 
 
           	$this->template->content = View::factory('oc-panel/profile/ads', array('ads'=>$ads,
+                                                                                    'search'=>$search,
           																		   'pagination'=>$pagination,
           																		   'user'=>$user));
         }
@@ -47,6 +53,7 @@ class Controller_Panel_Myads extends Auth_Frontcontroller {
         {
 
         	$this->template->content = View::factory('oc-panel/profile/ads', array('ads'=>$ads,
+                                                                                    'search'=>$search,
           																		   'pagination'=>NULL,
           																		   'user'=>$user));
         }
