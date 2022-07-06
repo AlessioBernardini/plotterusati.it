@@ -1,3 +1,50 @@
+#report_ad::after {
+  content: "NB: gli annunci e gli utenti segnalati come SPAM potranno essere rimossi o meno ad insindacabile giudizio dello staff.";
+  position: absolute;
+  color: gray;
+  margin-left: 20px;
+}
+
+#myTabContent h5 {
+  font-size: 18px;
+}
+
+h1::after, h2::after {
+  z-index: -1;
+}
+.fb_dialog_content iframe {
+  right: 60px !important;
+  bottom: 15px !important;
+}
+
+/* TEMP PER FERIE
+#titolonuoviannunci h1::after {
+    content: "NB: Dal 2 al 20 agosto il personale sarà in ferie, si potrebbero riscontrare ritardi nella pubblicazione degli annunci, le normali attività riprenderanno a partire da lunedì 23 agosto 2021.";
+    display: block;
+    font-weight: normal;
+    font-size: 18px;
+    width: 100%;
+    left: 0;
+    background: none;
+    margin-top: 4px;
+    color: #41bb19;
+    line-height: 22px;
+}
+@media screen and (max-width: 480px) {
+#titolonuoviannunci h1:after {
+    width: auto;
+    left: auto;
+    margin: 0;
+    font-size: 12px;
+    line-height: 14px;
+    margin-top: 3px;
+}
+#titolonuoviannunci h1 {
+    font-size:24px;
+}
+}
+FINE TEMP PER FERIE*/
+
 .extra_info{
     position: relative;
 }
@@ -587,6 +634,13 @@ label[for="captcha"] {
     .topic {padding: 0;}
     .navbar-btn.benvenuti a {width: 31%;}
     #user_profile_info .segnaposto {width: 92%; height: 80%; padding-top: 40%;}
+    #report_ad::after {
+        display: inline-block;
+        margin-top: -15px;
+        width: 165px;
+        overflow-x: scroll;
+        height: 47px;
+    }
 }
 
 @media screen and (max-width: 1200px) {
