@@ -1,648 +1,662 @@
-#report_ad::after {
-  content: "NB: gli annunci e gli utenti segnalati come SPAM potranno essere rimossi o meno ad insindacabile giudizio dello staff.";
-  position: absolute;
-  color: gray;
-  margin-left: 20px;
-}
-
-#myTabContent h5 {
-  font-size: 18px;
-}
-
-h1::after, h2::after {
-  z-index: -1;
-}
-.fb_dialog_content iframe {
-  right: 60px !important;
-  bottom: 15px !important;
-}
-
-/* TEMP PER FERIE
-#titolonuoviannunci h1::after {
-    content: "NB: Dal 2 al 20 agosto il personale sarà in ferie, si potrebbero riscontrare ritardi nella pubblicazione degli annunci, le normali attività riprenderanno a partire da lunedì 23 agosto 2021.";
-    display: block;
-    font-weight: normal;
-    font-size: 18px;
-    width: 100%;
-    left: 0;
-    background: none;
-    margin-top: 4px;
-    color: #41bb19;
-    line-height: 22px;
-}
-@media screen and (max-width: 480px) {
-#titolonuoviannunci h1:after {
-    width: auto;
-    left: auto;
-    margin: 0;
-    font-size: 12px;
-    line-height: 14px;
-    margin-top: 3px;
-}
-#titolonuoviannunci h1 {
-    font-size:24px;
-}
-}
-FINE TEMP PER FERIE*/
-
-.extra_info{
-    position: relative;
-}
-
-.convideo{
-    position: absolute;
-    top: -38px;
-    background-color: red;
-    color: #FFF;
-    padding: 0 8px;
-}
-
-#iconaFB{
-    margin-right: 10px;
-}
-#iconaFB img{
-    width: 30px;
-}
-
-
-.my-6 svg{
-    display:none;
-}
-.my-6{
-    margin-bottom: 30px
-}
-
-#click_counter {
-    margin: 0 auto;
-    border-collapse: collapse;
-    font-family: Roboto, sans-serif;
-    font-size: 14px;
-}
-#click_counter th{
-    background-color: #f2f2f2;
-}
-#click_counter th, #click_counter td{
-    border: 1px solid #d2d6dc;
-    padding: 15px;
-}
-#click_counter img {
-    max-width: 150px;
-}
-#click_counter img.top {
-    max-width: 600px;
-}
-#click_counter .name{
-    text-transform: capitalize;
-}
-h1.click_title, a.click_back{
-    display: block;
-    font-family: Roboto, sans-serif;
-    text-align: center;
-    margin: 30px 0;
-    font-weight: normal;
-}
-#click_counter tr.invisible {
-    height: 20px;
-}
-.click_small {
-    margin: 0 auto;
-    text-align: center;
-    font-family: Roboto, sans-serif;
-    font-size: 12px;
-    margin-bottom: 10px;
-}
-
-.csstransforms3d.csstransitions.js-nav #inner-wrap {
-    transform: translate3d(0, 0, 0) scale3d(1, 1, 1); 
-}
-.csstransforms3d.csstransitions.js-nav #nav {
-    transform: translate3d(0, 0, 0) scale3d(1, 1, 1); 
-    transition-duration: 0.5s;
-}
-
-
-#menudesktop {
-    padding: 20px 15px 0;
-    color: #FFF;
-}
-#menudesktop .navbar-nav{
-    margin: 0 auto;
-    width: 1140px;
-    float: none;
-}
-#menudesktop .navbar-nav li{
-    width:auto;
-}
-#menudesktop .navbar-nav li a {
-    padding: 0 30px 0 0;
-    line-height: initial;
-}
-#menudesktop .navbar-nav li:first-child, #menudesktop .navbar-nav li{
-    border: none!important;
-    font-size: 20px;
-}
-#menudesktop .navbar-nav li .glyphicon, #menudesktop .navbar-nav li .fa {
-    margin-right: 5px;
-}
-
-.modal-body .form-horizontal input#price, .modal-body .form-horizontal label[for="price"] {
+#elimina-annuncio {
     display: none;
-}
-
-#listgrid .btn.btn-default.pull-right {
-    display: none;
-}
-
-.panel-heading {
-    display: none;
-}
-
-.latest_ads .favorite {
-    margin-bottom: -32px;
-}
-
-#user_profile_info .segnaposto {
-    position: absolute;
-    background-color: rgba(0,0,0,0.7);
-    color: #FFF;
-    width: 200px;
-    height: 200px;
-    text-align: center;
-    border-radius: 5px;
-    margin-top: 5px;
-    margin-left: 5px;
-    padding: 65px 20px;
-    font-size: 1.2em;
-    line-height: 1.3em;
-    letter-spacing: 0.2px;
-}
-
-.btn-default {
-    margin-left: -5px;
-}
-.btn-warning {
-    margin-right: -3px;
-}
-
-.glyphicon-heart-empty::before {
-    background-color: grey;
-    color: #FFF;
-    display: inline-block;
-    text-align: center;
-    line-height: 26px;
-    padding: 3px 8px 3px 6px;
-    margin-right: -4px;
-    margin-top: -1px;
-}
-.favorite .remove-favorite i {
-    background-color: red;
-    color: #FFF;
-    display: inline-block;
-    text-align: center;
-    line-height: 26px;
-    padding: 3px 8px 3px 6px;
-    margin-right: 1px;
-    margin-top: 0px;
-}
-
-.nolink:hover {
-    text-decoration: none;
-}
-
-.provenienza {
-    margin-bottom: 0;
-    margin-top: -10px;
-}
-.provenienza-home {
-    margin: 0 !important;
-}
-
-/*.navbar.navbar-default::after {
-    content: "NB: per manutenzione straordinaria, nelle prossime ore, si potrebbero riscontrare dei problemi durante il login. Ci scusiamo per il disagio.";
-    text-align: center;
-    display: block;
-    margin-bottom: 10px;
-    font-size: 16px;
-    font-weight: bold;
-    color: red;
-}*/
-
-.count_ads {
-    font-weight: bold;
-}
-
-.brand {
-    max-height: 60px!important;
-    overflow: visible!important;
-    margin-top: -20px;
-}
-.brand:after {
-    content: "il sito di annunci n.1 per la stampa digitale in Italia";
-    display: block;
-    font-size: 16px;
-    margin-top: 5px;
-}
-a.brand:hover {
-    text-decoration: none !important;
-    color: #41bb19;
-}
-
-#social-login {
-    text-align: center;
-    margin-top: 15px;
-    margin-bottom: 20px;
-}
-
-#descrizione-categoria:after {
-    content: "NB: inserisci anche la sottocategoria che comparirà una volta selezionata la categoria principale. In questo modo avrai un'icona speciale sul tuo annuncio che ti permetterà di essere più visibile all'interno del sito e di essere trovato più facilmente sulla mappa degli annunci.";
-    margin-top: -15px;
-    display: inline-block;
-    font-size: 12px;
-}
-#step2 .form-group:before{
-    content: "NB: è possibile proseguire anche senza inserire immagini per darti la possibilità di inserirle in seguito ma l'annuncio non verrà pubblicato finché resterà senza immagini. Gli annunci che resteranno senza immagini per oltre 7 giorni verranno eliminati.";
-    font-size: 12px;
-    color: #000;
-    line-height: 20px;
-    margin-bottom: 10px;
-    margin-top: -10px;
-    padding: 0 15px;
-}
-
-.home.vedi-tutti {
-    text-align: right;
-    display: block;
-    margin-top: -35px;
-    padding: 8px;
-}
-.home.vedi-tutti.sotto {
-    text-align: center;
-    margin-top: -5px;
-    margin-bottom: 60px;
-    font-size: 16px:
-}
-
-.latest_ads img {
-    border: 1px solid #dadada;
-    border-bottom: 0;
-}
-
-.light{
-    font-weight:lighter;
-}
-
-#user_profile_info .thumbnail.gallery-item {
-    pointer-events: none;
-}
-#user_profile_info > div {
-    padding-left:0;
-}
-
-footer{display:none}
-
-.js-ready #nav, .search-container, .footer-copyright {
-    background-image: none;
-    background-color: #222;
-    border: none;
-}
-
-.sweet-alert h2::after {
-    display: none;
-}
-
-.navbar-btn.benvenuti {
-    height: 42px;
-    overflow: hidden;
-    text-align:center;
-}
-.navbar-btn.benvenuti a {
-    margin-right:10px;
-}
-
-.navbar-btn.benvenuti a.last {
-    margin-right:0;
-}
-
-.categories .category {
-    min-height: 80px;
-}
-.categories .category img {
-    margin: 10px 0 5px;
-}
-.categories .category h5 {
-    top: 45%;
-}
-.categories .category a, .categories .category .badge {
-    border-radius: 0;
-}
-.featured-posts .row {
-    margin: 0 -8px;
-}
-.badge{
-    background-color: #41bb19;
-}
-
-#footer-link {
-    display: inline-block;
-    margin-top: -5px;
-    margin-left: 8px;
-    text-transform: lowercase!important;
-}
-#footer-link a, #footer-link span{
-    text-transform: initial;
-}
-#counter{
-    float: right;
-    opacity: 0.05;
-}
-
-h1, h2 {
-    /*text-align: left;*/
-    margin: 30px 0 50px 0;
-}
-/*h1::after, h2::after {
-    left: 0;
-    margin-left:0;
-}*/
-
-h5 {
-    font-size: 12px;
-    font-weight: normal;
-}
-
-h3{
-    height:auto;
-    line-height: 30px;
-}
-
-h3.chi-siamo{
-    line-height: 30px;
-    font-weight: normal;
-}
-
-h3.no-border:before{
-    display:none;
-}
-h3.no-border{
-    margin:0;
-    padding:0;
-}
-
-h3 .details {
-    display:none;
-}
-
-.page-header {
-    padding-bottom: 0;
-    margin: 0;
-    border-bottom: none;
-}
-
-.list-group .grid-group-item h3 {
-    font-size: 18px;
-    height: 60px;
-    line-height: 60px;
-    overflow: hidden;
-}
-
-.latest_ads h5 {
-    font-weight: bold;
-    text-transform: capitalize;
-    font-size: 18px;
-    margin:0;
-}
-.latest_ads {
-    margin-bottom: 30px;
-}
-.extra_info .fa.fa-money {
-    display: none;
-}
-.extra_info .price {
-    font-weight: bold;
-    font-size: 16px;
-    line-height: 20px;
-    color: #000;
-}
-.listing_ads .extra_info .price {
-    margin-right: 20px;
-}
-.extra_info .location i, .latest_ads .extra_info .price i, .listing_ads .extra_info .location i, .listing_ads .extra_info .price i {
-    margin-right: 5px;
-}
-
-/*section.categories{
-    margin-bottom: 50px;
-    margin-top: -30px;
-}*/
-section.related{
-    margin-bottom: 50px;
-}
-
-.vertical-rule {
-    margin: 0 5px;
-    visibility: hidden;
-}
-
-.navbar-nav li a {
-    padding: 20px 20px 5px;
-}
-
-.btn, .filter .btn-default, .toolbar{
-    border-radius: 0!important;
-}
-
-.listing_ads .extra_info {
-    margin-top: -1px;
-    margin-left: 1px;
-    width: calc(100% - 2px);
-}
-
-a#list, a#grid {
-    display: none;
-}
-.list-group .grid-group-item p.description, .latest_ads .caption p {
-    margin-bottom: 0;
-    height: auto !important;
-    max-height: 75px !important;
-}
-.list-group .grid-group-item p.description, .latest_ads .caption p.aggiunto {
-    margin-top: 0;
-    height: auto!important;
-}
-
-#listing_description {
-    display: none;
-}
-
-.panel-body {
-    padding-left: 0;
-}
-
-.single .extra_info .price {
-    font-weight: bold;
-}
-.label {
-    font-size: 100%;
-    font-weight: normal;
-    border-radius: 0;
-}
-.label-info {
-    background-color: #41bb19;
-}
-
-/*.single .extra_info div {
-    background-color: #eee;
-}*/
-
-.st_googleplus_large {
-    display: none;
-}
-
-.well-sm {
-    border-radius: 0;
-    margin-top: 20px;
-}
-.well{
-    box-shadow: none;
-}
-
-.cerca .btn {
-    padding: 5px 11px;
-    margin-top: 5px;
-}
-
-.form-control, .form-inline.well .select2-selection--multiple {
-    border-radius:0;
-    box-shadow: none;
-}
-
-.page-header small {
-    display: none;
-}
-
-.panel, .panel-default {
-    border: none;
-    box-shadow: none;
-}
-
-td {
-    vertical-align: middle !important;
-}
-
-#mobile-desc {
-    margin-bottom: 5px;
-    display: none;
-}
-.table-bordered {
-    border: 1px solid #ddd!important;
-}
-
-#page-edit-profile {
-    margin-top: 20px;
-}
-
-#online_user {
-    color: #000;
-    text-align: right;
-    margin-top: -13px;
-    margin-bottom: 2px;
-}
-
-#task-table-filter {
+  }
+  
+  input#search {
+    width: 85%;
     height: 44px;
-}
-
-.breadcrumb {
-    text-align: left;
-    border-radius: 0;
-    margin-top: 20px;
-    background-color: #f5f5f5;
-}
-
-#task-table {
-    margin-top: 20px;
-}
-.forum .col-md-9.col-sm-12.col-xs-12 {
-    padding: 0;
-}
-.forum .col-md-9.col-sm-12.col-xs-12 form input {
-    width:80%;
-    float:left;
-    border-right: 0;
-}
-.forum .col-md-9.col-sm-12.col-xs-12 form button{
-    width:20%;
-    float:right;
-}
-.forum .col-md-3.col-sm-12.col-xs-12 {
-    padding-right: 0;
-}
-.forum .col-md-3.col-sm-12.col-xs-12 .btn {
-    width:100%;
-}
-.col-md-3.span2.topic {
-    padding: 0;
-}
-.page-header.topic {
-    margin-bottom: 22px;
-}
-.topic .naviga {
-    float: right;
-}
-.topic .naviga a {
-    background-color: #999;
-}
-.col-md-9.span6.topic {
-    margin-bottom: 40px;
-}
-
-label[for="captcha"] {
-    display: none;
-}
-.modal-dialog{
-    overflow: hidden;
-}
-
-.sidebar-banner{
-    margin-top:-15px;
-    margin-right:-15px;
-    /*width: calc(70% + 8px);*/
-}
-
-@media screen and (max-width: 480px) {
-    #iconaFB{margin-right: 0; position:absolute; top:5px; left:0;}
-    .solodesktop{display:none;}
-    .brand{margin-top: 20px; }
-    .brand:after {content: "il sito di annunci n.1 per la stampa digitale";}
-    .btn-group > .btn + .dropdown-toggle {padding-left: 0;}
-    .btn.btn-primary .fa.fa-user { margin-right: -10px; margin-left: -10px;}
-    .navbar-nav li {font-size: 18px;}
-    .btn-group > .btn-group {width: auto;}
-    .single .extra_info div {padding: 8px 0;border: 1px solid #dadada;}
-    .single .extra_info{border:none;}
-    .single .extra_info .col-xs-12.col-sm-4 {border-top: none;}
-    .single .extra_info .price {border-bottom: none;}
-    #search-custom-fields{width:100%}
-    /*.well{margin-bottom:50px;}*/
-    #page{margin-bottom:40px;}
-    #mobile-desc{display:block}
-    #step2 h3 {line-height: 25px; height: 80px;}
-    .breadcrumb{display:none;}
-    .forum .col-md-3.col-sm-12.col-xs-12 {padding-left: 0;}
-    .forum .col-md-9.col-sm-12.col-xs-12 form button {height: 44px;}
-    .topic .naviga {float: none; margin-top:10px;}
-    .topic {padding: 0;}
-    .navbar-btn.benvenuti a {width: 31%;}
-    #user_profile_info .segnaposto {width: 92%; height: 80%; padding-top: 40%;}
-    #report_ad::after {
-        display: inline-block;
-        margin-top: -15px;
-        width: 165px;
-        overflow-x: scroll;
-        height: 47px;
-    }
-}
-
-@media screen and (max-width: 1200px) {
-    #menudesktop {display:none}   
-}
+    margin-right: 10px;
+  }
+  
+  #report_ad::after {
+    content: "NB: gli annunci e gli utenti segnalati come SPAM potranno essere rimossi o meno ad insindacabile giudizio degli amministratori.";
+    position: absolute;
+    color: gray;
+    margin-left: 20px;
+  }
+  
+  #myTabContent h5 {
+    font-size: 18px;
+  }
+  
+  h1::after, h2::after {
+    z-index: -1;
+  }
+  .fb_dialog_content iframe {
+    right: 60px !important;
+    bottom: 15px !important;
+  }
+  
+  /* TEMP PER FERIE
+  #titolonuoviannunci h1::after {
+      content: "NB: Dal 2 al 20 agosto il personale sarà in ferie, si potrebbero riscontrare ritardi nella pubblicazione degli annunci, le normali attività riprenderanno a partire da lunedì 23 agosto 2021.";
+      display: block;
+      font-weight: normal;
+      font-size: 18px;
+      width: 100%;
+      left: 0;
+      background: none;
+      margin-top: 4px;
+      color: #41bb19;
+      line-height: 22px;
+  }
+  @media screen and (max-width: 480px) {
+  #titolonuoviannunci h1:after {
+      width: auto;
+      left: auto;
+      margin: 0;
+      font-size: 12px;
+      line-height: 14px;
+      margin-top: 3px;
+  }
+  #titolonuoviannunci h1 {
+      font-size:24px;
+  }
+  }
+  FINE TEMP PER FERIE*/
+  
+  .extra_info{
+      position: relative;
+  }
+  
+  .convideo{
+      position: absolute;
+      top: -38px;
+      background-color: red;
+      color: #FFF;
+      padding: 0 8px;
+  }
+  
+  #iconaFB{
+      margin-right: 10px;
+  }
+  #iconaFB img{
+      width: 30px;
+  }
+  
+  
+  .my-6 svg{
+      display:none;
+  }
+  .my-6{
+      margin-bottom: 30px
+  }
+  
+  #click_counter {
+      margin: 0 auto;
+      border-collapse: collapse;
+      font-family: Roboto, sans-serif;
+      font-size: 14px;
+  }
+  #click_counter th{
+      background-color: #f2f2f2;
+  }
+  #click_counter th, #click_counter td{
+      border: 1px solid #d2d6dc;
+      padding: 15px;
+  }
+  #click_counter img {
+      max-width: 150px;
+  }
+  #click_counter img.top {
+      max-width: 600px;
+  }
+  #click_counter .name{
+      text-transform: capitalize;
+  }
+  h1.click_title, a.click_back{
+      display: block;
+      font-family: Roboto, sans-serif;
+      text-align: center;
+      margin: 30px 0;
+      font-weight: normal;
+  }
+  #click_counter tr.invisible {
+      height: 20px;
+  }
+  .click_small {
+      margin: 0 auto;
+      text-align: center;
+      font-family: Roboto, sans-serif;
+      font-size: 12px;
+      margin-bottom: 10px;
+  }
+  
+  .csstransforms3d.csstransitions.js-nav #inner-wrap {
+      transform: translate3d(0, 0, 0) scale3d(1, 1, 1); 
+  }
+  .csstransforms3d.csstransitions.js-nav #nav {
+      transform: translate3d(0, 0, 0) scale3d(1, 1, 1); 
+      transition-duration: 0.5s;
+  }
+  
+  
+  #menudesktop {
+      padding: 20px 15px 0;
+      color: #FFF;
+  }
+  #menudesktop .navbar-nav{
+      margin: 0 auto;
+      width: 1140px;
+      float: none;
+  }
+  #menudesktop .navbar-nav li{
+      width:auto;
+  }
+  #menudesktop .navbar-nav li a {
+      padding: 0 30px 0 0;
+      line-height: initial;
+  }
+  #menudesktop .navbar-nav li:first-child, #menudesktop .navbar-nav li{
+      border: none!important;
+      font-size: 20px;
+  }
+  #menudesktop .navbar-nav li .glyphicon, #menudesktop .navbar-nav li .fa {
+      margin-right: 5px;
+  }
+  
+  .modal-body .form-horizontal input#price, .modal-body .form-horizontal label[for="price"] {
+      display: none;
+  }
+  
+  #listgrid .btn.btn-default.pull-right {
+      display: none;
+  }
+  
+  .panel-heading {
+      display: none;
+  }
+  
+  .latest_ads .favorite {
+      margin-bottom: -32px;
+  }
+  
+  #user_profile_info .segnaposto {
+      position: absolute;
+      background-color: rgba(0,0,0,0.7);
+      color: #FFF;
+      width: 200px;
+      height: 200px;
+      text-align: center;
+      border-radius: 5px;
+      margin-top: 5px;
+      margin-left: 5px;
+      padding: 65px 20px;
+      font-size: 1.2em;
+      line-height: 1.3em;
+      letter-spacing: 0.2px;
+  }
+  
+  .btn-default {
+      margin-left: -5px;
+  }
+  .btn-warning {
+      margin-right: -3px;
+  }
+  
+  .glyphicon-heart-empty::before {
+      background-color: grey;
+      color: #FFF;
+      display: inline-block;
+      text-align: center;
+      line-height: 26px;
+      padding: 3px 8px 3px 6px;
+      margin-right: -4px;
+      margin-top: -1px;
+  }
+  .favorite .remove-favorite i {
+      background-color: red;
+      color: #FFF;
+      display: inline-block;
+      text-align: center;
+      line-height: 26px;
+      padding: 3px 8px 3px 6px;
+      margin-right: 1px;
+      margin-top: 0px;
+  }
+  
+  .nolink:hover {
+      text-decoration: none;
+  }
+  
+  .provenienza {
+      margin-bottom: 0;
+      margin-top: -10px;
+  }
+  .provenienza-home {
+      margin: 0 !important;
+  }
+  
+  /*.navbar.navbar-default::after {
+      content: "NB: per manutenzione straordinaria, nelle prossime ore, si potrebbero riscontrare dei problemi durante il login. Ci scusiamo per il disagio.";
+      text-align: center;
+      display: block;
+      margin-bottom: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      color: red;
+  }*/
+  
+  .count_ads {
+      font-weight: bold;
+  }
+  
+  .brand {
+      max-height: 60px!important;
+      overflow: visible!important;
+      margin-top: -20px;
+  }
+  .brand:after {
+      content: "il sito di annunci n.1 per la stampa digitale in Italia";
+      display: block;
+      font-size: 16px;
+      margin-top: 5px;
+  }
+  a.brand:hover {
+      text-decoration: none !important;
+      color: #41bb19;
+  }
+  
+  #social-login {
+      text-align: center;
+      margin-top: 15px;
+      margin-bottom: 20px;
+  }
+  
+  #descrizione-categoria:after {
+      content: "NB: inserisci anche la sottocategoria che comparirà una volta selezionata la categoria principale. In questo modo avrai un'icona speciale sul tuo annuncio che ti permetterà di essere più visibile all'interno del sito e di essere trovato più facilmente sulla mappa degli annunci.";
+      margin-top: -15px;
+      display: inline-block;
+      font-size: 12px;
+  }
+  #step2 .form-group:before{
+      content: "NB: è possibile proseguire anche senza inserire immagini per darti la possibilità di inserirle in seguito ma l'annuncio non verrà pubblicato finché resterà senza immagini. Gli annunci che resteranno senza immagini per oltre 7 giorni verranno eliminati.";
+      font-size: 12px;
+      color: #000;
+      line-height: 20px;
+      margin-bottom: 10px;
+      margin-top: -10px;
+      padding: 0 15px;
+  }
+  
+  .home.vedi-tutti {
+      text-align: right;
+      display: block;
+      margin-top: -35px;
+      padding: 8px;
+  }
+  .home.vedi-tutti.sotto {
+      text-align: center;
+      margin-top: -5px;
+      margin-bottom: 60px;
+      font-size: 16px:
+  }
+  
+  .latest_ads img {
+      border: 1px solid #dadada;
+      border-bottom: 0;
+  }
+  
+  .light{
+      font-weight:lighter;
+  }
+  
+  #user_profile_info .thumbnail.gallery-item {
+      pointer-events: none;
+  }
+  #user_profile_info > div {
+      padding-left:0;
+  }
+  
+  footer{display:none}
+  
+  .js-ready #nav, .search-container, .footer-copyright {
+      background-image: none;
+      background-color: #222;
+      border: none;
+  }
+  
+  .sweet-alert h2::after {
+      display: none;
+  }
+  
+  .navbar-btn.benvenuti {
+      height: 42px;
+      overflow: hidden;
+      text-align:center;
+  }
+  .navbar-btn.benvenuti a {
+      margin-right:10px;
+  }
+  
+  .navbar-btn.benvenuti a.last {
+      margin-right:0;
+  }
+  
+  .categories .category {
+      min-height: 80px;
+  }
+  .categories .category img {
+      margin: 10px 0 5px;
+  }
+  .categories .category h5 {
+      top: 45%;
+  }
+  .categories .category a, .categories .category .badge {
+      border-radius: 0;
+  }
+  .featured-posts .row {
+      margin: 0 -8px;
+  }
+  .badge{
+      background-color: #41bb19;
+  }
+  
+  #footer-link {
+      display: inline-block;
+      margin-top: -5px;
+      margin-left: 8px;
+      text-transform: lowercase!important;
+  }
+  #footer-link a, #footer-link span{
+      text-transform: initial;
+  }
+  #counter{
+      float: right;
+      opacity: 0.05;
+  }
+  
+  h1, h2 {
+      /*text-align: left;*/
+      margin: 30px 0 50px 0;
+  }
+  /*h1::after, h2::after {
+      left: 0;
+      margin-left:0;
+  }*/
+  
+  h5 {
+      font-size: 12px;
+      font-weight: normal;
+  }
+  
+  h3{
+      height:auto;
+      line-height: 30px;
+  }
+  
+  h3.chi-siamo{
+      line-height: 30px;
+      font-weight: normal;
+  }
+  
+  h3.no-border:before{
+      display:none;
+  }
+  h3.no-border{
+      margin:0;
+      padding:0;
+  }
+  
+  h3 .details {
+      display:none;
+  }
+  
+  .page-header {
+      padding-bottom: 0;
+      margin: 0;
+      border-bottom: none;
+  }
+  
+  .list-group .grid-group-item h3 {
+      font-size: 18px;
+      height: 60px;
+      line-height: 60px;
+      overflow: hidden;
+  }
+  
+  .latest_ads h5 {
+      font-weight: bold;
+      text-transform: capitalize;
+      font-size: 18px;
+      margin:0;
+  }
+  .latest_ads {
+      margin-bottom: 30px;
+  }
+  .extra_info .fa.fa-money {
+      display: none;
+  }
+  .extra_info .price {
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 20px;
+      color: #000;
+  }
+  .listing_ads .extra_info .price {
+      margin-right: 20px;
+  }
+  .extra_info .location i, .latest_ads .extra_info .price i, .listing_ads .extra_info .location i, .listing_ads .extra_info .price i {
+      margin-right: 5px;
+  }
+  
+  /*section.categories{
+      margin-bottom: 50px;
+      margin-top: -30px;
+  }*/
+  section.related{
+      margin-bottom: 50px;
+  }
+  
+  .vertical-rule {
+      margin: 0 5px;
+      visibility: hidden;
+  }
+  
+  .navbar-nav li a {
+      padding: 20px 20px 5px;
+  }
+  
+  .btn, .filter .btn-default, .toolbar{
+      border-radius: 0!important;
+  }
+  
+  .listing_ads .extra_info {
+      margin-top: -1px;
+      margin-left: 1px;
+      width: calc(100% - 2px);
+  }
+  
+  a#list, a#grid {
+      display: none;
+  }
+  .list-group .grid-group-item p.description, .latest_ads .caption p {
+      margin-bottom: 0;
+      height: auto !important;
+      max-height: 75px !important;
+  }
+  .list-group .grid-group-item p.description, .latest_ads .caption p.aggiunto {
+      margin-top: 0;
+      height: auto!important;
+  }
+  
+  #listing_description {
+      display: none;
+  }
+  
+  .panel-body {
+      padding-left: 0;
+  }
+  
+  .single .extra_info .price {
+      font-weight: bold;
+  }
+  .label {
+      font-size: 100%;
+      font-weight: normal;
+      border-radius: 0;
+  }
+  .label-info {
+      background-color: #41bb19;
+  }
+  
+  /*.single .extra_info div {
+      background-color: #eee;
+  }*/
+  
+  .st_googleplus_large {
+      display: none;
+  }
+  
+  .well-sm {
+      border-radius: 0;
+      margin-top: 20px;
+  }
+  .well{
+      box-shadow: none;
+  }
+  
+  .cerca .btn {
+      padding: 5px 11px;
+      margin-top: 5px;
+  }
+  
+  .form-control, .form-inline.well .select2-selection--multiple {
+      border-radius:0;
+      box-shadow: none;
+  }
+  
+  .page-header small {
+      display: none;
+  }
+  
+  .panel, .panel-default {
+      border: none;
+      box-shadow: none;
+  }
+  
+  td {
+      vertical-align: middle !important;
+  }
+  
+  #mobile-desc {
+      margin-bottom: 5px;
+      display: none;
+  }
+  .table-bordered {
+      border: 1px solid #ddd!important;
+  }
+  
+  #page-edit-profile {
+      margin-top: 20px;
+  }
+  
+  #online_user {
+      color: #000;
+      text-align: right;
+      margin-top: -13px;
+      margin-bottom: 2px;
+  }
+  
+  #task-table-filter {
+      height: 44px;
+  }
+  
+  .breadcrumb {
+      text-align: left;
+      border-radius: 0;
+      margin-top: 20px;
+      background-color: #f5f5f5;
+  }
+  
+  #task-table {
+      margin-top: 20px;
+  }
+  .forum .col-md-9.col-sm-12.col-xs-12 {
+      padding: 0;
+  }
+  .forum .col-md-9.col-sm-12.col-xs-12 form input {
+      width:80%;
+      float:left;
+      border-right: 0;
+  }
+  .forum .col-md-9.col-sm-12.col-xs-12 form button{
+      width:20%;
+      float:right;
+  }
+  .forum .col-md-3.col-sm-12.col-xs-12 {
+      padding-right: 0;
+  }
+  .forum .col-md-3.col-sm-12.col-xs-12 .btn {
+      width:100%;
+  }
+  .col-md-3.span2.topic {
+      padding: 0;
+  }
+  .page-header.topic {
+      margin-bottom: 22px;
+  }
+  .topic .naviga {
+      float: right;
+  }
+  .topic .naviga a {
+      background-color: #999;
+  }
+  .col-md-9.span6.topic {
+      margin-bottom: 40px;
+  }
+  
+  label[for="captcha"] {
+      display: none;
+  }
+  .modal-dialog{
+      overflow: hidden;
+  }
+  
+  .sidebar-banner{
+      margin-top:-15px;
+      margin-right:-15px;
+      /*width: calc(70% + 8px);*/
+  }
+  
+  @media screen and (max-width: 480px) {
+      #iconaFB{margin-right: 0; position:absolute; top:5px; left:0;}
+      .solodesktop{display:none;}
+      .brand{margin-top: 20px; }
+      .brand:after {content: "il sito di annunci n.1 per la stampa digitale";}
+      .btn-group > .btn + .dropdown-toggle {padding-left: 0;}
+      .btn.btn-primary .fa.fa-user { margin-right: -10px; margin-left: -10px;}
+      .navbar-nav li {font-size: 18px;}
+      .btn-group > .btn-group {width: auto;}
+      .single .extra_info div {padding: 8px 0;border: 1px solid #dadada;}
+      .single .extra_info{border:none;}
+      .single .extra_info .col-xs-12.col-sm-4 {border-top: none;}
+      .single .extra_info .price {border-bottom: none;}
+      #search-custom-fields{width:100%}
+      /*.well{margin-bottom:50px;}*/
+      #page{margin-bottom:40px;}
+      #mobile-desc{display:block}
+      #step2 h3 {line-height: 25px; height: 80px;}
+      .breadcrumb{display:none;}
+      .forum .col-md-3.col-sm-12.col-xs-12 {padding-left: 0;}
+      .forum .col-md-9.col-sm-12.col-xs-12 form button {height: 44px;}
+      .topic .naviga {float: none; margin-top:10px;}
+      .topic {padding: 0;}
+      .navbar-btn.benvenuti a {width: 31%;}
+      #user_profile_info .segnaposto {width: 92%; height: 80%; padding-top: 40%;}
+      #report_ad::after {
+          display: inline-block;
+          margin-top: -15px;
+          width: 165px;
+          overflow-x: scroll;
+          height: 47px;
+      }
+      input#search {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+  }
+  
+  @media screen and (max-width: 1200px) {
+      #menudesktop {display:none}   
+  }
