@@ -195,7 +195,7 @@
                             </a>
                         <?endif?>
                         <?if(core::config('advertisement.delete_ad')==TRUE):?>
-                            <a
+                            <a  id="elimina-annuncio"
                                 href="<?=Route::url('oc-panel', array('controller'=>'myads','action'=>'delete','id'=>$ad->id_ad))?>"
                                 class="btn btn-danger"
                                 title="<?=__('Delete?')?>"
