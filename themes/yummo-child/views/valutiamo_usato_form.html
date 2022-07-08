@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+</head>
+
+<body>
+
+
+
+    <!--Il codice presente in questa pagina (solo html nel body) va copiato e incollato sul backend di plotterusati dentro "Contenuto>Pagine>Valutiamo il tuo usato"-->
+    <!--Link diretto dove copiare: https://www.plotterusati.it/oc-panel/pages  -->
+
+    Non sai di preciso quanto valga la tua attrezzatura usata? Compila questo modulo in tutte le sue parti e riceverai gratuitamente la nostra valutazione!
+    <br /><br />
+
+    <form class="container-fluid" style="padding:0" method="POST" action="https://www.plotterusati.it/themes/yummo-child/views/valutiamo_usato_action.php">
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="Email">Email*</label>
+                <input type="email" class="form-control" id="Email" required="required" name="Email">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="RagioneSociale">Ragione Sociale</label>
+                <input type="text" class="form-control" id="RagioneSociale" name="RagioneSociale" placeholder="Lasciare vuoto in caso di persona fisica...">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="Nome">Nome*</label>
+                <input type="text" class="form-control" id="Nome" name="Nome" required="required">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="Cognome">Cognome*</label>
+                <input type="text" class="form-control" id="Cognome" name="Cognome" required="required">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="Categoria">Categoria*</label>
+                <select class="custom-select" id="Categoria" name="Categoria" required="required">
+                    <option selected>Seleziona Categoria...</option>
+                    <option value="Plotter da Stampa">Plotter da Stampa</option>
+                    <option value="Plotter da Stampa e Taglio">Plotter da Stampa e Taglio</option>
+                    <option value="Plotter da Taglio">Plotter da Taglio</option>
+                    <option value="Stampanti Laser">Stampanti Laser</option>
+                    <option value="Taglierine">Taglierine</option>
+                    <option value="Laminatrici">Laminatrici</option>
+                    <option value="Frese e Incisori">Frese e Incisori</option>
+                    <option value="Tessile">Tessile</option>
+                    <option value="Finishing">Finishing</option>
+                    <option value="Arti Grafiche">Arti Grafiche</option>
+                    <option value="Pezzi di Ricambio">Pezzi di Ricambio</option>
+                    <option value="Stock Consumabili">Stock Consumabili</option>
+                  </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="Condizione">Condizione*</label>
+                <select class="custom-select" id="Condizione" name="Condizione" required="required">
+                    <option selected>Seleziona Condizione...</option>
+                    <option value="Demo Showroom">Demo Showroom</option>
+                    <option value="Usato Perfetto">Usato Perfetto</option>
+                    <option value="Buono Stato">Buono Stato</option>
+                    <option value="Pezzi di Ricambio">Pezzi di Ricambio</option>
+                  </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="MarcaModello">Marca e Modello*</label>
+                <input type="text" class="form-control" id="MarcaModello" name="MarcaModello" required="required">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="Cognome">Formato*</label>
+                <input type="text" class="form-control" id="Formato" name="Formato" required="required" placeholder="Formato di stampa, luce di taglio,... in cm">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="AnnoCostruzione">Anno di Costruzione*</label>
+                <input type="number" class="form-control" id="AnnoCostruzione" name="AnnoCostruzione" required="required">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="AnnoRevisione">Anno di Revisione*</label>
+                <input type="number" class="form-control" id="AnnoRevisione" name="AnnoRevisione" required="required">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="Garanzia">Garanzia*</label>
+                <input type="text" class="form-control" id="Garanzia" name="Garanzia" required="required" placeholder="Indicare se ancora in garanzia e mesi residui">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="Assistenza">Contratto di Assistenza*</label>
+                <select class="custom-select" id="Assistenza" name="Assistenza" required="required">
+                    <option selected>Indicare se in possesso di un contratto di assistenza...</option>
+                    <option value="SI">SI</option>
+                    <option value="NO">NO</option>
+                  </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label for="Descrizione">Descrizione*</label>
+                <textarea class="form-control" id="Descrizione" rows="10" name="Descrizione" required="required" placeholder="Descrivere in modo chiaro le condizioni dell'oggetto, indicando eventuali optional, software o consumabili inclusi"></textarea>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-3">Invia Richiesta</button>
+    </form>
+
+
+
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+        crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+    -->
+</body>
+
+</html>
