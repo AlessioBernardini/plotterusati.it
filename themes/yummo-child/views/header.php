@@ -164,7 +164,7 @@
                     <li><a href="https://www.plotterusati.it/mappa.html" target="_blank"><i class="glyphicon glyphicon-globe"></i>Ricerca sulla mappa</a></li>
                     <li class=""><a href="https://www.plotterusati.it/forum" target="_self"><i class="fa fa-comment"></i>Forum</a></li>
                     <li><a href="https://www.plotterusati.it/all" target="_self"><i class="glyphicon glyphicon-list"></i>Tutti gli annunci</a></li>
-                    <li class=""><a href="http://www.auth-privacy.com/?domain=https://www.plotterusati.it" target="_blank"><i class="fa fa-envelope-o"></i>Iscriviti alla Newsletter</a></li>
+                    <li class="new"><a href="https://www.plotterusati.it/valutiamo.html"><i class="fas fa-hand-holding-usd"></i>Valutiamo il tuo usato</a></li>
                 </ul>
         	</div>
         </div>
