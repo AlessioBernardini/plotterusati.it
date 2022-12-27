@@ -16,7 +16,7 @@ class Core {
      * OC version
      * @var string
      */
-    const VERSION = '4.3.0';
+    const VERSION = '4.2.0';
 
     /**
      * @var string used to populate data from valid domain
@@ -233,7 +233,7 @@ class Core {
         //if older than a month or ?reload=1 force reload
         if ( time() > strtotime('+1 week',filemtime($version_file)) OR $reload === TRUE )
         {
-            $url = 'https://yclas.nyc3.digitaloceanspaces.com/self-hosted/versions.json';
+            $url = 'https://raw.githubusercontent.com/yclas/yclas/master/versions.json';
 
             //read from oc/versions.json on CDN
             $json = Core::curl_get_contents($url.'?r='.time());
@@ -614,12 +614,8 @@ class Core {
             if (Valid::url($image))
             {
                 $image_path = str_replace(Core::S3_domain(), '', $image);
-                
                 if (($pos = strpos($image_path, '?'))>0)
-                {
-                    $image_query = substr($image_path, $pos);
                     $image_path = substr($image_path, 0, $pos);
-                }
             }
 
             if (file_exists($image_path))
@@ -633,11 +629,6 @@ class Core {
 
                 if ($mode = 'crop')
                     $params.='-c';
-
-                if (isset($image_query))
-                {
-                    return Route::url('imagefly',  array('params'=>$params,'imagepath'=>$image_path)).$image_query;
-                }
 
                 return Route::url('imagefly',  array('params'=>$params,'imagepath'=>$image_path));
             }
@@ -743,7 +734,7 @@ class Core {
         if ( ($url_location = get_headers($download_url,1)) != FALSE AND is_array($url_location) AND isset($url_location['Location']) )
         {
             //d($url_location);
-            $download_url = is_array($url_location['Location']) ? end($url_location['Location']) : $url_location['Location'];
+            $download_url = end($url_location['Location']);
             //d($download_url);
 
             $fname = DOCROOT.'themes/'.$l.'.zip'; //root folder
