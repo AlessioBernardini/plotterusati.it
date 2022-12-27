@@ -11,7 +11,7 @@ class SA_USERSONLINE
 
     protected $DB_HOST = "89.46.111.211";
 
-    protected $DB_NAME = "Sql1450861_2";
+    protected $DB_NAME = "Sql1450861_3";
 
     protected $DB_USER = "Sql1450861";
 
