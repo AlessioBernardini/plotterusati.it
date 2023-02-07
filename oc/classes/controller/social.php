@@ -214,7 +214,7 @@ class Controller_Social extends Controller {
 
                     if (Core::config('general.users_must_verify_email'))
                     {
-                        Alert::set(Alert::SUCCESS, __('Please confirm your email address, a confirmation email was sent to your registration email address.'));
+                        Alert::set(Alert::SUCCESS, __('Prima di accedere devi confermare il tuo indirizzo email, una email di conferma è stata inviata al tuo indirizzo email di registrazione.'));
 
                         $this->redirect(Route::url('oc-panel', ['directory' => 'user', 'controller' => 'auth', 'action' => 'login']));
                     }

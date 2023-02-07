@@ -775,7 +775,7 @@ class Controller_Panel_Profile extends Auth_Frontcontroller {
                     Model_Transaction::deposit($this->user, NULL, NULL, Core::config('general.ewallet_gamification_earn_on_sign_up'));
                 }
 
-                Alert::set(Alert::SUCCESS, __('You have verified your email.'));
+                Alert::set(Alert::SUCCESS, __('Grazie per aver verificato la tua email. Benvenuto!'));
             } catch (Exception $e) {
                 //throw 500
                 throw HTTP_Exception::factory(500,$e->getMessage());
