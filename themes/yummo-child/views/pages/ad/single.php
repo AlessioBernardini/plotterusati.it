@@ -58,7 +58,13 @@
 	            </div>
 	        <?endif?>
 	        <div class="col-xs-12 col-sm-6">
-	        	<?= __("Posted by")?> <a href="<?=Route::url('profile',  array('seoname'=>$ad->user->seoname))?>"><?=$ad->user->name?></a> <?=$ad->user->is_verified_user();?> <?= __("il")?> <span><?= Date::format($ad->published, core::config('general.date_format'))?></span>
+                <?php //se il ruole è = 11 è un rivenditore e scrivo RIvenditore vicino al nome
+                    if($ad->user->id_role == 11){
+                        echo __("Posted by") ?><a href="<?=Route::url('profile',  array('seoname'=>$ad->user->seoname))?>"> <?=$ad->user->name?></a> (Rivenditore) <?=$ad->user->is_verified_user();?> <?= __("il")?> <span><?= Date::format($ad->published, core::config('general.date_format'))?></span><?php
+                    }else{
+                        echo __("Posted by") ?><a href="<?=Route::url('profile',  array('seoname'=>$ad->user->seoname))?>"> <?=$ad->user->name?></a> <?=$ad->user->is_verified_user();?> <?= __("il")?> <span><?= Date::format($ad->published, core::config('general.date_format'))?></span><?php
+                    }
+                ?>
 	        </div>
 	        <?if (Core::config('advertisement.reviews')==1):?>
 	        	<div class="col-xs-12 col-sm-2">

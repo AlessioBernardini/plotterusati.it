@@ -42,7 +42,13 @@
             <br><br>
 	    </div>
 	    <div class="col-xs-12 col-md-9">
-	        <h3><?=$user->name?> <?=$user->is_verified_user()?></h3>
+                <?php //se il ruole è = 11 è un rivenditore e scrivo RIvenditore vicino al nome
+                    if($user->id_role == 11){
+                        ?><h3><?=$user->name?> (Rivenditore) <?=$user->is_verified_user()?></h3><?php
+                    }else{
+                        ?><h3><?=$user->name?> <?=$user->is_verified_user()?></h3><?php
+                    }
+                ?>
 
 	        <div class="text-description">
 	            <p><?=Text::bb2html($user->description,TRUE)?></p>
