@@ -48,7 +48,7 @@
                 <?endif?>
             <?endif?>
 	        <?if(core::config('advertisement.count_visits')==1):?>
-	        	<div class="col-xs-6 col-sm-2">
+	        	<div class="col-xs-6 col-sm-1">
 	        		<i class="fa fa-eye"></i><?=$hits?>
 	        	</div>
 	        <?endif?>
@@ -57,12 +57,12 @@
 	            	<i class="fa fa-map-marker"></i><?=$ad->location->translate_name() ?>
 	            </div>
 	        <?endif?>
-	        <div class="col-xs-12 col-sm-6">
+	        <div class="col-xs-12 col-sm-7" id="single_nomeutente">
                 <?php //se il ruole è = 11 è un rivenditore e scrivo RIvenditore vicino al nome
                     if($ad->user->id_role == 11){
-                        echo __("Posted by") ?><a href="<?=Route::url('profile',  array('seoname'=>$ad->user->seoname))?>"> <?=$ad->user->name?></a> (Rivenditore) <?=$ad->user->is_verified_user();?> <?= __("il")?> <span><?= Date::format($ad->published, core::config('general.date_format'))?></span><?php
+                        echo __("Posted by") ?> <a href="<?=Route::url('profile',  array('seoname'=>$ad->user->seoname))?>"><?=$ad->user->name?></a> (Rivenditore) <?=$ad->user->is_verified_user();?> <?= __("il")?> <span><?= Date::format($ad->published, core::config('general.date_format'))?></span><?php
                     }else{
-                        echo __("Posted by") ?><a href="<?=Route::url('profile',  array('seoname'=>$ad->user->seoname))?>"> <?=$ad->user->name?></a> <?=$ad->user->is_verified_user();?> <?= __("il")?> <span><?= Date::format($ad->published, core::config('general.date_format'))?></span><?php
+                        echo __("Posted by") ?> <a href="<?=Route::url('profile',  array('seoname'=>$ad->user->seoname))?>"><?=$ad->user->name?></a> <?=$ad->user->is_verified_user();?> <?= __("il")?> <span><?= Date::format($ad->published, core::config('general.date_format'))?></span><?php
                     }
                 ?>
 	        </div>
