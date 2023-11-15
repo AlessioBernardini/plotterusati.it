@@ -611,7 +611,7 @@ class Model_User extends ORM {
             $user->seoname              = $user->gen_seo_title($user->name);
             $user->password             = $password;
             $user->subscriber           = 1;
-            //$user->verification_code    = rand(100000, 999999);
+            $user->verification_code    = rand(100000, 999999);
 
             try
             {
