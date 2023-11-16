@@ -765,6 +765,7 @@ class Controller_Panel_Profile extends Auth_Frontcontroller {
 
         if ($this->user->verification_code == $verification_code )
         {
+            $this->user->verified = new Database_Expression('verified + 1'); //l'email è verificata quindi segno l'utente come verificato
             $this->user->status = Model_User::STATUS_ACTIVE;
 
             try {
@@ -774,7 +775,7 @@ class Controller_Panel_Profile extends Auth_Frontcontroller {
                 {
                     Model_Transaction::deposit($this->user, NULL, NULL, Core::config('general.ewallet_gamification_earn_on_sign_up'));
                 }
-
+                
                 Alert::set(Alert::SUCCESS, __('Grazie per aver verificato la tua email. Benvenuto!'));
             } catch (Exception $e) {
                 //throw 500

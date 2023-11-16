@@ -612,6 +612,7 @@ class Model_User extends ORM {
             $user->password             = $password;
             $user->subscriber           = 1;
             $user->verification_code    = rand(100000, 999999);
+            $user->verified             = 0; //di default quando creo l'utente non è verificato, cambierò il valore con update alla verifica dell'email
 
             try
             {
@@ -1000,14 +1001,21 @@ class Model_User extends ORM {
     }
 
     /**
-     * Check if the user is verified.
+     * Check if the user is verified. Aggiornata per il nuovo campo del database "verified"
      * @return  verified badge else false
      */
-    public function is_verified_user()
+    /*public function is_verified_user()
     {
         if ($this->loaded() AND isset($this->cf_verifiedbadge) AND $this->cf_verifiedbadge==1 AND Core::extra_features() == TRUE)
             return '<i title="'.__('Verified!').'" class="fa fa-check-circle" aria-hidden="true"></i>';
 
+        return '';
+    }*/
+    public function is_verified_user()
+    {
+        if ($this->loaded() AND $this->verified==1){
+            return '<i class="fa fa-shield" aria-hidden="true"></i>';
+        }
         return '';
     }
 

@@ -94,6 +94,11 @@
 			            <?endif?>
 		            <?endforeach?>
 	            <?endif?>
+                <?php
+                if($user->verified == 1){
+                    ?><br><li><i class="fa fa-shield" aria-hidden="true"></i> <strong><?=_e('Venditore Verificato')?></strong></li><?php
+                }
+                ?>
 	        </ul>
         </div>
 		<div class="clearfix">&nbsp;</div>
