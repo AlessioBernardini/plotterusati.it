@@ -44,21 +44,38 @@ class Valid extends Kohana_Valid{
      * @return  boolean
      */
     public static function email_domain($email)
-    {
-        if ( ! Valid::not_empty($email))
-            return FALSE; // Empty fields cause issues with checkdnsrr()
+	{
+	    if ( ! Valid::not_empty($email))
+	        return FALSE;
+	
+	    $domain = preg_replace('/^[^@]++@/', '', $email);
+	
+	    // banned domains
+	    $banned_domains = self::get_banned_domains();
+	
+	    if (
+	        core::config('general.black_list') == TRUE
+	        AND is_array($banned_domains)
+	        AND in_array($domain, $banned_domains, TRUE)
+	    )
+	        return FALSE;
+	
+	    // allowed domains
+	    $email_domains = core::config('general.email_domains');
+	    $admin_emails  = Email::get_admins_emails();
+	
+	    if (
+	        $email_domains !== NULL
+	        AND $email_domains != ''
+	        AND is_array($admin_emails)
+	        AND ! in_array($domain, explode(',', $email_domains), TRUE)
+	        AND ! in_array($email, $admin_emails, TRUE)
+	    )
+	        return FALSE;
+	
+	    return (bool) checkdnsrr($domain, 'MX');
+	}
 
-        $domain = preg_replace('/^[^@]++@/', '', $email);
-
-        if (core::config('general.black_list') == TRUE AND in_array($domain,self::get_banned_domains()))
-            return FALSE;
-
-        if (core::config('general.email_domains') !== NULL AND core::config('general.email_domains') != '' AND ! in_array($domain, explode(',', core::config('general.email_domains'))) AND ! in_array($email, Email::get_admins_emails()))
-                return FALSE;
-
-        // Check if the email domain has a valid MX record
-        return (bool) checkdnsrr($domain, 'MX');
-    }
 
 
     /**
@@ -87,7 +104,13 @@ class Valid extends Kohana_Valid{
             $banned_domains = File::read($file);
         }
 
-        $banned_domains = json_decode($banned_domains);
+        $banned_domains = json_decode($banned_domains, TRUE);
+
+		if ( ! is_array($banned_domains))
+		{
+		    $banned_domains = [];
+		}
+
 
         if (!empty(core::config('general.disallowed_email_domains')))
         {
@@ -189,6 +212,6 @@ class Valid extends Kohana_Valid{
             }
         }
 
-        TRUE;
+        return TRUE;
     }
 }
