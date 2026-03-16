@@ -1,19 +1,33 @@
 <?php
 if(isset($_POST)) {
     $mailto = "info@plotterusati.it";
-    $email = $_POST['Email'];
-    $ragSoc = $_POST['RagioneSociale'];
-    $nome = $_POST['Nome'];
-    $cognome = $_POST['Cognome'];
-    $categoria = $_POST['Categoria'];
-    $condizione = $_POST['Condizione'];
-    $marcaModello = $_POST['MarcaModello'];
-    $formato = $_POST['Formato'];
-    $annoCostruzione = $_POST['AnnoCostruzione'];
-    $annoRevisione = $_POST['AnnoRevisione'];
-    $garanzia = $_POST['Garanzia'];
-    $assistenza = $_POST['Assistenza'];
-    $descrizione = $_POST['Descrizione'];
+    
+    // Funzione helper per sanificare gli header da newline
+    function sanitize_header_value($value) {
+        return str_replace(array("\r", "\n", "%0a", "%0d"), '', trim($value));
+    }
+
+    $email = filter_var($_POST['Email'], FILTER_VALIDATE_EMAIL);
+    if (!$email) {
+        echo "Indirizzo email non valido.";
+        exit;
+    }
+    
+    $email = sanitize_header_value($email);
+    $nome = sanitize_header_value($_POST['Nome']);
+    $cognome = sanitize_header_value($_POST['Cognome']);
+
+    // Sanitizzazione HTML generale
+    $ragSoc = htmlspecialchars($_POST['RagioneSociale'] ?? '', ENT_QUOTES, 'UTF-8');
+    $categoria = htmlspecialchars($_POST['Categoria'] ?? '', ENT_QUOTES, 'UTF-8');
+    $condizione = htmlspecialchars($_POST['Condizione'] ?? '', ENT_QUOTES, 'UTF-8');
+    $marcaModello = htmlspecialchars($_POST['MarcaModello'] ?? '', ENT_QUOTES, 'UTF-8');
+    $formato = htmlspecialchars($_POST['Formato'] ?? '', ENT_QUOTES, 'UTF-8');
+    $annoCostruzione = htmlspecialchars($_POST['AnnoCostruzione'] ?? '', ENT_QUOTES, 'UTF-8');
+    $annoRevisione = htmlspecialchars($_POST['AnnoRevisione'] ?? '', ENT_QUOTES, 'UTF-8');
+    $garanzia = htmlspecialchars($_POST['Garanzia'] ?? '', ENT_QUOTES, 'UTF-8');
+    $assistenza = htmlspecialchars($_POST['Assistenza'] ?? '', ENT_QUOTES, 'UTF-8');
+    $descrizione = htmlspecialchars($_POST['Descrizione'] ?? '', ENT_QUOTES, 'UTF-8');
 
     $subject = "Richiesta valutazione usato dal sito www.plotterusati.it";
     
@@ -21,8 +35,8 @@ if(isset($_POST)) {
     . "<b>Dati anagrafici</b>" . "<br/>"
     . "Email: " . "<a href='mailto:".$email."'>".$email."</a>". "<br/>"
     . "Ragione Sociale: " . $ragSoc . "<br/>"
-    . "Nome: " . $nome . "<br/>"
-    . "Cognome: " . $cognome . "<br/><br/>"
+    . "Nome: " . htmlspecialchars($nome, ENT_QUOTES, 'UTF-8') . "<br/>"
+    . "Cognome: " . htmlspecialchars($cognome, ENT_QUOTES, 'UTF-8') . "<br/><br/>"
     . "<b>Dati attrezzatura</b>" . "<br/>"
     . "Categoria: " . $categoria . "<br/>"
     . "Condizione: " . $condizione . "<br/>"
@@ -42,7 +56,7 @@ if(isset($_POST)) {
     $headers .= "X-Priority: 1\n"; // Urgent message!
     $headers .= "Return-Path: noreply@plotterusati.it\n"; // Return path for errors
     $headers .= "MIME-Version: 1.0\r\n";
-    $headers .= "Content-Type: text/html; charset=iso-8859-1\n";
+    $headers .= "Content-Type: text/html; charset=UTF-8\n";
     
     $result = mail($mailto, $subject, $message, $headers);
 

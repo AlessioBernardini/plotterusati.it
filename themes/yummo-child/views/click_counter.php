@@ -34,10 +34,18 @@ class click_counter
 $clicks = new click_counter();
 
 if(isset($_GET["id"])){
-    $id= $_GET["id"];
-    $clicks->update_clicks_byID($id);
-    $redirect=$clicks->get_clicks_byID($id)["link"];
-    header("location: $redirect");
+    $id= (int)$_GET["id"];
+    
+    if ($id > 0) {
+        $clicks->update_clicks_byID($id);
+        $record = $clicks->get_clicks_byID($id);
+        
+        if ($record && !empty($record["link"])) {
+            $redirect = $record["link"];
+            header("location: $redirect");
+            exit; // Prevenire l'esecuzione del resto della pagina se è un redirect
+        }
+    }
 }
 
 ?>
