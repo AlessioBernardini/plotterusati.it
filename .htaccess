@@ -202,10 +202,8 @@ Options -Indexes
 
 
 # Blocca URL malevoli già segnalati dal provider (SEO spam / phishing cloaking)
-RewriteRule ^user/pusulabet-giris/?$ - [F,L,NC]
+RewriteRule ^user/pusulabet.*$ - [F,L,NC]
+RewriteRule ^user/.*(bet|bahis|casino|giris|slot|bonus|free-spin).*$ - [F,L,NC]
 
-# Blocca varianti SEO-spam simili (slug betting/casino in /user/)
-RewriteRule ^user/(?:[^/]*?(?:bet|bahis|casino|giris|slot|bonus|free-spin)[^/]*)/?$ - [F,L,NC]
-
-# Blocca eventuali path clonati da report esterni (es. /urlscan.io/result/<uuid>)
-RewriteRule ^urlscan\.io/result/[0-9a-f\-]+/?$ - [F,L,NC]
+# Blocca directory inesistenti sospette
+RewriteRule ^urlscan\.io/.*$ - [F,L,NC]
