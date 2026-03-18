@@ -98,10 +98,9 @@ class Email {
      * @param  array $file      file to attach to email
      * @return boolean            s
      */
-    public static function content($to, $to_name='', $from = NULL, $from_name =NULL, $content, $replace, $file=NULL)
+    public static function content($to, $to_name='', $from = NULL, $from_name =NULL, $content, $replace, $file=NULL, $language = NULL)
     {
-
-        $email = Model_Content::get_by_title($content,'email');
+        $email = Model_Content::get_by_title($content, 'email', $language);
 
         //content found
         if ($email->loaded())
@@ -339,6 +338,77 @@ class Email {
         }
 
         return $arr;
+    }
+
+    public static function send_digest_mail($recipients, $ads = NULL, $interval = NULL, $language = NULL)
+    {
+        $digest_mail_content = Model_Content::get_by_title('digest-' . $interval, 'email', $language);
+
+        if (! $digest_mail_content->loaded())
+        {
+            $digest_mail_content = Model_Content::get_by_title('digest', 'email', $language);
+        }
+
+        if (! $digest_mail_content->loaded())
+        {
+            return;
+        }
+
+        if (! array($recipients))
+        {
+            return;
+        }
+
+        $unsubscribe_link = Route::url('oc-panel', ['controller' => 'auth', 'action' => 'unsubscribe_from_email_digest']);
+
+        $replace = [
+            '[SITE.NAME]' => core::config('general.site_name'),
+            '[SITE.URL]' => core::config('general.base_url'),
+            '[ADS]' => View::factory('_ads-email-digest', ['ads' => $ads, 'language' => $language])->render(),
+        ];
+
+        $subject = str_replace(array_keys($replace), array_values($replace), $digest_mail_content->title);
+        $content = str_replace(array_keys($replace), array_values($replace), $digest_mail_content->description);
+
+        $mail_body = View::factory('email-digest', [
+            'title' => $subject,
+            'content' => $content,
+            'unsubscribe_link' => $unsubscribe_link,
+            'language' => $language,
+        ])->render();
+
+        switch (core::config('email.service')) {
+            case 'elasticemail':
+            case 'elastic':
+                $result = ElasticEmail::send(
+                    $recipients, '', $subject, $mail_body,
+                    $digest_mail_content->from_email, core::config('general.site_name')
+                );
+
+                break;
+            case 'mailgun':
+                $result = Mailgun::send(
+                    $recipients, '', $subject, $mail_body,
+                    $digest_mail_content->from_email, core::config('general.site_name')
+                );
+
+                break;
+            case 'pepipost':
+                //todo
+
+                break;
+            case 'smtp':
+            case 'mail':
+            default:
+                $result = self::phpmailer(
+                    $recipients, '', $subject, $mail_body,
+                    $digest_mail_content->from_email, core::config('general.site_name')
+                );
+
+                break;
+        }
+
+        return $result;
     }
 
 } //end email

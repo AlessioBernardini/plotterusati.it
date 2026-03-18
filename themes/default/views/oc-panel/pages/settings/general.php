@@ -1,7 +1,5 @@
 <?php defined('SYSPATH') or die('No direct script access.');?>
 
-<?=Form::errors()?>
-
 <div class="md:flex md:items-center md:justify-between">
     <div class="flex-1 min-w-0">
         <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
@@ -22,6 +20,12 @@
         </div>
     <? endif ?>
 </div>
+
+<? if (! empty($errors)) : ?>
+    <div class="mt-8">
+        <?= View::factory('oc-panel/components/form-errors', ['errors' => $errors]) ?>
+    </div>
+<? endif ?>
 
 <div class="bg-white overflow-hidden shadow rounded-lg mt-8">
     <div class="px-4 py-5 sm:p-6">
@@ -96,6 +100,15 @@
                                 <p class="text-gray-500"><?= __('Enables an alert to accept cookies') ?>.</p>
                             </div>
                         </div>
+                        <div class="sm:col-span-6">
+                            <div class="absolute flex items-center h-5">
+                                <?=FORM::checkbox('users_must_verify_email', 1, (bool) Core::post('users_must_verify_email', Core::config('general.users_must_verify_email')), ['class' => 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out'])?>
+                            </div>
+                            <div class="pl-7 text-sm leading-5">
+                                <?=FORM::label('users_must_verify_email', __('User must verify email'), ['class'=>'font-medium text-gray-700'])?>
+                                <p class="text-gray-500"><?= __('Require users to verify their email addresses after register') ?>.</p>
+                            </div>
+                        </div>
                         <div class="sm:col-span-4">
                             <?= FORM::label('moderation', __('Moderation'), array('class'=>'block text-sm font-medium leading-5 text-gray-700'))?>
                             <div class="mt-1 rounded-md shadow-sm">
@@ -156,24 +169,24 @@
                             <?= FORM::label('email_domains', __('Allowed email domains'), array('class'=>'block text-sm font-medium leading-5 text-gray-700'))?>
                             <div class="mt-1 rounded-md shadow-sm">
                                 <?= FORM::input('email_domains', Core::post('email_domains', Core::config('general.email_domains')), [
-                                    'placeholder' => __('For email domain push enter.'),
+                                    'placeholder' => __('e.g. gmail.com,yahoo.com,yourcompany.com'),
                                     'class' => 'form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5',
                                 ])?>
                             </div>
                             <p class="mt-2 text-sm text-gray-500">
-                                <?=__("You need to write your email domains to enable the service.")?>
+                                <?=__("You need to write your email domains to enable the service. Separate each domain with a comma.")?>
                             </p>
                         </div>
                         <div class="sm:col-span-4">
                             <?= FORM::label('disallowed_email_domains', __('Disallowed email domains'), array('class'=>'block text-sm font-medium leading-5 text-gray-700'))?>
                             <div class="mt-1 rounded-md shadow-sm">
                                 <?= FORM::input('disallowed_email_domains', Core::post('disallowed_email_domains', Core::config('general.disallowed_email_domains')), [
-                                    'placeholder' => __('For email domain push enter.'),
+                                    'placeholder' => __('e.g. gmail.com,yahoo.com'),
                                     'class' => 'form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5',
                                 ])?>
                             </div>
                             <p class="mt-2 text-sm text-gray-500">
-                                <?=__("You need to write your email domains to enable the service.")?>
+                                <?=__("You need to write your email domains to enable the service. Separate each domain with a comma.")?>
                             </p>
                         </div>
                         <div class="sm:col-span-4">

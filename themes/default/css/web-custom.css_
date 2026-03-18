@@ -1,12 +1,11 @@
-.navbar.navbar-default::after {
-    content: "NB: per manutenzione straordinaria, nelle prossime ore, si potrebbero riscontrare dei problemi durante il login. Ci scusiamo per il disagio.";
+/* #titolonuoviannunci:after {
+    content: "NB: dal 13 al 21 agosto effettuiamo la chiusura estiva, la pubblicazione di nuovi annunci in questo periodo potrebbe subire dei ritardi.";
     text-align: center;
     display: block;
-    margin-bottom: 10px;
-    font-size: 16px;
-    font-weight: bold;
+    margin-top: -15px;
+    margin-bottom: 15px;
     color: red;
-}
+} */
 
 .count_ads {
     font-weight: bold;

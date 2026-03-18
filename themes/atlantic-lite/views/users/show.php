@@ -11,8 +11,8 @@
                 <?$images = $user->get_profile_images(); if ($images):?>
                     <div id="gallery">
                         <?$i = 0; foreach ($images as $key => $image):?>
-                            <a href="<?=$image?>" class="thumbnail gallery-item <?=$i > 0 ? 'hidden' : NULL?>" data-gallery>
-                                <img class="img-rounded img-responsive" src="<?=Core::imagefly($image,200,200)?>" alt="<?=$user->name?>">
+                            <a href="<?=$image?>" class="gallery-item <?=$i > 0 ? 'hidden' : NULL?>" data-gallery>
+                                <img class="rounded img-thumbnail img-fluid" src="<?=Core::imagefly($image,200,200)?>" alt="<?=$user->name?>">
                             </a>
                         <?$i++; endforeach?>
                     </div>
@@ -62,7 +62,7 @@
                 <?if (Core::extra_features() == TRUE):?>
                     <?foreach ($user->custom_columns(TRUE) as $name => $value):?>
                         <?if($value!=''):?>
-                            <?if($name!='whatsapp' AND $name!='skype' AND $name!='telegram'):?>
+                            <?if(!in_array(mb_strtolower($name), ['whatsapp', 'skype', 'telegram'])):?>
                                 <li>
                                     <strong><?=$name?>:</strong>
                                     <?if($value=='checkbox_1'):?>
@@ -79,28 +79,30 @@
                 <?endif?>
             </ul>
 
-            <?if (Core::extra_features() == TRUE):?>
-                <?if(isset($user->cf_whatsapp) AND strlen($user->cf_whatsapp) > 6):?>
-                    <a href="https://api.whatsapp.com/send?phone=<?=$user->cf_whatsapp?>" title="Chat with <?=$user->name?>" alt="Whatsapp"><i class="fa fa-2x fa-whatsapp" style="color:#43d854"></i></a>
+            <div class="tw-flex tw-items-center tw-space-x-2">
+                <?if (Core::extra_features() == TRUE):?>
+                    <?if(isset($user->cf_whatsapp) AND strlen($user->cf_whatsapp) > 6):?>
+                        <a href="https://api.whatsapp.com/send?phone=<?=$user->cf_whatsapp?>" title="Chat with <?=$user->name?>" alt="Whatsapp"><i class="fab fa-2x fa-whatsapp" style="color:#43d854"></i></a>
+                    <?endif?>
+
+                    <?if(isset($user->cf_skype) AND $user->cf_skype!=''):?>
+                        <a href="skype:<?=$user->cf_skype?>?chat" title="Chat with <?=$user->name?>" alt="Skype"><i class="fab fa-2x fa-skype" style="color:#00aff0"></i></a>
+                    <?endif?>
+
+                    <?if(isset($user->cf_telegram) AND $user->cf_telegram!=''):?>
+                        <a href="tg://resolve?domain=<?=$user->cf_telegram?>" id="telegram" title="Chat with <?=$user->name?>" alt="Telegram"><i class="fab fa-2x fa-telegram" style="color:#0088cc"></i></a>
+                    <?endif?>
                 <?endif?>
 
-                <?if(isset($user->cf_skype) AND $user->cf_skype!=''):?>
-                    <a href="skype:<?=$user->cf_skype?>?chat" title="Chat with <?=$user->name?>" alt="Skype"><i class="fa fa-2x fa-skype" style="color:#00aff0"></i></a>
+                <?if (core::config('general.messaging') == TRUE AND !Auth::instance()->logged_in()) :?>
+                    <a class="btn btn-primary" data-toggle="modal" data-dismiss="modal" href="<?=Route::url('oc-panel',array('directory'=>'user','controller'=>'auth','action'=>'login'))?>#login-modal">
+                        <i class="fas fa-envelope"></i>
+                        <?=_e('Send Message')?>
+                    </a>
+                <?else :?>
+                    <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#contact-modal"><i class="fas fa-envelope"></i> <?=_e('Send Message')?></button>
                 <?endif?>
-
-                <?if(isset($user->cf_telegram) AND $user->cf_telegram!=''):?>
-                    <a href="tg://resolve?domain=<?=$user->cf_telegram?>" id="telegram" title="Chat with <?=$user->name?>" alt="Telegram"><i class="fa fa-2x fa-telegram" style="color:#0088cc"></i></a>
-                <?endif?>
-            <?endif?>
-
-            <?if (core::config('general.messaging') == TRUE AND !Auth::instance()->logged_in()) :?>
-                <a class="btn btn-primary" data-toggle="modal" data-dismiss="modal" href="<?=Route::url('oc-panel',array('directory'=>'user','controller'=>'auth','action'=>'login'))?>#login-modal">
-                    <i class="fas fa-envelope"></i>
-                    <?=_e('Send Message')?>
-                </a>
-            <?else :?>
-                <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#contact-modal"><i class="fas fa-envelope"></i> <?=_e('Send Message')?></button>
-            <?endif?>
+            </div>
 
             <div id="contact-modal" class="modal fade">
                 <div class="modal-dialog">
@@ -166,6 +168,44 @@
                     </div>
                 </div>
             </div>
+
+            <?if (core::config('general.ewallet') AND Auth::instance()->logged_in()) :?>
+                <button class="btn btn-success" type="button" data-toggle="modal" data-target="#send-money"><i class="fa fa-money-bill"></i> <?=_e('Send Money')?></button>
+
+                <div id="send-money" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title"><?=_e('Send money')?></h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+
+                            <?= FORM::open(Route::url('oc-panel', array('controller'=>'profile', 'action'=>'transfer', 'id'=>$user->seoname)), array('class'=>'form-horizontal well'))?>
+                                <div class="modal-body">
+                                    <?=Form::errors()?>
+
+                                    <div class="form-group">
+                                        <?= FORM::label('amount', __('Amount'), ['class' => 'col-md-2 control-label', 'for' => 'amount'])?>
+                                        <div class="col-md-4 ">
+                                            <?= Form::input('amount', 0, [
+                                                'required',
+                                                'type' => 'number',
+                                                'class' => 'form-control',
+                                            ])?>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <?= FORM::button(NULL, _e('Send'), array('type'=>'submit', 'class'=>'btn btn-success', 'action'=>Route::url('default', array('controller'=>'contact', 'action'=>'userprofile_contact' , 'id'=>$user->id_user))))?>
+                                </div>
+                            <?= FORM::close()?>
+                        </div>
+                    </div>
+                </div>
+            <?endif?>
 
             <?if (core::config('advertisement.gm_api_key')):?>
                 <?if(Core::config('advertisement.map') AND $user->address !== NULL AND $user->latitude !== NULL AND $user->longitude !== NULL):?>

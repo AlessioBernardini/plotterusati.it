@@ -91,13 +91,23 @@
                         <p class="text-gray-500"><?= __('Required field to register.') ?></p>
                     </div>
                 </div>
-                <div class="sm:col-span-6">
+                <div class="sm:col-span-6" x-data="{ searchable: <?= $field_data['searchable'] ? 'true' : 'false' ?> }">
                     <div class="absolute flex items-center h-5">
-                        <?=FORM::checkbox('searchable', 'on', (bool) $field_data['searchable'], ['class' => 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out'])?>
+                        <?=FORM::checkbox('searchable', 'on', '', ['x-model' => 'searchable', 'class' => 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out'])?>
                     </div>
                     <div class="pl-7 text-sm leading-5">
                         <?=FORM::label('searchable', __('Searchable'), ['class'=>'font-medium text-gray-700'])?>
                         <p class="text-gray-500"><?= __('Search in ads will include this field as well.') ?></p>
+                    </div>
+
+                    <div x-show="searchable" class="pl-7 mt-4">
+                        <div class="absolute flex items-center h-5">
+                            <?=FORM::checkbox('text_searchable', 'on', (bool) ($field_data['text_searchable'] ?? FALSE), ['class' => 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out'])?>
+                        </div>
+                        <div class="pl-7 text-sm leading-5">
+                            <?=FORM::label('text_searchable', __('Text searchable'), ['class'=>'font-medium text-gray-700'])?>
+                            <p class="text-gray-500"><?= __('Enables text search to look for key words in this custom field.') ?></p>
+                        </div>
                     </div>
                 </div>
                 <div class="sm:col-span-6">
@@ -151,45 +161,48 @@
                 <div>
                     <? foreach ($languages = i18n::get_selectable_languages() as $locale => $language) : ?>
                         <? $last_item = $locale === count($languages) - 1 ?>
-                        <div class="<?= $last_item ? '' : 'mb-8 border-b border-gray-200 pb-8' ?>">
-                            <div>
-                                <h3 class="text-base leading-5 font-medium text-gray-900">
-                                    <?= $locale ?>
-                                </h3>
-                            </div>
-                            <div class="mt-6 grid grid-cols-1 row-gap-6 col-gap-4 sm:grid-cols-6">
-                                <div class="sm:col-span-4">
-                                    <?= FORM::label('translations_label_' . $locale, _e('Label'), array('class' => 'block text-sm font-medium leading-5 text-gray-700', 'for' => 'translations_label_' . $locale)) ?>
-                                    <div class="mt-1 rounded-md shadow-sm">
-                                        <?= FORM::input('translations[label][' . $locale . ']', Model_Field::translate_label($field_data, $locale), array(
-                                            'class' => 'form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5',
-                                        )) ?>
-                                    </div>
+                        <? if (Core::config('i18n.locale') != $locale) : ?>
+                            <div class="<?= $last_item ? '' : 'mb-8 border-b border-gray-200 pb-8' ?>">
+                                <div>
+                                    <h3 class="text-base leading-5 font-medium text-gray-900">
+                                        <?= $locale ?>
+                                    </h3>
                                 </div>
-                                <div class="sm:col-span-4">
-                                    <?= Form::label('translations_tooltip_' . $locale, _e('Tooltip'), array('class' => 'block text-sm font-medium leading-5 text-gray-700', 'for' => 'translations_tooltip_' . $locale)) ?>
-                                    <div class="mt-1 rounded-md shadow-sm">
-                                        <?= FORM::input('translations[tooltip][' . $locale . ']', Model_Field::translate_tooltip($field_data, $locale), array(
-                                            'class' => 'form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5',
-                                            'id' => 'translations_tooltip_' . $locale,
-                                        )) ?>
-                                    </div>
-                                </div>
-                                <? if ($field_data['type'] == 'select' OR $field_data['type'] == 'radio') : ?>
+                                <div class="mt-6 grid grid-cols-1 row-gap-6 col-gap-4 sm:grid-cols-6">
                                     <div class="sm:col-span-4">
-                                        <?= Form::label('translations_values_' . $locale, _e('Values'), array('class' => 'block text-sm font-medium leading-5 text-gray-700', 'for' => 'translations_values_' . $locale)) ?>
+                                        <?= FORM::label('translations_label_' . $locale, _e('Label'), array('class' => 'block text-sm font-medium leading-5 text-gray-700', 'for' => 'translations_label_' . $locale)) ?>
                                         <div class="mt-1 rounded-md shadow-sm">
-                                            <?= FORM::input('translations[values][' . $locale . ']', (is_array(Model_Field::translate_values($field_data, $locale))) ? implode(",", Model_Field::translate_values($field_data, $locale)) : Model_Field::translate_values($field_data, $locale), array(
+                                            <?= FORM::input('translations[label][' . $locale . ']', Model_Field::translate_label($field_data, $locale), array(
                                                 'class' => 'form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5',
-                                                'id' => 'translations_values_' . $locale,
                                             )) ?>
                                         </div>
                                     </div>
-                                <? else: ?>
-                                    <?= FORM::hidden('translations[values][' . $locale . ']') ?>
-                                <? endif ?>
+                                    <div class="sm:col-span-4">
+                                        <?= Form::label('translations_tooltip_' . $locale, _e('Tooltip'), array('class' => 'block text-sm font-medium leading-5 text-gray-700', 'for' => 'translations_tooltip_' . $locale)) ?>
+                                        <div class="mt-1 rounded-md shadow-sm">
+                                            <?= FORM::input('translations[tooltip][' . $locale . ']', Model_Field::translate_tooltip($field_data, $locale), array(
+                                                'class' => 'form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5',
+                                                'id' => 'translations_tooltip_' . $locale,
+                                            )) ?>
+                                        </div>
+                                    </div>
+                                    <? if ($field_data['type'] == 'select' OR $field_data['type'] == 'radio') : ?>
+                                        <div class="sm:col-span-4">
+                                            <?= Form::label('translations_values_' . $locale, _e('Values'), array('class' => 'block text-sm font-medium leading-5 text-gray-700', 'for' => 'translations_values_' . $locale)) ?>
+                                            <div class="mt-1 rounded-md shadow-sm">
+                                                <?= FORM::input('translations[values][' . $locale . ']', (is_array(Model_Field::translate_values($field_data, $locale))) ? implode(",", Model_Field::translate_values($field_data, $locale)) : Model_Field::translate_values($field_data, $locale), array(
+                                                    'placeholder' => __('Comma separated for select'),
+                                                    'class' => 'form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5',
+                                                    'id' => 'translations_values_' . $locale,
+                                                )) ?>
+                                            </div>
+                                        </div>
+                                    <? else: ?>
+                                        <?= FORM::hidden('translations[values][' . $locale . ']') ?>
+                                    <? endif ?>
+                                </div>
                             </div>
-                        </div>
+                        <? endif ?>
                     <? endforeach ?>
                 </div>
                 <div>

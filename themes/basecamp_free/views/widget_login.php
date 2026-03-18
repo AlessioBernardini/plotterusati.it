@@ -9,6 +9,15 @@
 			<span class="caret"></span>
 		</button>
 		<ul class="dropdown-menu">
+            <?if (core::config('general.ewallet')):?>
+                <li class="dropdown-header"><?= __('eWallet balance') ?></li>
+                <li>
+                    <a href="<?= Route::url('oc-panel', ['controller' => 'ewallet', 'action' => 'index']) ?>">
+                        <?= i18n::money_format(Auth::instance()->get_user()->ewallet_balance, 'YCL') ?>
+                    </a>
+                </li>
+                <li role="separator" class="divider"></li>
+            <?endif?>
 			<li>
 				<a href="<?=Route::url('oc-panel',array('controller'=>'home','action'=>'index'))?>">
 					<i class="glyphicon glyphicon-cog"></i> <?=_e('Panel')?>
@@ -34,7 +43,7 @@
             <?if(core::config('payment.paypal_seller') == TRUE OR Core::config('payment.stripe_connect')==TRUE OR Core::config('payment.escrow_pay')==TRUE):?>
 				<li>
 					<a href="<?=Route::url('oc-panel',array('controller'=>'profile','action'=>'sales'))?>">
-						<i class="glyphicon glyphicon-usd"></i> <?=_e('My Sales')?>
+						<i class="fas fa-money-bill"></i> <?=_e('My Sales')?>
 					</a>
 				</li>
 			<?endif?>
@@ -47,7 +56,7 @@
 			<?endif?>
 			<li>
 				<a href="<?=Route::url('oc-panel',array('controller'=>'profile','action'=>'subscriptions'))?>">
-					<i class="glyphicon glyphicon-envelope"></i> <?=_e('Subscriptions')?>
+					<i class="glyphicon glyphicon-envelope"></i> <?=_e('Notifications')?>
 				</a>
 			</li>
 			<li>

@@ -52,7 +52,7 @@ class install{
      * Software install settings
      * @var string
      */
-    const VERSION   = '4.22.0';
+    const VERSION   = '4.4.0';
 
     /**
      * default locale/language of the install
@@ -210,7 +210,7 @@ class install{
      */
     public static function versions()
     {
-        return json_decode(core::curl_get_contents('https://raw.githubusercontent.com/yclas/yclas/master/versions.json?t='.time()),TRUE);
+        return json_decode(core::curl_get_contents('https://yclas.nyc3.digitaloceanspaces.com/self-hosted/versions.json?t='.time()),TRUE);
     }
 
     /**

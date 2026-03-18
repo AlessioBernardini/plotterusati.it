@@ -20,7 +20,7 @@
 	                                <br>
 	                            <?endif?>
 	                            <a class="btn btn-primary" href="<?=Route::url('default', array('controller'=>'stripe','action'=>'connect','id'=>'now'))?>">
-	                                <span class="glyphicon glyphicon-usd" aria-hidden="true"></span> Connect with Stripe
+	                                <span class="fas fa-money-bill" aria-hidden="true"></span> Connect with Stripe
 	                            </a>
 
 	                        </div>
@@ -213,6 +213,17 @@
 								<?endif?>
 							<?endforeach?>
 
+                            <? if (Core::config('email.digest')) : ?>
+                                <div class="form-group">
+                                    <?= FORM::label('digest_interval', _e('Receive digest emails'), array('class'=>'col-xs-4 control-label', 'for'=>'digest_interval'))?>
+                                    <div class="col-sm-8">
+                                        <?= Form::select('digest_interval', ['never' => __('Never'), 'daily' => __('Daily'), 'weekly' => __('Weekly'), 'monthly' => __('Monthly')], $user->digest_interval, [
+                                            'class' => 'form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5',
+                                        ])?>
+                                    </div>
+                                </div>
+                            <? endif ?>
+
 							<div class="form-group clearfix">
 								<div class="col-md-offset-4 col-md-8">
 									<div class="checkbox">
@@ -355,12 +366,12 @@
 	                                    </div>
 	                                <?endif?>
 	                            </div>
-	                            <?if (core::config('advertisement.num_images') > core::count($images)):?>
+	                            <?if (core::config('advertisement.num_images') > $user->has_image):?>
 	                                <hr>
 	                                <div class="form-group">
 	                                    <h5><?=_e('Add image')?></h5>
 	                                    <div>
-	                                        <?for ($i = 0; $i < (core::config('advertisement.num_images') - core::count($images)); $i++):?>
+	                                        <?for ($i = 0; $i < (core::config('advertisement.num_images') - $user->has_image); $i++):?>
 	                                            <div class="fileinput fileinput-new <?=($i >= 1) ? 'hidden' : NULL?>" data-provides="fileinput">
 	                                                <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
 	                                                <div>

@@ -105,7 +105,12 @@ class StripeCheckout {
                 'currency' => $order->currency,
                 'quantity' => 1,
             ]],
-            'success_url' => Route::url('default', ['controller' => 'stripecheckout', 'action' => 'success', 'id' => $order->id_order]),
+            'metadata' => ['id_order' => $order->id_order],
+            'success_url' => Route::url('default', [
+                'controller' => 'stripecheckout',
+                'action' => Core::config('payment.stripe_webhooks') ? 'thanks' : 'success',
+                'id' => $order->id_order
+            ]),
             'cancel_url' => Route::url('default', ['controller' => 'ad', 'action' => 'checkout', 'id' => $order->id_order]),
             'locale' => 'auto',
         ];
@@ -194,7 +199,11 @@ class StripeCheckout {
                 'quantity' => 1,
             ]],
             'mode' => 'payment',
-            'success_url' => Route::url('default', ['controller' => 'stripecheckout', 'action' => 'success_connect', 'id' => $order->id_order]),
+            'success_url' => Route::url('default', [
+                'controller' => 'stripecheckout',
+                'action' => Core::config('payment.stripe_webhooks') ? 'thanks' : 'success_connect',
+                'id' => $order->id_order
+            ]),
             'cancel_url' => Route::url('default', ['controller' => 'ad', 'action' => 'checkout', 'id' => $order->id_order]),
             'locale' => 'auto',
         ];

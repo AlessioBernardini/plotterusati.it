@@ -7,6 +7,7 @@
     <?endif?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="<?=__('Maps')?>">
+    <link rel="shortcut icon" href="<?=(Theme::get('favicon_url')!='') ? Theme::get('favicon_url') : core::config('general.base_url').'images/favicon.ico'?>">
     <?if (Core::extra_features() == FALSE):?>
         <meta name="author" content="yclas.com">
     <?endif?>
@@ -65,7 +66,7 @@
                 controls_on_map: false,
                 map_options: {
                     <?if(Core::config('advertisement.map_zoom')) :?>
-                        maxZoom: 60,
+                        maxZoom: <?=Core::config('advertisement.map_zoom')?>,
                     <?endif?>
                 },
                 <?if(! Core::config('advertisement.map_zoom')) :?>

@@ -27,8 +27,8 @@
 <meta property="fb:pages" content="<?=core::config('advertisement.facebook_id')?>" />
 <?if (Controller::$image!==NULL):?>
 <meta property="og:image"   content="<?=Controller::$image?>"/>
-<?elseif(Theme::get('logo_url')!=NULL):?>
-<meta property="og:image"   content="<?=Theme::get('logo_url')?>"/>
+<?elseif(Theme::get('og-image')!=NULL):?>
+<meta property="og:image"   content="<?=Theme::get('og-image')?>"/>
 <?endif?>
 <meta property="og:title"   content="<?=HTML::chars($title)?>"/>
 <meta property="og:type"   content="website"/>
@@ -42,8 +42,8 @@
 <meta name="twitter:description" content="<?=HTML::chars($meta_description)?>" />
 <?if (Controller::$image!==NULL):?>
 <meta name="twitter:image" content="<?=Controller::$image?>" />
-<?elseif(Theme::get('logo_url')!=NULL):?>
-<meta name="twitter:image" content="<?=Theme::get('logo_url')?>" />
+<?elseif(Theme::get('og-image')!=NULL):?>
+<meta name="twitter:image" content="<?=Theme::get('og-image')?>" />
 <?endif?>
 <meta name="twitter:image:alt" content="<?=HTML::chars($title)?>" />
 
@@ -93,6 +93,7 @@
 <link rel="shortcut icon" href="<?=(Theme::get('favicon_url')!='') ? Theme::get('favicon_url') : core::config('general.base_url').'images/favicon.ico'?>">
 <?if(Theme::get('apple-touch-icon')!=NULL):?>
 <link rel="apple-touch-icon" href="<?=(Theme::get('apple-touch-icon')) ?>">
+<link rel="icon" type="image/png" href="<?=(Theme::get('apple-touch-icon')) ?>" sizes="57x57">
 <?endif?>
 <?if(Theme::get('theme_color')!=NULL):?>
 <meta name="theme-color" content="<?=Theme::get('theme_color')?>">

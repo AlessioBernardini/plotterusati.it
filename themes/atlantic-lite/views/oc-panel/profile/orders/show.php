@@ -2,7 +2,13 @@
     <div class="row justify-content-center">
         <div class="col-12 col-md-8 col-lg-8">
             <div class="mb-3">
-                <h1 class="h2 text-center"><?=_e('Checkout')?></h1>
+                <h1 class="h2 text-center">
+                    <? if ($order->status == Model_Order::STATUS_PAID) : ?>
+                        <?=_e('Invoice')?>
+                    <? else : ?>
+                        <?=_e('Checkout')?>
+                    <? endif ?>
+                </h1>
             </div>
 
             <div class="d-flex justify-content-between">
@@ -14,7 +20,13 @@
                             <em><?=_e('VAT Number')?>: <?=$order->VAT_country?> <?=$order->VAT_number?></em>
                         <?endif?>
                         <em><?=_e('Date')?>: <?= Date::format($order->created, core::config('general.date_format'))?></em>
-                        <em><?=_e('Checkout')?> #: <?=$order->id_order?></em>
+                        <em>
+                            <? if ($order->status == Model_Order::STATUS_PAID) : ?>
+                                <?=_e('Invoice')?>
+                            <? else : ?>
+                                <?=_e('Checkout')?>
+                            <? endif ?> #: <?=$order->id_order?>
+                        </em>
                     </address>
                 </div>
 
@@ -50,7 +62,7 @@
                     <span><?=_e('Total')?></span>
                     <strong class="text-danger">
                         <?if($order->id_product == Model_Order::PRODUCT_AD_SELL AND $order->ad->shipping_price()):?>
-                            ><?= i18n::money_format($order->amount + $order->ad->shipping_price(), $order->currency) ?>
+                            <?= i18n::money_format($order->amount, $order->currency) ?>
                         <?else:?>
                             <?= $order->id_product == Model_Order::PRODUCT_AD_SELL ? i18n::money_format($order->amount, $order->currency) : i18n::format_currency($order->amount, $order->currency) ?>
                         <?endif?>

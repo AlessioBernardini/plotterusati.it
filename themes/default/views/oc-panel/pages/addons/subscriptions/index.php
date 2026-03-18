@@ -37,6 +37,26 @@
                             <p class="text-gray-500"><?=__("Once set to TRUE, if user subscription expires, the user and the ads get disabled, until renewal.")?></p>
                         </div>
                     </div>
+                    <? if (Core::config('general.subscriptions_expire') == TRUE) : ?>
+                        <div class="sm:col-span-6">
+                            <div class="absolute flex items-center h-5">
+                                <?=FORM::checkbox('subscriptions_expire_dont_limit_access', 1, (bool) Core::post('subscriptions_expire_dont_limit_access', Core::config('general.subscriptions_expire_dont_limit_access')), ['class' => 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out'])?>
+                            </div>
+                            <div class="pl-7 text-sm leading-5">
+                                <?=FORM::label('subscriptions_expire_dont_limit_access', __('Do not limit access'), ['class'=>'font-medium text-gray-700'])?>
+                                <p class="text-gray-500"><?=__("Members can browse listings, contact sellers, and navigate their account regardless of subscription status.")?></p>
+                            </div>
+                        </div>
+                    <? endif ?>
+                    <div class="sm:col-span-6">
+                        <div class="absolute flex items-center h-5">
+                            <?=FORM::checkbox('subscriptions_mark_as_sold', 1, (bool) Core::post('subscriptions_mark_as_sold', Core::config('general.subscriptions_mark_as_sold')), ['class' => 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out'])?>
+                        </div>
+                        <div class="pl-7 text-sm leading-5">
+                            <?=FORM::label('subscriptions_mark_as_sold', __('Give extra ad on mark as sold'), ['class'=>'font-medium text-gray-700'])?>
+                            <p class="text-gray-500"><?=__("Once set to TRUE, marking an ad as sold will give one extra ad to the membership.")?></p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="mt-8 border-t border-gray-200 pt-5">
@@ -62,8 +82,44 @@
                         <?endforeach?>
                     </select>
                 <?elseif($values=='DATE'):?>
-                    <input type="text" class="datepicker_boot form-input relative block w-full rounded-none -ml-px bg-transparent focus:z-10 transition ease-in-out duration-150 sm:text-sm sm:leading-5" id="filter__from__<?=$field_name?>" name="filter__from__<?=$field_name?>" placeholder="<?=__('From')?> <?=$field_name?>" value="<?=core::request('filter__from__'.$field_name)?>" data-date="<?=core::request('filter__from__'.$field_name)?>" data-date-format="yyyy-mm-dd">
-                    <input type="text" class="datepicker_boot form-input relative block w-full rounded-none -ml-px bg-transparent focus:z-10 transition ease-in-out duration-150 sm:text-sm sm:leading-5" id="filter__to__<?=$field_name?>" name="filter__to__<?=$field_name?>" placeholder="<?=__('To')?> <?=$field_name?>" value="<?=core::request('filter__to__'.$field_name)?>" data-date="<?=core::request('filter__to__'.$field_name)?>" data-date-format="yyyy-mm-dd">
+                    <input
+                        type="text"
+                        class="form-input relative block w-full rounded-none -ml-px bg-transparent focus:z-10 transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                        id="filter__from__<?=$field_name?>"
+                        name="filter__from__<?=$field_name?>"
+                        placeholder="<?=__('From')?> <?=$field_name?>"
+                        value="<?=core::request('filter__from__'.$field_name)?>" data-date="<?=core::request('filter__from__'.$field_name)?>"
+                        x-data=""
+                        x-ref="input"
+                        x-init="
+                            new Pikaday({
+                                field: $refs.input,
+                                toString(date, format) {
+                                    return moment(date).format('YYYY-MM-DD');
+                                },
+                            });
+                        "
+                    >
+                    <input
+                        type="text"
+                        class="form-input relative block w-full rounded-none -ml-px bg-transparent focus:z-10 transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                        id="filter__to__<?=$field_name?>"
+                        name="filter__to__<?=$field_name?>"
+                        placeholder="<?=__('To')?> <?=$field_name?>"
+                        value="<?=core::request('filter__to__'.$field_name)?>"
+                        data-date="<?=core::request('filter__to__'.$field_name)?>"
+                        data-date-format="yyyy-mm-dd"
+                        x-data=""
+                        x-ref="input"
+                        x-init="
+                            new Pikaday({
+                                field: $refs.input,
+                                toString(date, format) {
+                                    return moment(date).format('YYYY-MM-DD');
+                                },
+                            });
+                        "
+                    >
                 <?elseif($values=='RANGE'):?>
                     <input type="text" class="form-input relative block w-full rounded-none -ml-px bg-transparent focus:z-10 transition ease-in-out duration-150 sm:text-sm sm:leading-5" id="filter__from__<?=$field_name?>" name="filter__from__<?=$field_name?>" placeholder="<?=__('From')?> <?=$field_name?>" value="<?=core::request('filter__from__'.$field_name)?>" >
                     <input type="text" class="form-input relative block w-full rounded-none -ml-px bg-transparent focus:z-10 transition ease-in-out duration-150 sm:text-sm sm:leading-5" id="filter__to__<?=$field_name?>" name="filter__to__<?=$field_name?>" placeholder="<?=__('To')?> <?=$field_name?>" value="<?=core::request('filter__to__'.$field_name)?>" >

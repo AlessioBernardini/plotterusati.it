@@ -503,6 +503,27 @@ $(function(){
     var $params = {
         rules:{},
         messages:{},
+        errorClass: 'invalid-feedback',
+        errorElement: 'div',
+        errorPlacement: function(error, element) {
+            element.removeClass('invalid-feedback');
+
+            if(element.is(':radio') || element.is(':checkbox')){
+                error.insertBefore(element.closest('label'));
+            } else if (element.is('textarea')) {
+                error.insertAfter(element.closest('textarea'));
+            } else if (element.is('select')) {
+                error.insertAfter(element.closest('select'));
+            } else if (element.is(':hidden')) {
+                checkbox_group = element.parent('.form-check').parent('div[data-type="checkbox_group"]');
+
+                if (checkbox_group && checkbox_group.find('.invalid-feedback').length === 0) {
+                    checkbox_group.append(error);
+                }
+            } else {
+                error.insertAfter(element.closest('input'));
+            }
+        },
         submitHandler: function(form) {
             $('#processing-modal').on('shown.bs.modal', function() {
                 form.submit();
@@ -867,7 +888,7 @@ function createCustomFieldsByCategory (customfields) {
                                                                                                         'title'       : customfield.translated_tooltip,
                                                                                                         'required'    : customfield.required,
                                                                                                         'value'       : radioidx + 1,
-                                                                                                        'checked'     : (value == $('#custom-fields').data('customfield-values')[customfield.label]) ? true:false,
+                                                                                                        'checked'     : (value == $('#custom-fields').data('customfield-values')[customfield.translated_label]) ? true:false,
                                                                                                     })).append(value)).insertBefore($template.find('div[data-input]'));
                 });
                 $template.find('div[data-input]').remove();
@@ -905,10 +926,11 @@ function createCustomFieldsByCategory (customfields) {
                         'data-type': customfield.type,
                         'data-toggle': 'tooltip',
                         'title': customfield.tooltip,
+                        'class': 'form-check-input',
                         'checked': $('#custom-fields').data('customfield-values')[label],
                     }));
 
-                    $('input[name="' + name + '"]').wrap('<div class="checkbox"></div>').wrap('<label class="checkbox_group"></label>').after(label);
+                    $('input[name="' + name + '"]').wrap('<div class="form-check"></div>').after($('<label class="form-check-label"></label>').text(label));
 
                     $('input[name="' + name + '"]').before($('<input/>').attr({
                         'type': 'hidden',
@@ -922,6 +944,39 @@ function createCustomFieldsByCategory (customfields) {
                         });
                     }
                 }
+                break;
+            case 'json':
+                if (idx === 'cf_openinghours') {
+                    $template.find('div:first').removeClass('col-sm-4').addClass('col-sm-8').find('div[data-input]').replaceWith($('#opening-hours-form-group').clone().attr({'id' : idx}).removeClass('d-none').append($('#custom-fields').data('customfield-values')[idx]));
+                    $template.find('select').select2({ width: '100%' });
+
+                    $('input[class*=dayopen]').on('change', function () {
+                        if ($(this).val() == '1') //open
+                        {
+                            $(this).closest('.form-group').find('.openninghours').removeClass('d-none');
+                            $(this).closest('.form-group').find('select').select2({
+                                width: '100%'
+                        });
+                        }
+                        else //closed
+                        {
+                            $(this).closest('.form-group').find('.openninghours').addClass('d-none');
+                        }
+                    });
+                } else {
+                    $template.find('div[data-input]').replaceWith($('<textarea/>').attr({   'id'          : idx,
+                                                                                        'name'        : idx,
+                                                                                        'class'       : 'form-control',
+                                                                                        'placeholder' : customfield.translated_label,
+                                                                                        'rows'        : 10,
+                                                                                        'cols'        : 50,
+                                                                                        'data-type'   : customfield.type,
+                                                                                        'data-toggle' : 'tooltip',
+                                                                                        'title'       : customfield.translated_tooltip,
+                                                                                        'required'    : customfield.required,
+                                                                                    }).append($('#custom-fields').data('customfield-values')[idx]));
+                }
+
                 break;
         }
     });
@@ -943,6 +998,10 @@ function createCustomFieldsByCategory (customfields) {
             $('#custom-fields').data('customfield-values')[customfields['cf_model'].label]
         );
         carquery.initYearMakeModelTrim('cf_year', 'cf_make', 'cf_model');
+    }
+
+    if (customfields['cf_brand'] != undefined && customfields['cf_model'] != undefined && customfields['cf_generation'] != undefined) {
+        autoDataAPI(customfields, 'select#cf_brand', 'select#cf_model', 'select#cf_generation')
     }
 }
 

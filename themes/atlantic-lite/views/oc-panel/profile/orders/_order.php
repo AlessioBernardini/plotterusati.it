@@ -4,7 +4,19 @@
 
     <td><?=$order->pk()?></td>
 
-    <td><?=Model_Order::$statuses[$order->status]?></td>
+    <td>
+        <?
+            $status = [
+                Model_Order::STATUS_CREATED =>  __('Created'),
+                Model_Order::STATUS_PAID =>  __('Paid'),
+                Model_Order::STATUS_REFUSED =>  __('Refused'),
+                Model_Order::STATUS_REFUND =>  __('Refund'),
+                Model_Order::STATUS_PENDING_CONFIRMATION =>  __('Pending confirmation'),
+            ]
+        ?>
+
+        <?= $status[$order->status] ?>
+    </td>
 
     <td><?=Model_Order::product_desc($order->id_product)?></td>
 
@@ -31,9 +43,15 @@
                 <i class="fas fa-check"></i> <?=_e('Mark as paid')?>
             </a>
         <?else:?>
-            <a class="btn btn-default" href="<?=Route::url('oc-panel', array('controller'=>'profile', 'action'=>'order', 'id' => $order->id_order))?>">
+            <a class="btn btn-sm btn-link" href="<?=Route::url('oc-panel', array('controller'=>'profile', 'action'=>'order', 'id' => $order->id_order))?>">
                 <i class="fas fa-search"></i> <?=_e('View')?>
             </a>
+
+            <?if (core::config('general.ewallet') AND $order->received === NULL AND $order->status == Model_Order::STATUS_PAID AND in_array($order->id_product, [Model_Order::PRODUCT_AD_SELL, Model_Order::PRODUCT_AD_CUSTOM])):?>
+                <a class="btn btn-warning" href="<?=Route::url('oc-panel', array('controller'=> 'profile','action'=>'order_received' , 'id' => $order->id_order))?>">
+                    <i class="fa fa-hands"></i> <?=_e('Mark as received')?>   
+                </a>
+            <?endif?>
         <?endif?>
 
         <?if ($order->paymethod == 'escrow'):?>
@@ -46,8 +64,20 @@
             <?endif?>
 
             <?if (isset($transaction->status) AND $transaction->status->received AND ! $transaction->status->accepted):?>
-                <a class="btn btn-default" href="<?= Route::url('oc-panel', ['controller'=>'escrow', 'action'=>'accept', 'id' => $order->id_order]) ?>">
-                    <i class="fas fa-check"></i> <?=_e('Mark as accepted')?>
+
+            <?endif?>
+        <?endif?>
+
+        <?if (Core::config('payment.stripe_connect') AND core::config('payment.stripe_escrow')):?>
+            <?if ($order->shipped !== NULL AND $order->received === NULL):?>
+                <a class="ml-2 btn btn-sm btn-link" href="<?= Route::url('oc-panel', ['controller'=>'profile', 'action'=>'order_received', 'id' => $order->id_order]) ?>">
+                    <i class="fas fa-check"></i> <?=_e('Mark as received')?>
+                </a>
+            <?endif?>
+
+            <?if ($order->cancelled === NULL AND $order->shipped === NULL):?>
+                <a class="ml-2 btn btn-sm btn-link" href="<?= Route::url('oc-panel', ['controller'=>'profile', 'action'=>'cancel_order', 'id' => $order->id_order]) ?>">
+                    <i class="fas fa-times"></i> <?=_e('Cancel order')?>
                 </a>
             <?endif?>
         <?endif?>

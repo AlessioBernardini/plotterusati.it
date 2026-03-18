@@ -63,6 +63,9 @@ class Model_Post extends ORM {
         $form->fields['id_user']['value']       =  auth::instance()->get_user()->id_user;
         $form->fields['id_user']['display_as']  = 'hidden';
 
+        $form->fields['locale']['display_as']  = 'select';
+        $form->fields['locale']['options']     = i18n::get_selectable_languages();
+
         $form->fields['seotitle']['display_as']  = 'hidden';
 
     }
@@ -83,46 +86,58 @@ class Model_Post extends ORM {
     public function gen_seotitle($seotitle)
     {
         //in case seotitle is really small or null
-        if (strlen($seotitle)<3)
+        if (strlen($seotitle) < 3)
+        {
             $seotitle = $this->title;
+        }
 
         $seotitle = URL::title($seotitle);
 
-        if ($seotitle != $this->seotitle)
+        if ($seotitle === $this->seotitle)
         {
-            $post = new self;
-            //find a user same seotitle
-            $s = $post->where('seotitle', '=', $seotitle)->limit(1)->find();
+            return $seotitle;
+        }
 
-            //found, increment the last digit of the seotitle
-            if ($s->loaded())
+        //find a post with same seotitle
+        $post_with_same_seotitle = (new self)
+            ->where('seotitle', '=', $seotitle)
+            ->where('locale', '=', $this->locale)
+            ->limit(1)
+            ->find();
+
+        if (! $post_with_same_seotitle->loaded())
+        {
+            return $seotitle;
+        }
+
+        $count = 2;
+        $loop = TRUE;
+
+        while($loop)
+        {
+            $incremented_seotitle = $seotitle.'-'.$count;
+
+            unset($post_with_same_seotitle);
+
+            $post_with_same_seotitle = (new self)
+                ->where('seotitle', '=', $incremented_seotitle)
+                ->where('locale', '=', $this->locale)
+                ->limit(1)
+                ->find();
+
+            if(! $post_with_same_seotitle->loaded())
             {
-                $cont = 2;
-                $loop = TRUE;
-                while($loop)
-                {
-                    $attempt = $seotitle.'-'.$cont;
-                    $post = new self;
-                    unset($s);
-                    $s = $post->where('seotitle', '=', $attempt)->limit(1)->find();
-                    if(!$s->loaded())
-                    {
-                        $loop = FALSE;
-                        $seotitle = $attempt;
-                    }
-                    else
-                    {
-                        $cont++;
-                    }
-                }
+                $loop = FALSE;
+                $seotitle = $incremented_seotitle;
+            }
+            else
+            {
+                $count++;
             }
         }
 
-
         return $seotitle;
     }
-
-
 
     /**
      * prints the disqus script from the view for blogs!
@@ -382,6 +397,21 @@ array (
     'is_nullable' => false,
     'ordinal_position' => 10,
     'display' => '1',
+    'comment' => '',
+    'extra' => '',
+    'key' => '',
+    'privileges' => 'select,insert,update,references',
+  ),
+  'locale' =>
+  array (
+    'type' => 'string',
+    'column_name' => 'locale',
+    'column_default' => NULL,
+    'data_type' => 'varchar',
+    'is_nullable' => false,
+    'ordinal_position' => 2,
+    'character_maximum_length' => '8',
+    'collation_name' => 'utf8_general_ci',
     'comment' => '',
     'extra' => '',
     'key' => '',

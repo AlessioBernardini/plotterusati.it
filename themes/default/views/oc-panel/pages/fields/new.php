@@ -61,6 +61,7 @@
                             'file_gpicker' => __('File Google Drive'),
                             'url' => __('URL'),
                             'video' => __('Video'),
+                            'json' => 'JSON',
                         ];
                     ?>
                     <?= FORM::label('type', __('Type'), array('class'=>'block text-sm font-medium leading-5 text-gray-700'))?>
@@ -112,13 +113,23 @@
                         <p class="text-gray-500"><?= __('Required field to register.') ?></p>
                     </div>
                 </div>
-                <div class="sm:col-span-6">
+                <div class="sm:col-span-6" x-data="{ searchable: <?= Core::post('searchable') ? 'true' : 'false' ?> }">
                     <div class="absolute flex items-center h-5">
-                        <?=FORM::checkbox('searchable', 'on', (bool) Core::post('searchable'), ['class' => 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out'])?>
+                        <?=FORM::checkbox('searchable', 'on', '', ['x-model' => 'searchable', 'class' => 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out'])?>
                     </div>
                     <div class="pl-7 text-sm leading-5">
                         <?=FORM::label('searchable', __('Searchable'), ['class'=>'font-medium text-gray-700'])?>
                         <p class="text-gray-500"><?= __('Search in ads will include this field as well.') ?></p>
+                    </div>
+
+                    <div x-show="searchable" class="pl-7 mt-4">
+                        <div class="absolute flex items-center h-5">
+                            <?=FORM::checkbox('text_searchable', 'on', (bool) Core::post('text_searchable'), ['class' => 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out'])?>
+                        </div>
+                        <div class="pl-7 text-sm leading-5">
+                            <?=FORM::label('text_searchable', __('Text searchable'), ['class'=>'font-medium text-gray-700'])?>
+                            <p class="text-gray-500"><?= __('Search in ads will include this field as well.') ?></p>
+                        </div>
                     </div>
                 </div>
                 <div class="sm:col-span-6">

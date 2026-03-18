@@ -25,13 +25,22 @@ class Controller_Blog extends Controller {
 	    $this->template->title            = __('Blog');
 	    $this->template->meta_description = core::config('general.site_name').' '.__('blog section.');
 
-	    $posts = new Model_Post();
-        $posts->where('status','=', Model_Post::STATUS_ACTIVE)->where('id_forum','IS',NULL);
+	    $posts = (new Model_Post())
+            ->where('status', '=', Model_Post::STATUS_ACTIVE)
+            ->where('id_forum', 'IS', NULL);
 
-        if ( ($search=Core::get('search'))!==NULL AND strlen(Core::get('search'))>=3 )
-        $posts->where_open()
-             ->where('title','like','%'.$search.'%')->or_where('description','like','%'.$search.'%')
-             ->where_close();
+        if (Core::config('general.multilingual'))
+        {
+            $posts->where('locale', '=', i18n::$locale);
+        }
+
+        if ( ($search = Core::get('search')) !== NULL AND strlen(Core::get('search'))>=3 )
+        {
+            $posts->where_open()
+                 ->where('title', 'like', '%' . $search . '%')
+                 ->or_where('description', 'like', '%' . $search . '%')
+                 ->where_close();
+        }
 
         $res_count = clone $posts;
         $res_count = $res_count->count_all();
@@ -79,24 +88,42 @@ class Controller_Blog extends Controller {
      */
     public function action_view($seotitle)
     {
-
         $post = new Model_Post();
 
         // if visitor or user with ROLE_USER display post with STATUS_ACTIVE
         if (! Auth::instance()->logged_in() OR
             (Auth::instance()->logged_in() AND Auth::instance()->get_user()->id_role == Model_Role::ROLE_USER))
+        {
             $post->where('status','=',Model_Post::STATUS_ACTIVE);
+        }
 
-        $post->where('seotitle','=',$seotitle)
-            ->where('id_forum','IS',NULL)
-            ->cached()->limit(1)->find();
+        $post->where('seotitle', '=', $seotitle)
+            ->where('id_forum', 'IS', NULL);
+
+        if (Core::config('general.multilingual'))
+        {
+            $post->where('locale', '=', i18n::$locale);
+        }
+
+        $post = $post->cached()->limit(1)->find();
+
+        // was not found try default locale
+        if (Core::config('general.multilingual') AND ! $post->loaded())
+        {
+            $post = $post->where('seotitle', '=', $seotitle)
+                 ->where('locale', '=', i18n::$locale_default)
+                 ->where('id_forum', 'IS', NULL)
+                 ->limit(1)
+                 ->cached()
+                 ->find();
+        }
 
         if ($post->loaded())
         {
             Breadcrumbs::add(Breadcrumb::factory()->set_title($post->title));
 
             if ($post->status == 0)
-                    Alert::set(Alert::ALERT, __('Blog post unpublished.'));
+                Alert::set(Alert::ALERT, __('Blog post unpublished.'));
 
             $this->template->title            = $post->title;
             $this->template->meta_description = $post->description;

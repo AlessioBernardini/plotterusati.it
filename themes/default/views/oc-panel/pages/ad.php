@@ -39,6 +39,7 @@
 
             $status_array = [
                 '' => __('Any status'),
+                Model_Ad::STATUS_PUBLISHED => __('Published'),
                 Model_Ad::STATUS_SPAM => __('Spam'),
                 Model_Ad::STATUS_UNAVAILABLE => __('Unavailable'),
                 Model_Ad::STATUS_UNCONFIRMED => __('Unconfirmed'),
@@ -67,9 +68,11 @@
         <span class="shadow-sm rounded-md">
             <?= FORM::select('status', $status_array, Core::get('status'), ['x-on:change' => '$el.submit()', 'class' => 'block form-select w-32 py-2 px-3 py-0 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5'])?>
         </span>
-        <span class="ml-3 shadow-sm rounded-md">
-            <?= FORM::select('filter', $filters_array, Core::get('filter'), ['x-on:change' => '$el.submit()', 'class' => 'block form-select w-36 py-2 px-3 py-0 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5'])?>
-        </span>
+        <? if (core::count($filters_array) > 1) : ?>
+            <span class="ml-3 shadow-sm rounded-md">
+                <?= FORM::select('filter', $filters_array, Core::get('filter'), ['x-on:change' => '$el.submit()', 'class' => 'block form-select w-36 py-2 px-3 py-0 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5'])?>
+            </span>
+        <? endif ?>
         <span class="ml-3 shadow-sm rounded-md">
             <?= FORM::select('order', $field_orders, Core::get('order'), ['x-on:change' => '$el.submit()', 'class' => 'block form-select w-24 py-2 px-3 py-0 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5'])?>
         </span>
@@ -91,14 +94,14 @@
         "
     >
         <form method="GET" enctype="multipart/form-data" x-ref="form">
-            <div class="bg-white overflow-hidden shadow rounded-lg mt-8">
+            <div class="bg-white shadow rounded-lg mt-8">
                 <div class="flex flex-col">
-                    <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
-                        <div class="align-middle inline-block min-w-full overflow-hidden sm:rounded-lg border-b border-gray-200">
+                    <div class="-my-2 py-2 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+                        <div class="align-middle inline-block min-w-full sm:rounded-lg border-b border-gray-200">
                             <table class="min-w-full">
                                 <thead>
                                     <tr>
-                                        <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                        <th class="rounded-tl-lg px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                             <?= Form::checkbox('select_all', 1, 0, [
                                                 'class' => 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out',
                                                 '@click' => 'selectAll = ! selectAll'
@@ -121,11 +124,11 @@
                                         <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                             <?= __('Published') ?>
                                         </th>
-                                        <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                        <th class="<?= ! isset($res) ? 'rounded-tr-lg' : '' ?> px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                             <?= __('Created') ?>
                                         </th>
                                         <?if(isset($res)):?>
-                                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-right">
+                                            <th class="rounded-tr-lg px-6 py-3 border-b border-gray-200 bg-gray-50 text-right">
                                                 <div x-data="{ open: false }" @keydown.escape="open = false" @click.away="open = false" class="relative inline-block text-left ml-3">
                                                     <div>
                                                         <button @click.prevent="open = !open" class="flex items-center text-gray-400 hover:text-gray-600 focus:outline-none focus:text-gray-600">
@@ -183,9 +186,9 @@
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white">
-                                    <?$i = 0; foreach($res as $ad):?>
+                                    <?$i = 1; foreach($res as $ad):?>
                                         <tr>
-                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium text-gray-900">
+                                            <td class="<?= count($res) === $i ? 'rounded-bl-lg' : '' ?> px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium text-gray-900">
                                                 <?= Form::checkbox('id_ads[]', $ad->id_ad, 0, [
                                                     'class' => 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out',
                                                     'id' => 'select-all',
@@ -214,15 +217,7 @@
                                                 </td>
                                             <?endif?>
                                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                                                <?if($ad->status == Model_Ad::STATUS_NOPUBLISHED):?>
-                                                    <?=__('Not published')?>
-                                                <? elseif($ad->status == Model_Ad::STATUS_PUBLISHED):?>
-                                                    <?=__('Published')?>
-                                                <? elseif($ad->status == Model_Ad::STATUS_SPAM):?>
-                                                    <?=__('Spam')?>
-                                                <? elseif($ad->status == Model_Ad::STATUS_UNAVAILABLE):?>
-                                                    <?=__('Unavailable')?>
-                                                <?endif?>
+                                                <?= Model_Ad::get_status_label($ad->status) ?>
 
                                                 <?if( ($order = $ad->get_order())!==FALSE ):?>
                                                     <a class="label <?=($order->status==Model_Order::STATUS_PAID)?'label-success':'label-warning'?> "
@@ -244,7 +239,7 @@
                                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
                                                 <?=Date::format($ad->created, core::config('general.date_format'))?>
                                             </td>
-                                            <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5">
+                                            <td class="<?= count($res) === $i ? 'rounded-br-lg' : '' ?> px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5">
                                                 <div class="flex justify-end items-center">
                                                     <div class="font-medium">
                                                         <a href="<?=Route::url('oc-panel', array('controller'=>'myads','action'=>'update','id'=>$ad->id_ad))?>" class="text-blue-600 hover:text-blue-900 focus:outline-none focus:underline"><?= __('Edit') ?></a>
@@ -312,7 +307,7 @@
                                                                             </a>
                                                                         <?endif?>
                                                                     <?endif?>
-                                                                    <?if(core::config('payment.pay_to_go_on_top') > 0 AND core::config('payment.to_top') != FALSE):?>
+                                                                    <?if(core::config('payment.pay_to_go_on_top') > 0 AND core::config('payment.to_top') != FALSE AND $ad->status == Model_Ad::STATUS_PUBLISHED):?>
                                                                         <a
                                                                             class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900"
                                                                             href="<?=Route::url('default', array('controller'=>'ad','action'=>'to_top','id'=>$ad->id_ad))?>"
@@ -342,7 +337,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                    <? endforeach ?>
+                                    <? $i++; endforeach ?>
                                 </tbody>
                             </table>
                         </div>
@@ -350,6 +345,14 @@
                 </div>
             </div>
         </form>
+    </div>
+<? else : ?>
+    <div class="bg-white shadow rounded-lg mt-8">
+        <div class="px-4 py-5 sm:p-6 flex h-40 justify-center items-center">
+            <div class="text-lg leading-6 font-medium text-gray-500">
+                <?= __('No ads were found.') ?>
+            </div>
+        </div>
     </div>
 <? endif ?>
 
@@ -371,7 +374,7 @@
                 </p>
             </div>
             <div class="mt-3 text-sm leading-5">
-                <a href="<?= Route::url('oc-panel', ['controller' => 'userfields']) ?>" class="font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:underline transition ease-in-out duration-150">
+                <a href="<?= Route::url('oc-panel/settings', ['controller' => 'advertisement']) ?>" class="font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:underline transition ease-in-out duration-150">
                     <?= __('Go to advertisement settings') ?> &rarr;
                 </a>
             </div>

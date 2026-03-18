@@ -2,12 +2,9 @@
 
 <style>
     .dropdown-menu {
-        position: absolute;
         z-index: 1000;
-        display: none;
-        float: left;
         min-width: 160px;
-        margin: 1px 0 0 2px;
+        width: 100%;
         list-style: none;
         font-size: 14px;
         text-align: left;
@@ -15,7 +12,6 @@
         border: 1px solid #ccc;
         border: 1px solid rgba(0,0,0,.15);
         border-radius: 4px;
-        box-shadow: 0 6px 12px rgba(0,0,0,.175);
         background-clip: padding-box;
     }
 </style>
@@ -74,8 +70,44 @@
                         <?endforeach?>
                     </select>
                 <?elseif($values=='DATE'):?>
-                    <input type="text" class="datepicker_boot form-input relative block w-full rounded-none -ml-px bg-transparent focus:z-10 transition ease-in-out duration-150 sm:text-sm sm:leading-5" id="filter__from__<?=$field_name?>" name="filter__from__<?=$field_name?>" placeholder="<?=__('From')?> <?=$field_name?>" value="<?=core::request('filter__from__'.$field_name)?>" data-date="<?=core::request('filter__from__'.$field_name)?>" data-date-format="yyyy-mm-dd">
-                    <input type="text" class="datepicker_boot form-input relative block w-full rounded-none -ml-px bg-transparent focus:z-10 transition ease-in-out duration-150 sm:text-sm sm:leading-5" id="filter__to__<?=$field_name?>" name="filter__to__<?=$field_name?>" placeholder="<?=__('To')?> <?=$field_name?>" value="<?=core::request('filter__to__'.$field_name)?>" data-date="<?=core::request('filter__to__'.$field_name)?>" data-date-format="yyyy-mm-dd">
+                    <input
+                        type="text"
+                        class="form-input relative block w-full rounded-none -ml-px bg-transparent focus:z-10 transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                        id="filter__from__<?=$field_name?>"
+                        name="filter__from__<?=$field_name?>"
+                        placeholder="<?=__('From')?> <?=$field_name?>"
+                        value="<?=core::request('filter__from__'.$field_name)?>" data-date="<?=core::request('filter__from__'.$field_name)?>"
+                        x-data=""
+                        x-ref="input"
+                        x-init="
+                            new Pikaday({
+                                field: $refs.input,
+                                toString(date, format) {
+                                    return moment(date).format('YYYY-MM-DD');
+                                },
+                            });
+                        "
+                    >
+                    <input
+                        type="text"
+                        class="form-input relative block w-full rounded-none -ml-px bg-transparent focus:z-10 transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                        id="filter__to__<?=$field_name?>"
+                        name="filter__to__<?=$field_name?>"
+                        placeholder="<?=__('To')?> <?=$field_name?>"
+                        value="<?=core::request('filter__to__'.$field_name)?>"
+                        data-date="<?=core::request('filter__to__'.$field_name)?>"
+                        data-date-format="yyyy-mm-dd"
+                        x-data=""
+                        x-ref="input"
+                        x-init="
+                            new Pikaday({
+                                field: $refs.input,
+                                toString(date, format) {
+                                    return moment(date).format('YYYY-MM-DD');
+                                },
+                            });
+                        "
+                    >
                 <?elseif($values=='RANGE'):?>
                     <input type="text" class="form-input relative block w-full rounded-none -ml-px bg-transparent focus:z-10 transition ease-in-out duration-150 sm:text-sm sm:leading-5" id="filter__from__<?=$field_name?>" name="filter__from__<?=$field_name?>" placeholder="<?=__('From')?> <?=$field_name?>" value="<?=core::request('filter__from__'.$field_name)?>" >
                     <input type="text" class="form-input relative block w-full rounded-none -ml-px bg-transparent focus:z-10 transition ease-in-out duration-150 sm:text-sm sm:leading-5" id="filter__to__<?=$field_name?>" name="filter__to__<?=$field_name?>" placeholder="<?=__('To')?> <?=$field_name?>" value="<?=core::request('filter__to__'.$field_name)?>" >
@@ -105,7 +137,7 @@
                                 </th>
                             <?endforeach?>
 
-                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50" data-column-id="commands" data-formatter="commands" data-sortable="false"></th>
+                            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50" data-column-id="commands" data-formatter="commands" data-sortable="false"><?=__('Actions')?></th>
                         </tr>
                     </thead>
                 </table>

@@ -765,7 +765,7 @@ class Controller_Panel_Profile extends Auth_Frontcontroller {
 
         if ($this->user->verification_code == $verification_code )
         {
-            $this->user->verified = new Database_Expression('verified + 1'); //l'email è verificata quindi segno l'utente come verificato
+            $this->user->verified = new Database_Expression('verified + 1');
             $this->user->status = Model_User::STATUS_ACTIVE;
 
             try {

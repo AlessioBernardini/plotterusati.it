@@ -14,6 +14,12 @@
     </div>
 </div>
 
+<? if (! empty($errors)) : ?>
+    <div class="mt-8">
+        <?= View::factory('oc-panel/components/form-errors', ['errors' => $errors]) ?>
+    </div>
+<? endif ?>
+
 <div class="bg-white overflow-hidden shadow rounded-lg mt-8">
     <div class="px-4 py-5 sm:p-6">
         <?=FORM::open(Route::url('oc-panel/settings',['controller'=>'advertisement']))?>
@@ -67,17 +73,7 @@
                         <div class="sm:col-span-4">
                             <?= FORM::label('sort_by', __('Sort by in listing'), ['class'=>'block text-sm font-medium leading-5 text-gray-700'])?>
                             <div class="mt-1 rounded-md shadow-sm">
-                                <?= FORM::select('sort_by', ['title-asc'=>"Name (A-Z)",
-                                                                                 'title-desc'=>"Name (Z-A)",
-                                                                                 'price-asc'=>"Price (Low)",
-                                                                                 'price-desc'=>"Price (High)",
-                                                                                 'featured'=>"Featured",
-                                                                                 'rating'=>"Rating",
-                                                                                 'favorited'=>"Favorited",
-                                                                                 'published-desc'=>"Newest",
-                                                                                 'published-asc'=>"Oldest",
-                                                                                 'distance'=>"Distance",
-                                                                                 'event-date'=>"Event date"], Core::post('sort_by', Core::config('advertisement.sort_by')), [
+                                <?= FORM::select('sort_by', $sort_by_options, Core::post('sort_by', Core::config('advertisement.sort_by')), [
                                     'class' => 'form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5',
                                 ])?>
                             </div>
@@ -86,21 +82,9 @@
                             </p>
                         </div>
                         <div class="sm:col-span-4">
-                            <?
-                                $ads_in_home = [0=>__('Latest Ads'),
-                                                        1=>__('Featured Ads'),
-                                                        4=>__('Featured Ads Random'),
-                                                        2=>__('Popular Ads last month'),
-                                                        3=>__('None')];
-
-                                if(core::config('advertisement.count_visits')==0)
-                                {
-                                    unset($ads_in_home[2]);
-                                }
-                            ?>
                             <?= FORM::label('ads_in_home', __('Advertisements in home'), ['class'=>'block text-sm font-medium leading-5 text-gray-700'])?>
                             <div class="mt-1 rounded-md shadow-sm">
-                                <?= FORM::select('ads_in_home', $ads_in_home, Core::post('ads_in_home', Core::config('advertisement.ads_in_home')), [
+                                <?= FORM::select('ads_in_home', $ads_in_home_options, Core::post('ads_in_home', Core::config('advertisement.ads_in_home')), [
                                     'class' => 'form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5',
                                 ])?>
                             </div>
@@ -121,7 +105,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="mt-8 border-t border-gray-200 pt-8">
+                <div class="mt-8 border-t border-gray-200 pt-8" x-data="
+                    {
+                        adsPerDayEnabled: <?= Core::post('ads_per_day_limit', Core::config('advertisement.ads_per_day_limit')) ? 'true' : 'false' ?>,
+                        loginToPostEnabled: <?= Core::post('login_to_post', Core::config('advertisement.login_to_post')) ? 'true' : 'false' ?>,
+                    }
+                ">
                     <div>
                         <h3 class="text-lg leading-6 font-medium text-gray-900">
                             <?=__('Publish Options')?>
@@ -130,7 +119,7 @@
                     <div class="mt-6 grid grid-cols-1 row-gap-6 col-gap-4 sm:grid-cols-6">
                         <div class="sm:col-span-6">
                             <div class="absolute flex items-center h-5">
-                                <?=FORM::checkbox('login_to_post', 1, (bool) Core::post('login_to_post', Core::config('advertisement.login_to_post')), ['class' => 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out'])?>
+                                <?=FORM::checkbox('login_to_post', 1, '', ['x-model' => 'loginToPostEnabled', 'class' => 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out'])?>
                             </div>
                             <div class="pl-7 text-sm leading-5">
                                 <?=FORM::label('login_to_post', __('Require login to post'), ['class'=>'font-medium text-gray-700'])?>
@@ -138,6 +127,29 @@
                                     <?=__('Require only the logged in users to post.')?>
                                 </p>
                             </div>
+                        </div>
+                        <div class="sm:col-span-6" x-show="loginToPostEnabled">
+                            <div class="absolute flex items-center h-5">
+                                <?=FORM::checkbox('ads_per_day_enabled', 1, '', ['x-model' => 'adsPerDayEnabled', 'class' => 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out'])?>
+                            </div>
+                            <div class="pl-7 text-sm leading-5">
+                                <?=FORM::label('ads_per_day_enabled', __('Limit published ads per day'), ['class'=>'font-medium text-gray-700'])?>
+                                <p class="text-gray-500">
+                                    <?=__('Limit the number of published ads a user can post per day.')?>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="sm:col-span-3" x-show="loginToPostEnabled && adsPerDayEnabled">
+                            <?= FORM::label('ads_per_day_limit', __('Ads per day limit'), ['class'=>'block text-sm font-medium leading-5 text-gray-700'])?>
+                            <div class="mt-1 rounded-md shadow-sm">
+                                <?= FORM::input('ads_per_day_limit', Core::post('ads_per_day_limit', Core::config('advertisement.ads_per_day_limit')), [
+                                    'type' => 'number',
+                                    'class' => 'form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5',
+                                ])?>
+                            </div>
+                            <p class="mt-2 text-sm text-gray-500">
+                                <?=__('How many ads a user can publish per day.')?>
+                            </p>
                         </div>
                         <div class="sm:col-span-6">
                             <div class="absolute flex items-center h-5">
@@ -218,13 +230,9 @@
                             </div>
                         </div>
                         <div class="sm:col-span-4">
-                            <?$pages = [''=>__('Deactivated')]?>
-                            <?foreach (Model_Content::get_pages() as $key => $value) {
-                                $pages[$value->seotitle] = $value->title;
-                            }?>
                             <?= FORM::label('tos', __('Terms of Service'), ['class'=>'block text-sm font-medium leading-5 text-gray-700'])?>
                             <div class="mt-1 rounded-md shadow-sm">
-                                <?= FORM::select('tos', $pages, Core::post('tos', Core::config('advertisement.tos')), [
+                                <?= FORM::select('tos', $page_options, Core::post('tos', Core::config('advertisement.tos')), [
                                     'class' => 'form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5',
                                 ])?>
                             </div>
@@ -236,7 +244,7 @@
                         <div class="sm:col-span-4">
                             <?= FORM::label('thanks_page', __('Thanks page'), ['class'=>'block text-sm font-medium leading-5 text-gray-700'])?>
                             <div class="mt-1 rounded-md shadow-sm">
-                                <?= FORM::select('thanks_page', $pages, Core::post('thanks_page', Core::config('advertisement.thanks_page')), [
+                                <?= FORM::select('thanks_page', $page_options, Core::post('thanks_page', Core::config('advertisement.thanks_page')), [
                                     'class' => 'form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5',
                                 ])?>
                             </div>
@@ -400,6 +408,17 @@
                     <div class="mt-6 grid grid-cols-1 row-gap-6 col-gap-4 sm:grid-cols-6">
                         <div class="sm:col-span-6">
                             <div class="absolute flex items-center h-5">
+                                <?=FORM::checkbox('login_to_view_ad', 1, (bool) Core::post('login_to_view_ad', Core::config('advertisement.login_to_view_ad')), ['class' => 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out'])?>
+                            </div>
+                            <div class="pl-7 text-sm leading-5">
+                                <?=FORM::label('login_to_view_ad', __('Require login to view ad'), ['class'=>'font-medium text-gray-700'])?>
+                                <p class="text-gray-500">
+                                    <?=__('Require only logged in users to see the ad details.')?>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="sm:col-span-6">
+                            <div class="absolute flex items-center h-5">
                                 <?=FORM::checkbox('contact', 1, (bool) Core::post('contact', Core::config('advertisement.contact')), ['class' => 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out'])?>
                             </div>
                             <div class="pl-7 text-sm leading-5">
@@ -411,10 +430,10 @@
                         </div>
                         <div class="sm:col-span-6">
                             <div class="absolute flex items-center h-5">
-                                <?=FORM::checkbox('login_to_view_ad', 1, (bool) Core::post('login_to_view_ad', Core::config('advertisement.login_to_view_ad')), ['class' => 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out'])?>
+                                <?=FORM::checkbox('login_to_contact', 1, (bool) Core::post('login_to_contact', Core::config('advertisement.login_to_contact')), ['class' => 'form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out'])?>
                             </div>
                             <div class="pl-7 text-sm leading-5">
-                                <?=FORM::label('login_to_view_ad', __('Require login to contact'), ['class'=>'font-medium text-gray-700'])?>
+                                <?=FORM::label('login_to_contact', __('Require login to contact'), ['class'=>'font-medium text-gray-700'])?>
                                 <p class="text-gray-500">
                                     <?=__('Require only the logged in users to contact.')?>
                                 </p>

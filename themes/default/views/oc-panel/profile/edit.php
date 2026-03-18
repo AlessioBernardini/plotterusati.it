@@ -10,16 +10,28 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-8">
-                            <?if ($user->stripe_user_id!=''):?>
-                                Stripe connected <?=$user->stripe_user_id?>
-                                <br>
-                                Reconnect:
-                                <br>
-                            <?endif?>
-                            <a class="btn btn-primary" href="<?=Route::url('default', array('controller'=>'stripe','action'=>'connect','id'=>'now'))?>">
-                                <span class="glyphicon glyphicon-usd" aria-hidden="true"></span> Connect with Stripe
-                            </a>
+                            <? if (Core::config('payment.stripe_connect_legacy')) : ?>
+                                <? if ($user->stripe_user_id != ''): ?>
+                                    Stripe connected <?=$user->stripe_user_id?>
+                                    <br>
+                                    Reconnect:
+                                    <br>
+                                <? endif ?>
 
+                                <a class="btn btn-primary" href="<?=Route::url('default', array('controller'=>'stripe','action'=>'connect','id'=>'now'))?>">
+                                    <span class="fas fa-money-bill" aria-hidden="true"></span> Connect with Stripe
+                                </a>
+                            <? else : ?>
+                                <? if (StripeKO::connected_account_with_charges_enabled($user)) : ?>
+                                    <a class="btn btn-primary" href="<?= Route::url('default', ['controller' => 'stripe', 'action' => 'log_into_connected_account', 'id' => 'now']) ?>">
+                                        <?= _e('View Stripe account') ?>
+                                    </a>
+                                <? else : ?>
+                                    <a class="btn btn-primary" href="<?= Route::url('default', ['controller' => 'stripe', 'action' => 'connect_express', 'id' => 'now']) ?>">
+                                        <?= _e('Connect with Stripe') ?>
+                                    </a>
+                                <? endif ?>
+                            <? endif ?>
                         </div>
                     </div>
                 </div>
@@ -220,6 +232,17 @@
                                 <?endif?>
                             <?endforeach?>
 
+                            <? if (Core::config('email.digest')) : ?>
+                                <div class="form-group">
+                                    <?= FORM::label('digest_interval', _e('Receive digest emails'), array('class'=>'col-xs-4 control-label', 'for'=>'digest_interval'))?>
+                                    <div class="col-sm-8">
+                                        <?= Form::select('digest_interval', ['never' => __('Never'), 'daily' => __('Daily'), 'weekly' => __('Weekly'), 'monthly' => __('Monthly')], $user->digest_interval, [
+                                            'class' => 'form-select block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5',
+                                        ])?>
+                                    </div>
+                                </div>
+                            <? endif ?>
+
                             <div class="form-group">
                                 <div class="col-md-offset-4 col-md-8">
                                     <div class="checkbox">
@@ -277,6 +300,31 @@
                 </div>
             </div>
         </div>
+
+        <? if (Core::config('advertisement.instagram') == 1) : ?>
+            <div class="panel panel-default">
+                <div class="panel-heading" id="page-edit-profile">
+                    <h3 class="panel-title"><?=_e('Instagram Connect')?></h3>
+                    <p><?= _e('Once connected, your instagram feed will be shown on your listing page.')?></p>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <?if ($user->instagram_token != ''):?>
+                                Instagram connected.
+                                <br><br>
+                                Reconnect:
+                                <br>
+                            <?endif?>
+
+                            <a class="btn btn-primary" href="<?= Instagram::loginUrl() ?>">
+                                <?= _e('Connect with Instagram') ?>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <? endif ?>
 
         <?if( Core::config('general.google_authenticator')==TRUE):?>
         <div class="panel panel-default">
@@ -369,12 +417,12 @@
                                     </div>
                                 <?endif?>
                             </div>
-                            <?if (core::config('advertisement.num_images') > core::count($images)):?>
+                            <?if (core::config('advertisement.num_images') > $user->has_image):?>
                                 <hr>
                                 <div class="form-group">
                                     <h5><?=_e('Add image')?></h5>
                                     <div>
-                                        <?for ($i = 0; $i < (core::config('advertisement.num_images') - core::count($images)); $i++):?>
+                                        <?for ($i = 0; $i < (core::config('advertisement.num_images') - $user->has_image); $i++):?>
                                             <div class="fileinput fileinput-new <?=($i >= 1) ? 'hidden' : NULL?>" data-provides="fileinput">
                                                 <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
                                                 <div>

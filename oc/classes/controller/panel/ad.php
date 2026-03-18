@@ -66,12 +66,20 @@ class Controller_Panel_Ad extends Auth_Controller {
         }
 
 		// sort ads by search value
-		if($q = $this->request->query('search'))
-		{
-			$ads = $ads->where('title', 'like', '%'.$q.'%');
-			if(core::config('general.search_by_description') == TRUE)
-	        	$ads = $ads->or_where('description', 'like', '%'.$q.'%');
-		}
+        if($q = $this->request->query('search'))
+        {
+            $ads = $ads->where('title', 'like', '%'.$q.'%');
+
+            if(core::config('general.search_by_description') == TRUE)
+            {
+                $ads = $ads->or_where('description', 'like', '%'.$q.'%');
+            }
+
+            if(is_numeric($q))
+            {
+                $ads = $ads->or_where('id_ad', '=', $q);
+            }
+        }
 
         if (is_numeric(Core::request('filter__id_user')))
             $ads = $ads->where('id_user', '=',Core::request('filter__id_user'));
@@ -295,11 +303,16 @@ class Controller_Panel_Ad extends Auth_Controller {
 
 		if (is_array($id_ads))
 		{
-			$ads = new Model_Ad();
-			$ads = $ads->where('id_ad', 'in', $id_ads)->find_all();
+			$ads = (new Model_Ad())->where('id_ad', 'in', $id_ads)->find_all();
 
 			foreach ($ads as $ad)
-				$ad->sold();
+            {
+                if ($ad->sold())
+                {
+                    Model_Subscription::ad_sold($ad->user);
+                    Alert::set(Alert::SUCCESS, __('Advertisement is marked as Sold'));
+                }
+            }
 
 			Alert::set(Alert::SUCCESS, __('Advertisement is marked as sold'));
 		}

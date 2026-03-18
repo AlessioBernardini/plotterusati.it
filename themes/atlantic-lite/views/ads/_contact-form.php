@@ -40,7 +40,7 @@
 
     <div class="form-group">
         <?= Form::label('message', _e('Message')) ?>
-        <?= Form::textarea('contact-message', Request::current()->post('message'), [
+        <?= Form::textarea('message', Request::current()->post('message'), [
             'id' => 'contact-message',
             'class' => 'form-control',
             'placeholder' => __('Message'),
@@ -84,7 +84,7 @@
             <?= FORM::label('contact-captcha', _e('Captcha')) ?>
             <div class="form-row">
                 <div class="form-group col-6 col-md-3">
-                    <?= FORM::input('contact-captcha', NULL, [
+                    <?= FORM::input('captcha', NULL, [
                         'class' => 'form-control',
                         'id' => 'contact-captcha',
                         'required'
@@ -98,6 +98,6 @@
     <? endif ?>
 
     <div class="mt-3">
-        <?= Form::button('contact-submit', _e('Contact Us'), ['type' => 'submit', 'class' => 'btn btn-primary']) ?>
+        <?= Form::button('contact-submit', _e('Contact'), ['type' => 'submit', 'class' => 'btn btn-primary']) ?>
     </div>
 <?= FORM::close() ?>

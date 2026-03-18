@@ -3,7 +3,7 @@
   * Theme Name: Ocean Free
   * Description: Clean free theme that includes full admin. It has publicity. Do not delete this theme, all the views depend in this theme.
   * Tags: HTML5, Admin, Free
-  * Version: 4.0.1
+  * Version: 4.4.0
   * Author: Chema <chema@open-classifieds.com> , <slobodan@open-classifieds.com>
   * License: GPL v3
   * Skins: default,green,orange
@@ -91,6 +91,13 @@ if (Core::config('general.sms_auth')){
 if (core::config('general.carquery'))
 {
     Theme::$scripts['footer'][] = '//www.carqueryapi.com/js/carquery.0.3.4.js';
+}
+
+if (core::config('general.autodata'))
+{
+    Theme::$styles['//cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/css/selectize.bootstrap3.min.css'] = 'screen';
+    Theme::$scripts['footer'][] = '//cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.1/js/standalone/selectize.min.js';
+    Theme::$scripts['footer'][] = 'js/autodata.js?v='.Core::VERSION;
 }
 
 /**
