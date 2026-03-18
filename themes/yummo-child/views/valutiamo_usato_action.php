@@ -1,5 +1,10 @@
 <?php
-if(isset($_POST)) {
+if(isset($_POST) && !empty($_POST)) {
+    // HONEYPOT ANTI-SPAM: i bot riempiono tutti i campi. Se questo è pieno, blocchiamo.
+    if (!empty($_POST['telefono_secondario'])) {
+        exit; // Uscita silenziosa senza inviare spam
+    }
+
     $mailto = "info@plotterusati.it";
     
     // Funzione helper per sanificare gli header da newline
